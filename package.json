@@ -1,0 +1,35 @@
+{
+    "name": "dbt-design",
+    "description": "The new DBT Design",
+    "version": "1.0.0",
+    "author": "René Adler (eagle)",
+  	"homepage": "https://www.db-thueringen.de",
+  	"repository": {
+    	"type": "git",
+    	"url": "https://github.com/ThULB/dbt.git"
+  	},
+  	"license": "GPL-3.0",
+    "engines": {
+    	"node": ">= 0.8.11"
+  	},
+    "devDependencies": {
+    	"bower": "latest",
+        "grunt": "latest",
+        "grunt-bowercopy": "latest",
+        "grunt-cli": "latest",
+        "grunt-contrib-clean": "latest",
+        "grunt-contrib-concat": "latest",
+        "grunt-contrib-connect": "latest",
+        "grunt-contrib-copy": "latest",
+        "grunt-contrib-uglify": "latest",
+        "grunt-contrib-imagemin": "latest",
+        "grunt-contrib-less": "latest",
+        "grunt-contrib-watch": "latest",
+        "grunt-connect-proxy": "0.1.10",
+        "grunt-google-fonts": "latest",
+        "grunt-responsive-images": "latest",
+        "grunt-newer": "latest",
+        "serve-static": "latest",
+        "ssl-root-cas": "latest"
+    }
+}

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="de" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digitale Bibliothek Thüringen</title>
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/images/favicon-apple-touch-57.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicon-apple-touch-114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/favicon-apple-touch-72.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/favicon-apple-touch-144.png">
+<link rel="icon" sizes="128x128" href="assets/images/favicon.icns">
+<link rel="icon" type="image/vnd.microsoft.icon" sizes="16x16 32x32 48x48 64x64 128x128" href="assets/images/favicon.ico">
+<link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
+
+<link href="assets/css/layout.min.css" rel="stylesheet">
+<script type="text/javascript">
+	document.documentElement.className = document.documentElement.className.replace("no-js", "");
+</script>
+</head>
+<body>
+	<div id="loader-wrapper">
+		<div id="loader"></div>
+		<div class="loader-section"></div>
+	</div>
+	<nav class="navbar navbar-default navbar-dbt navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed plus-sign" data-toggle="collapse" data-target="#navbar,#container-overlay" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html"><span class="img-placeholder"></span></a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="dropdown"><a href="#rc" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Semesterapparate
+							<span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li class="active"><a href="#">Aktuelle Liste</a></li>
+							<li><a href="#">Einrichten</a></li>
+						</ul></li>
+					<li><a href="#publish" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Publizieren <span
+							class="caret"
+						></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Dokumente einreichen</a></li>
+							<li><a href="#">Leitlinien</a></li>
+							<li><a href="#">Vertragsbedingungen</a></li>
+						</ul></li>
+					<li class="visible-xs"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blättern
+							<span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Einrichtungen</a></li>
+							<li><a href="#">Dokumententype</a></li>
+							<li><a href="#">Sachgruppen</a></li>
+							<li><a href="#">Personen</a></li>
+						</ul></li>
+					<li class="visible-xs"><a href="#">FAQ</a></li>
+					<li class="visible-xs"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Merkliste
+							<sup>0</sup> <span class="caret"></span>
+					</a>
+						<ul role="menu" class="dropdown-menu">
+							<li class="disabled"><a>Auf ihrer Merkliste befinden sich keine Dokumente.</a></li>
+							<li class="divider"></li>
+							<li><a href="https://www.db-thueringen.de/servlets/MCRBasketServlet?type=objects&amp;action=show">Merkliste &ouml;ffnen</a></li>
+						</ul></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="hidden-xs"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i
+							class="fa fa-bookmark" aria-hidden="true"
+						></i> <sup>0</sup> <span class="caret"></span></a>
+						<ul role="menu" class="dropdown-menu">
+							<li class="disabled"><a>Auf ihrer Merkliste befinden sich keine Dokumente.</a></li>
+							<li class="divider"></li>
+							<li><a href="https://www.db-thueringen.de/servlets/MCRBasketServlet?type=objects&amp;action=show">Merkliste &ouml;ffnen</a></li>
+						</ul></li>
+					<li class="hidden-xs"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i
+							class="fa fa-sitemap" aria-hidden="true"
+						></i> <span class="visible-lg-inline">Blättern</span> <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Einrichtungen</a></li>
+							<li><a href="#">Dokumententype</a></li>
+							<li><a href="#">Sachgruppen</a></li>
+							<li><a href="#">Personen</a></li>
+						</ul></li>
+					<li class="hidden-xs"><a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i> <span class="visible-xs-inline visible-lg-inline">FAQ</span>
+					</a></li>
+					<li><a href="#"><i class="fa fa-power-off" aria-hidden="true"></i> <span class="visible-xs-inline visible-lg-inline">Anmelden</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="searchbar">
+		<div class="container">
+			<form class="navbar-form navbar-right" role="search">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Suchen"> <span class="input-group-btn">
+						<button type="submit" class="btn btn-default">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div id="container-main">
+		<a id="top"></a>
+		<div class="container">
+			<h2>Semesterapparate</h2>
+			<div class="datatable panel panel-default" id="slots_wrapper">
+				<div class="panel-heading clearfix">
+					<form role="form" class="row form-inline" id="slots_form">
+						<input value="" name="SortBy" type="hidden"><input value="" name="SortOrder" type="hidden"><input value="text" name="SortType"
+							type="hidden"
+						><input value="1" name="Page" type="hidden">
+						<div class="col-xs-6">
+							<div id="slots_filter" class="form-group no-margin">
+								<label><span aria-hidden="true" class="glyphicon glyphicon-filter"></span>Filter&nbsp;<input name="Filter" type="search"
+									class="form-control input-sm" value=""
+								></label>
+							</div>
+						</div>
+						<div class=" col-xs-6">
+							<div class="form-group pull-right no-margin" id="slots_length">
+								<label><select onchange="this.form.submit()" size="1" name="numPerPage" class="form-control input-sm"><option value="10">10</option>
+										<option value="25">25</option>
+										<option value="50" selected>50</option>
+										<option value="100">100</option></select>&nbsp;Eintr&auml;ge anzeigen </label>
+								<noscript>
+									<input value="Ok" name="Ok" type="submit" class="btn">
+								</noscript>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="table-responsive">
+					<table id="slots" class="table table-striped">
+						<thead>
+							<tr>
+								<th width="15%"><a
+									href="https://www.db-thueringen.de/rc?SortBy=slot.lecturers&amp;SortOrder=asc&amp;SortType=text&amp;numPerPage=50&amp;Page=1&amp;Filter="
+								>DozentIn<span class="pull-left glyphicon glyphicon-sort sort-icon"></span></a></th>
+								<th width="*"><a
+									href="https://www.db-thueringen.de/rc?SortBy=slot.title&amp;SortOrder=asc&amp;SortType=text&amp;numPerPage=50&amp;Page=1&amp;Filter="
+								>Titel<span class="pull-left glyphicon glyphicon-sort sort-icon"></span></a></th>
+								<th width="15%"><a
+									href="https://www.db-thueringen.de/rc?SortBy=slot.validTo&amp;SortOrder=asc&amp;SortType=text&amp;numPerPage=50&amp;Page=1&amp;Filter="
+								>Semester<span class="pull-left glyphicon glyphicon-sort sort-icon"></span></a></th>
+								<th width="25%"><a
+									href="https://www.db-thueringen.de/rc?SortBy=slotId&amp;SortOrder=asc&amp;SortType=text&amp;numPerPage=50&amp;Page=1&amp;Filter="
+								>Standort<span class="pull-left glyphicon glyphicon-sort sort-icon"></span></a></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="odd">
+								<td valign="top">Ackermann, Astrid</td>
+								<td valign="top"><a
+									title="&quot;Journal des Luxus und der Moden&quot; - &quot;Brigitte&quot; - &quot;Vogue&quot;: Die Modepresse von ihren Anf&auml;ngen bis zur Gegenwart"
+									href="https://www.db-thueringen.de/rc/0027.12.06.0005"
+								>"Journal des Luxus und der Moden" - "Brigitte" - "Vogue": Die Modepresse von ihren Anf&auml;ngen bis zur Gegenwart</a></td>
+								<td valign="top" class="text-ellipsis">SS&nbsp;2016</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="even">
+								<td valign="top">Adler, Ren&eacute;</td>
+								<td valign="top"><a title="Test ESA f&uuml;r WinIBW3 Script" href="https://www.db-thueringen.de/rc/3400.01.01.0073">Test ESA f&uuml;r WinIBW3
+										Script</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="UB Ilmenau / Hauptbibliothek / EG">UB Ilmenau / Hauptbibliothek / EG</td>
+							</tr>
+							<tr class="odd">
+								<td valign="top">Albrecht, Sabine</td>
+								<td valign="top"><a title="Einf&uuml;hrung in die spanische Sprachwissenschaft" href="https://www.db-thueringen.de/rc/0027.13.07.0076">Einf&uuml;hrung
+										in die spanische Sprachwissenschaft</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 3 / Romanistik">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 3 / Romanistik</td>
+							</tr>
+							<tr class="even">
+								<td valign="top">Albrecht, Sabine</td>
+								<td valign="top"><a title="Weltsprachen kontrastiv" href="https://www.db-thueringen.de/rc/0027.13.07.0118">Weltsprachen kontrastiv</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 3 / Romanistik">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 3 / Romanistik</td>
+							</tr>
+							<tr class="odd">
+								<td valign="top">Ankirchner, Stefan</td>
+								<td valign="top"><a title="Seminar Wahrscheinlichkeitstheorie" href="https://www.db-thueringen.de/rc/0027.30.01.0055">Seminar
+										Wahrscheinlichkeitstheorie</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2015/2016</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Naturwissenschaften / TB Naturwissenschaften">ThULB Jena / TB Naturwissenschaften /
+									TB Naturwissenschaften</td>
+							</tr>
+							<tr class="even">
+								<td valign="top">Artmann, Stefan</td>
+								<td valign="top"><a title="Philosophie der Strukturwissenschaften" href="https://www.db-thueringen.de/rc/0027.11.04.0024">Philosophie der
+										Strukturwissenschaften</a></td>
+								<td valign="top" class="text-ellipsis">SS&nbsp;2011</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 1 / Philosophie">ThULB Jena / TB Geisteswissenschaften
+									/ Ebene 1 / Philosophie</td>
+							</tr>
+							<tr class="odd">
+								<td valign="top">Augustin, Silke</td>
+								<td valign="top"><a title="Prozessmesstechnik" href="https://www.db-thueringen.de/rc/3400.01.01.0003">Prozessmesstechnik</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="UB Ilmenau / Hauptbibliothek / EG">UB Ilmenau / Hauptbibliothek / EG</td>
+							</tr>
+							<tr class="even">
+								<td valign="top">Bauer, Joachim</td>
+								<td valign="top"><a title="Wucherstreit" href="https://www.db-thueringen.de/rc/0027.12.02.0611">Wucherstreit</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Geschichte">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Geschichte</td>
+							</tr>
+							<tr class="odd">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="Johann Gottfried Herder (1744-1803): Ein Leben in Briefen" href="https://www.db-thueringen.de/rc/0027.12.06.0150">Johann
+										Gottfried Herder (1744-1803): Ein Leben in Briefen</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="even">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="Die Lebensreform - Entw&uuml;rfe zur Neugestaltung von Leben &amp; Kunst um 1900"
+									href="https://www.db-thueringen.de/rc/0027.12.06.0159"
+								>Die Lebensreform - Entw&uuml;rfe zur Neugestaltung von Leben &amp; Kunst um 1900</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="odd">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="Retromania - Die Faszination am Vergangenen (Master- &amp; Bachelor)"
+									href="https://www.db-thueringen.de/rc/0027.12.06.0130"
+								>Retromania - Die Faszination am Vergangenen (Master- &amp; Bachelor)</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="even">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="Kultureller Austausch zwischen England und Deutschland" href="https://www.db-thueringen.de/rc/0027.12.06.0120">Kultureller
+										Austausch zwischen England und Deutschland</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="odd">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="Visuelle Anthropologie: Methodische Einf&uuml;hrung in die volkskundliche Bildinterpretation"
+									href="https://www.db-thueringen.de/rc/0027.12.06.0081"
+								>Visuelle Anthropologie: Methodische Einf&uuml;hrung in die volkskundliche Bildinterpretation</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="even">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="Die Lebensreform - Entw&uuml;rfe zur Neugestaltung von Leben &amp; Kunst um 1900"
+									href="https://www.db-thueringen.de/rc/0027.12.06.0131"
+								>Die Lebensreform - Entw&uuml;rfe zur Neugestaltung von Leben &amp; Kunst um 1900</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="odd">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="Die Genese Europas aus kulturhistorischer Sicht (mittwochs)" href="https://www.db-thueringen.de/rc/0027.12.06.0080">Die
+										Genese Europas aus kulturhistorischer Sicht (mittwochs)</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="even">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="&raquo;Ist das nicht malerisch?&laquo; Mit K&uuml;nstlern auf Reisen."
+									href="https://www.db-thueringen.de/rc/0027.12.06.0084"
+								>&raquo;Ist das nicht malerisch?&laquo; Mit K&uuml;nstlern auf Reisen.</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="odd">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="Der reisende Kosmopolit: Harry Graf Kessler (1868-1937)." href="https://www.db-thueringen.de/rc/0027.12.06.0085">Der
+										reisende Kosmopolit: Harry Graf Kessler (1868-1937).</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="even">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="Freizeit- und Urlaubswelten: Zur Geschichte des Tourismus." href="https://www.db-thueringen.de/rc/0027.12.06.0086">Freizeit-
+										und Urlaubswelten: Zur Geschichte des Tourismus.</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="odd">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="Die Genese Europas aus kulturhistorischer Sicht (dienstags)" href="https://www.db-thueringen.de/rc/0027.12.06.0079">Die
+										Genese Europas aus kulturhistorischer Sicht (dienstags)</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+							<tr class="even">
+								<td valign="top">Baumert, Susan</td>
+								<td valign="top"><a title="Seminar: Selbstzeugnisse und kulturelles Ich" href="https://www.db-thueringen.de/rc/0027.12.06.0114">Seminar:
+										Selbstzeugnisse und kulturelles Ich</a></td>
+								<td valign="top" class="text-ellipsis">WS&nbsp;2016/2017</td>
+								<td valign="top" class="text-ellipsis" title="ThULB Jena / TB Geisteswissenschaften / Ebene 2 / Volkskunde">ThULB Jena / TB Geisteswissenschaften /
+									Ebene 2 / Volkskunde</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="panel-footer clearfix">
+					<span id="slots_info" class="hidden-xs">1 bis 50 von 348 Eintr&auml;gen</span>
+					<ul class="pagination pagination-sm pull-right no-margin" id="slots_paginate">
+						<li class="disabled"><span>&laquo;<span class="sr-only">Erster</span></span></li>
+						<li class="disabled"><span>&lsaquo;<span class="sr-only">Zur&uuml;ck</span></span></li>
+						<li class="active"><span>1</span></li>
+						<li><a tabindex="0" href="https://www.db-thueringen.de/rc?SortBy=&amp;SortOrder=&amp;SortType=text&amp;numPerPage=50&amp;Page=2&amp;Filter=">2</a></li>
+						<li><a tabindex="0" href="https://www.db-thueringen.de/rc?SortBy=&amp;SortOrder=&amp;SortType=text&amp;numPerPage=50&amp;Page=3&amp;Filter=">3</a></li>
+						<li><a tabindex="0" href="https://www.db-thueringen.de/rc?SortBy=&amp;SortOrder=&amp;SortType=text&amp;numPerPage=50&amp;Page=4&amp;Filter=">4</a></li>
+						<li><a tabindex="0" href="https://www.db-thueringen.de/rc?SortBy=&amp;SortOrder=&amp;SortType=text&amp;numPerPage=50&amp;Page=5&amp;Filter=">5</a></li>
+						<li><a id="slots_next" tabindex="0"
+							href="https://www.db-thueringen.de/rc?SortBy=&amp;SortOrder=&amp;SortType=text&amp;numPerPage=50&amp;Page=2&amp;Filter="
+						>&rsaquo;<span class="sr-only">N&auml;chster</span></a></li>
+						<li><a id="slots_last" tabindex="0"
+							href="https://www.db-thueringen.de/rc?SortBy=&amp;SortOrder=&amp;SortType=text&amp;numPerPage=50&amp;Page=7&amp;Filter="
+						>&raquo;<span class="sr-only">Letzter</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="container-overlay" class="collapse" data-toggle="collapse" data-target="#navbar,#container-overlay" aria-expanded="false" aria-controls="navbar"></div>
+
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/js/layout.min.js"></script>
+	<script src="assets/js/anchorScrollFix.min.js"></script>
+	<script src="assets/js/waves.min.js"></script>
+</body>
+</html>

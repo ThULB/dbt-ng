@@ -1,0 +1,148 @@
+// GLOBAL OVERWRITES
+//--------------------------------------------------
+
+// Bootsrap - carousel indicators
+.carousel-indicators {
+  li {
+    .border-top-radius (0);
+    .border-bottom-radius (0);
+    .skew (@x: -20deg , @y: 0);
+  }
+}
+
+// Bootstrap alert
+.alert {
+  border: 0;
+  border-left: 3px solid #EEEEEE;
+  border-radius: 2px;
+  margin: 20px 0;
+  padding: 20px;
+  h4 {
+    margin-bottom: 5px;
+    margin-top: 0;
+  }
+}
+
+.alert-info {
+  background-color: #F4F8FA;
+  border-color: #5BC0DE;
+  h4 {
+    color: #5BC0DE;
+  }
+}
+
+.alert-warning {
+  background-color: #FCF8F2;
+  border-color: #F0AD4E;
+  h4 {
+    color: #F0AD4E;
+  }
+}
+
+.alert-danger {
+  background-color: #FDF7F7;
+  border-color: #D9534F;
+  h4 {
+    color: #D9534F;
+  }
+}
+
+.alert-success {
+  background-color: #dff0d8;
+  border-color: #298703;
+  h4 {
+    color: #298703;
+  }
+}
+
+.alert + .alert {
+  margin-top: -5px;
+}
+
+// Bootstrap - Panel
+.panel-default {
+  border: 1px solid @panel-default-border;
+  border-radius: 2px;
+  .box-shadow (~"0 1px 1px rgba(0, 0, 0, 0.05)");
+  .panel-heading {
+    background-color: @panel-default-heading-bg;
+    .border-top-radius (2px);
+    .box-shadow (~"0 -2px 0 rgba(0, 0, 0, 0.05) inset");
+    border-bottom: 1px solid @panel-default-border;
+    color: @text-color;
+  }
+
+  .panel-footer {
+    background-color: @panel-footer-bg;
+    .border-bottom-radius (2px);
+    border-top: 1px solid @panel-default-border;
+  }
+}
+
+// Bootsrap - Panels with Tabs
+.panel {
+  .panel-heading.with-tabs {
+    position: relative;
+    > .panel-title {
+      display: block;
+      line-height: ceil((@font-size-base * 1.125) * 2 - 1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    > .nav-tabs {
+      position: absolute;
+      right: 0;
+      border-bottom: 0 none;
+      bottom: 0;
+      display: block;
+      > li {
+        a {
+          .border-top-radius (0);
+        }
+      }
+    }
+  }
+}
+
+// Bootstrap - Form elements
+.form-control {
+  .box-shadow (~"none");
+  .transition (~"border-color 0.15s ease-in-out");
+  &:focus {
+    .box-shadow (~"none !important");
+  }
+}
+
+.form-horizontal .has-feedback select + .form-control-feedback {
+  right: 30px;
+}
+
+.row-condensed .has-feedback select + .form-control-feedback {
+  right: 20px;
+}
+
+.form-control-feedback {
+  pointer-events: auto;
+}
+
+// Bootstrap - Buttons
+.btn {
+  .box-shadow (~"0 -2px 0 rgba(0, 0, 0, 0.05) inset");
+  border-radius: 2px;
+  -webkit-tap-highlight-color: fadeout(@brand-primary, 50%);
+  &.waves-effect {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  }
+}
+
+// Bootstrap - Pagination
+.pagination {
+  > li {
+    > a , > span {
+      .box-shadow (~"0 -2px 0 rgba(0, 0, 0, 0.05) inset");
+    }
+  }
+}
+

@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="de" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digitale Bibliothek Thüringen</title>
+<link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/images/favicon-apple-touch-57.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/images/favicon-apple-touch-114.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/images/favicon-apple-touch-72.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/images/favicon-apple-touch-144.png">
+<link rel="icon" sizes="128x128" href="assets/images/favicon.icns">
+<link rel="icon" type="image/vnd.microsoft.icon" sizes="16x16 32x32 48x48 64x64 128x128" href="assets/images/favicon.ico">
+<link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
+
+<link href="assets/css/layout.min.css" rel="stylesheet">
+<script type="text/javascript">
+	document.documentElement.className = document.documentElement.className.replace("no-js", "");
+	var webApplicationBaseURL = "https://www.db-thueringen.de/";
+</script>
+</head>
+<body>
+	<div id="loader-wrapper">
+		<div id="loader"></div>
+		<div class="loader-section"></div>
+	</div>
+	<nav class="navbar navbar-default navbar-dbt navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed plus-sign" data-toggle="collapse" data-target="#navbar,#container-overlay" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html"><span class="img-placeholder"></span></a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="dropdown"><a href="#rc" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Semesterapparate
+							<span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Aktuelle Liste</a></li>
+							<li><a href="#">Einrichten</a></li>
+						</ul></li>
+					<li><a href="#publish" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Publizieren <span
+							class="caret"
+						></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Dokumente einreichen</a></li>
+							<li><a href="#">Leitlinien</a></li>
+							<li><a href="#">Vertragsbedingungen</a></li>
+						</ul></li>
+					<li class="visible-xs"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blättern
+							<span class="caret"></span>
+					</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Einrichtungen</a></li>
+							<li><a href="#">Dokumententype</a></li>
+							<li><a href="#">Sachgruppen</a></li>
+							<li><a href="#">Personen</a></li>
+						</ul></li>
+					<li class="visible-xs"><a href="#">FAQ</a></li>
+					<li class="visible-xs"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Merkliste
+							<sup>0</sup> <span class="caret"></span>
+					</a>
+						<ul role="menu" class="dropdown-menu">
+							<li class="disabled"><a>Auf ihrer Merkliste befinden sich keine Dokumente.</a></li>
+							<li class="divider"></li>
+							<li><a href="https://www.db-thueringen.de/servlets/MCRBasketServlet?type=objects&amp;action=show">Merkliste &ouml;ffnen</a></li>
+						</ul></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="hidden-xs"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i
+							class="fa fa-bookmark" aria-hidden="true"
+						></i> <sup>0</sup> <span class="caret"></span></a>
+						<ul role="menu" class="dropdown-menu">
+							<li class="disabled"><a>Auf ihrer Merkliste befinden sich keine Dokumente.</a></li>
+							<li class="divider"></li>
+							<li><a href="https://www.db-thueringen.de/servlets/MCRBasketServlet?type=objects&amp;action=show">Merkliste &ouml;ffnen</a></li>
+						</ul></li>
+					<li class="hidden-xs"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i
+							class="fa fa-sitemap" aria-hidden="true"
+						></i> <span class="visible-lg-inline">Blättern</span> <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Einrichtungen</a></li>
+							<li><a href="#">Dokumententype</a></li>
+							<li><a href="#">Sachgruppen</a></li>
+							<li><a href="#">Personen</a></li>
+						</ul></li>
+					<li class="hidden-xs"><a href="#"><i class="fa fa-question-circle" aria-hidden="true"></i> <span class="visible-xs-inline visible-lg-inline">FAQ</span>
+					</a></li>
+					<li><a href="#"><i class="fa fa-power-off" aria-hidden="true"></i> <span class="visible-xs-inline visible-lg-inline">Anmelden</span></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="searchbar">
+		<div class="container">
+			<form class="navbar-form navbar-right" role="search">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Suchen"> <span class="input-group-btn">
+						<button type="submit" class="btn btn-default">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div id="container-main">
+		<a id="top"></a>
+		<div class="container">
+			<div class="col-md-8">
+				<div class="detail_block text-center">
+					<br>
+					<div xmlns:encoder="xalan://java.net.URLEncoder" id="search_options">
+						<div class="row " id="solr-browse">
+							<div class="col-xs-12 col-md-2 text-center col-md-offset-5">
+								<a title="zur&uuml;ck zur Trefferliste" href="searchresult.html#hit_15"><span class="glyphicon glyphicon-chevron-up"></span></a>&nbsp;15 von 19529
+							</div>
+							<div class="col-xs-12 col-md-5 text-right">
+								<a data-pagination=".caption:mods.title.main"
+									href="https://www.db-thueringen.de/servlets/solr/find?q=dbt_mods_00031412&amp;fl=id&amp;origrows=20&amp;XSL.Style=browse&amp;version=4.5&amp;start=1&amp;rows=1"
+									class="next" tabindex="0"
+								><span class="glyphicon glyphicon-chevron-right icon"></span><span class="caption">n&auml;chster Treffer</span></a>
+							</div>
+						</div>
+						<script type="text/javascript">
+							document.addEventListener("load", function() {
+								var replaceUrlParam = function(url, paramName, paramValue) {
+									var pattern = new RegExp('\\b(' + paramName + '=).*?(&|$)')
+									if (url.search(pattern) >= 0) {
+										return url.replace(pattern, '$1' + paramValue + '$2');
+									}
+									return url + (url.indexOf('?') > 0 ? '&' : '?') + paramName + '=' + paramValue
+								}
+
+								$("*[data-pagination]").each(function() {
+									var $this = $(this);
+									var sel = /([^\:]*)\:(.*)/.exec($(this).data("pagination")).slice(1);
+
+									if (sel && sel.length > 1) {
+										var url = replaceUrlParam(replaceUrlParam($(this).attr("href"), "XSL.Style", "xml"), "fl", sel[1]);
+										$.ajax(url).done(function(data) {
+											var $xml = $(data);
+											var title = $xml.find("*[name='" + sel[1] + "']").text();
+											if (title) {
+												$this.attr("title", title);
+												$(sel[0], $this).text(title);
+											}
+										});
+									}
+								});
+							}, false);
+						</script>
+					</div>
+				</div>
+			</div>
+			<div itemtype="http://schema.org/ScholarlyArticle" itemscope="itemscope" class="row detail_row">
+				<div class="col-xs-12" id="head_col">
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-sm-push-8 col-md-4 col-md-push-8" id="aux_col_actions">
+							<div class="pull-right">
+								<div class="btn-group btn-group-justified">
+									<a
+										href="https://www.db-thueringen.de/servlets/MCRBasketServlet?type=objects&amp;action=add&amp;redirect=https%3A%2F%2Fwww.db-thueringen.de%2Freceive%2Fdbt_mods_00031398&amp;id=dbt_mods_00031398&amp;uri=mcrobject:dbt_mods_00031398"
+										class="btn btn-primary btn-sm"
+									><i class="fa fa-plus"></i> auf die Merkliste</a>
+									<div class="btn-group">
+										<a data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle" href="#"><i class="fa fa-cog"></i> Aktionen<span class="caret"></span></a>
+										<ul class="dropdown-menu dropdown-menu-right">
+											<li><a href="https://www.db-thueringen.de/servlets/MCRLoginServlet?action=login">Um das Dokument zu bearbeiten melden sie sich bitte an.</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-8 col-sm-pull-4 col-md-8 col-md-pull-4">
+							<div id="badges">
+								<a href="https://www.db-thueringen.de/servlets/solr/find?q=&amp;fq=category.top:mir_genres\:dissertation&amp;owner=createdby:guest"
+									class="mods_genre label label-info"
+								>Dissertation</a>
+								<time title="Publication date" data-toggle="tooltip" datetime="2017-01-25" itemprop="datePublished">
+									<span class="date_published label label-primary">Mi, 25. Jan. 2017</span>
+								</time>
+								<a href="https://www.db-thueringen.de/servlets/solr/find?q=&amp;fq=link:*rights_reserved&amp;owner=createdby:guest"
+									class="access_condition label label-success"
+								>Alle Rechte vorbehalten</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-8" id="main_col">
+					<div id="headline">
+						<h1 itemprop="name">Forward and inverse calculation methods for Lorentz force evaluation applied to laminated composites</h1>
+					</div>
+					<div class="detail_block">
+						<p id="authors_short">
+							<a xmlns:mods="http://www.loc.gov/mods/v3"
+								href="https://www.db-thueringen.de/servlets/solr/mods_nameIdentifier?q=mods.nameIdentifier:gnd\:1124077863&amp;owner=createdby:guest" itemprop="creator"
+							><span itemtype="http://schema.org/Person" itemscope="itemscope"><span itemprop="name">Mengelkamp, Judith</span>&nbsp;<a title="Link zu GND"
+									href="http://d-nb.info/gnd/1124077863"
+								><sup>GND</sup></a></span></a>
+						</p>
+						<div id="mir-abstract-tabs">
+							<ul role="tablist" class="nav nav-tabs">
+								<li class="active pull-right"><a data-toggle="tab" role="tab" href="#tab1">Englisch</a></li>
+								<li class="pull-right"><a data-toggle="tab" role="tab" href="#tab2">Deutsch</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="tab1" role="tabpanel" class="tab-pane ellipsis ellipsis-text active">
+									<p>
+										<span itemprop="description">The classiﬁcation of material deﬁciencies is a key feature in quality assurance. In this framework, laminated
+											composite materials are of special interest, because they increasingly replace monolithic materials. The Lorentz force evaluation (LFE) is an
+											evaluation technique to reconstruct the geometry of ﬂaws in electrically conducting composites using inverse calculations. These calculations are
+											based on perturbations that occur in the measured Lorentz force signals and are caused by the ﬂaws. The force signals are obtained using the
+											nondestructive testing method Lorentz force eddy current testing (LET). In this electromagnetic technique, a permanent magnet and the material under
+											investigation move relative to each other. As a consequence eddy currents are induced in the conductor. The eddy currents in turn interact with the
+											magnetic ﬁeld and cause a Lorentz force. Inverse calculations in LFE require a forward solution of the measured force signals, which incorporates a
+											model of the LET setup. The objective of this thesis is the development and evaluation of forward and inverse calculation methods for LFE. The
+											proposed methods are assessed using Lorentz force data obtained from laminated composites. In order to model the permanent magnet in the forward
+											solution for LFE the magnetic dipoles model (MDM) is introduced. In the MDM, a permanent magnet is represented by an assembly of magnetic dipoles. An
+											optimization procedure is used to determine optimal dipole positions. Contrary to analytic models the MDM can be applied to permanent magnets of
+											arbitrary geometry, and forward calculations can be performed with analytic mathematics. For defect reconstruction three inverse methods are
+											introduced in this thesis. In the ﬁrst method, conductivity reconstructions are performed using a stochastic optimization algorithm, the Differential
+											Evolution (DE). Prior to inverse calculations, the intrinsic control parameters of the DE are determined based on parameter studies. As the second
+											inverse strategy, current density reconstructions (CDR) calculated with minimum norm estimates (MNE) are employed. This approach is based on
+											interpreting a defect in the forward solution for LFE as a distributed current source. In the third method, a goal function scan is performed to
+											reconstruct the geometry parameters of the defect. All three inverse methods are suitable for reconstructing defects, whereas the ﬁrst and third
+											method provide more accurate results than the second. Further, measured Lorentz force signals obtained from glass laminate aluminum reinforced epoxy
+											(GLARE) composite are investigated. GLARE is widely used in the aircraft industry. The ﬂaw detectability of LET and LFE for GLARE is proved.</span><a
+											title="read less" class="readless hidden" href="#"
+										>&laquo; einklappen</a><a title="read more" class="readmore hidden" href="#">weiterlesen &raquo;</a>
+									</p>
+								</div>
+								<div id="tab2" role="tabpanel" class="tab-pane ellipsis ellipsis-text">
+									<p>
+										<span itemprop="description">Die Klassiﬁzierung von Materialdefekten ist ein wesentliches Merkmal der Qualit&auml;tssicherung. Dabei sind
+											geschichtete Verbundwerkstoffe von besonderem Interesse, weil sie zunehmend monolithische Werkstoffe ersetzen. Lorentz force evaluation (LFE) ist
+											eine Methode zur Rekonstruktion der Geometrie von Fehlstellen in elektrisch leitf&auml;higen Verbundwerkstoffen mittels inverser Berechnungen. Die
+											Grundlage der inversen Berechnungen sind St&ouml;rungen, die aufgrund der Fehlstellen in den gemessenen Lorentzkraft-Signalen auftreten. Die Signale
+											werden mittels der zerst&ouml;rungsfreien Pr&uuml;fmethode, der Lorentzkraft-Wirbelstrompr&uuml;fung (LET) gemessen. Bei diesem elektromagnetischen
+											Testverfahren bewegen sich ein Permanentmagnet und das zu untersuchende Material relativ zu einander. Dadurch werden Wirbelstr&ouml;me im Material
+											induziert. Die Interaktion dieser mit dem Magnetfeld hat eine Lorentzkraft zur Folge. F&uuml;r inverse Verfahren ist eine Vorw&auml;rtsl&ouml;sung
+											zur Berechnung der Lorentzkraft notwendig, der ein Modell des LET-Aufbaus zugrunde liegt. Das Ziel der vorliegenden Dissertation ist die Entwicklung
+											und Evaluierung von Vor-w&auml;rtsl&ouml;sungen und inversen Berechnungsmethoden f&uuml;r LFE. Zur Bewertung der Methoden werden Lorentzkraft Signale
+											verwendet, die aus Messungen von geschichteten Verbundmaterialien stammen. Zur Modellierung des Permanentmagneten in der Vorw&auml;rtsl&ouml;sung
+											f&uuml;r LFE wird das Magnetische-Dipole-Modell (MDM) entwickelt. In diesem Modell wird ein Permanentmagnet durch eine Verteilung magnetischer Dipole
+											repr&auml;sentiert. Die Positionen der magnetischen Dipole werden optimiert. Im Vergleich zu analytischen Modellen kann das MDM zur Modellierung
+											beliebig geformter Permanentmagneten verwendet werden. Die Lorentzkraft-Signale k&ouml;nnen analytisch berechnet werden. In dieser Dissertation
+											werden drei inverse Berechnungsmethoden f&uuml;r LFE erarbeitet. In der ersten Methode wird ein stochastischer Optimierungsalgorithmus, der
+											Differential Evolution, zur Rekonstruktion von Leitf&auml;higkeiten im Material verwendet. Die intrinsischen Kontrollparameter des Diﬀerential
+											Evolution (DE) werden anhand von Parameterstudien festgelegt. Als zweite inverse Methode werden Stromdichterekonstruktionen mittels
+											Minimum-Norm-Sch&auml;tzungen durchgef&uuml;hrt. Grundlegend f&uuml;r diesen Ansatz ist die Interpretation eines Defektes in der
+											Vorw&auml;rtsl&ouml;sung als verteilte Stromquelle. Als dritte inverse Methode wird eine Abtastung der Zielfunktion zur Rekonstruktion der
+											Defektparameter vorgenommen. Alle inversen Verfahren sind zur Defektrekonstruktion geeignet, wobei sich die Ergebnisse der ersten und dritten Methode
+											genauer darstellen als die der zweiten. Des Weiteren werden Messdaten eines aus glasfaserverst&auml;rktem Aluminium (GLARE) bestehenden
+											Pr&uuml;fk&ouml;rpers ausgewertet. GLARE wird insbesondere im Flugzeugbau eingesetzt. Es wird gezeigt, dass mit LET und LFE Materialfehler in GLARE
+											nachgewiesen werden k&ouml;nnen.</span><a title="read less" class="readless hidden" href="#">&laquo; einklappen</a><a title="read more"
+											class="readmore hidden" href="#"
+										>weiterlesen &raquo;</a>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<script xmlns:embargo="xalan://org.mycore.mods.MCRMODSEmbargoUtils" src="https://www.db-thueringen.de/modules/iview2/js/iview-client-base.js"
+						type="text/javascript"
+					></script>
+					<script src="https://www.db-thueringen.de/modules/iview2/js/iview-client-frame.js" type="text/javascript"></script>
+					<link href="https://www.db-thueringen.de/modules/iview2/css/default.css" type="text/css" rel="stylesheet">
+					<script src="https://www.db-thueringen.de/modules/iview2/js/iview-client-pdf.js" type="text/javascript"></script>
+					<script src="https://www.db-thueringen.de/modules/iview2/js/lib/pdf.js" type="text/javascript"></script>
+					<div class="row mir-preview">
+						<div class="col-md-12">
+							<h3 class="mir-viewer">Vorschau</h3>
+							<script>
+								window.addEventListener("load", function() {
+
+									new mycore.viewer.MyCoReViewer(jQuery('#viewer_dbt_derivate_00037537'), {
+										"derivateURL" : "https://www.db-thueringen.de/servlets/MCRFileNodeServlet/dbt_derivate_00037537",
+										"i18nURL" : "https://www.db-thueringen.de/rsc/locale/translate/{lang}/component.mets.*,component.iview2.*",
+										"derivate" : "dbt_derivate_00037537",
+										"filePath" : "ilm1-2016000702.pdf",
+										"mobile" : false,
+										"pdfProviderURL" : "https://www.db-thueringen.de/servlets/MCRFileNodeServlet/{derivate}/{filePath}?view",
+										"doctype" : "pdf",
+										"webApplicationBaseURL" : "https://www.db-thueringen.de/",
+										"pdfWorkerURL" : "https://www.db-thueringen.de/modules/iview2/js/lib/pdf.worker.js",
+										"canvas.startup.fitWidth" : true,
+										"canvas.overview.enabled" : false,
+										"lang" : "de",
+										chapter : {
+											enabled : true,
+											showOnStart : false
+										},
+										permalink : {
+											enabled : true,
+											updateHistory : false
+										}
+									});
+								});
+							</script>
+							<div class="viewer pdf" id="viewer_dbt_derivate_00037537"></div>
+						</div>
+					</div>
+					<div class="detail_block">
+						<div id="record_detail" class="">
+							<div class="file_box" id="filesdbt_derivate_00037537">
+								<div class="row header">
+									<div class="col-xs-12">
+										<div class="headline">
+											<div class="title">
+												<a aria-controls="collapsedbt_derivate_00037537" aria-expanded="false" href="#collapsedbt_derivate_00037537" data-toggle="collapse"
+													class="btn btn-primary btn-sm file_toggle"
+												><span>Dateien</span><span class="caret"></span></a>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+									</div>
+								</div>
+								<div data-urn="false" data-deletedb="false" data-writedb="false" data-mainDoc="ilm1-2016000702.pdf" data-deriID="dbt_derivate_00037537"
+									data-objID="dbt_mods_00031398" class="file_box_files"
+								>
+									<div class="filelist-loading">
+										<div class="bounce1"></div>
+										<div class="bounce2"></div>
+										<div class="bounce3"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="mir_metadata">
+						<h3>Einordnung</h3>
+						<dl>
+							<dt>Akademische Betreuung:</dt>
+							<dd>
+								<a href="https://www.db-thueringen.de/servlets/solr/mods_nameIdentifier?q=mods.nameIdentifier:gnd\:143795244&amp;owner=createdby:guest"
+									itemprop="creator"
+								><span itemtype="http://schema.org/Person" itemscope="itemscope"><span itemprop="name">Haueisen, Jens</span>&nbsp;<a title="Link zu GND"
+										href="http://d-nb.info/gnd/143795244"
+									><sup>GND</sup></a></span></a>
+							</dd>
+							<dt>Gutachter(in), Rezensent(in):</dt>
+							<dd>
+								<a href="https://www.db-thueringen.de/servlets/solr/mods_nameIdentifier?q=+mods.name:%22Crevecoeur, Guillaume%22&amp;owner=createdby:guest"
+									itemprop="creator"
+								><span itemtype="http://schema.org/Person" itemscope="itemscope"><span itemprop="name">Crevecoeur, Guillaume</span></span></a>; <a
+									href="https://www.db-thueringen.de/servlets/solr/mods_nameIdentifier?q=mods.nameIdentifier:gnd\:1100715819&amp;owner=createdby:guest"
+									itemprop="creator"
+								><span itemtype="http://schema.org/Person" itemscope="itemscope"><span itemprop="name">Brauer, Hartmut</span>&nbsp;<a title="Link zu GND"
+										href="http://d-nb.info/gnd/1100715819"
+									><sup>GND</sup></a></span></a>
+							</dd>
+							<dt>Datum der Einreichung:</dt>
+							<dd>11.04.2016</dd>
+							<dt>Datum der Annahme der Promotion / des Abschlusses:</dt>
+							<dd>30.11.2016</dd>
+							<dt>Datum der Ver&ouml;ffentlichung:</dt>
+							<dd>
+								<meta property="datePublished" content="2017-01-25">
+								25.01.2017
+							</dd>
+							<dt>PPN:</dt>
+							<dd>
+								<a href="http://gsoapi.gbv.de/DB=2.1/PPNSET?PPN=877818770">877818770</a>
+							</dd>
+							<dt>URN:</dt>
+							<dd>
+								<a href="http://nbn-resolving.de/urn:nbn:de:gbv:ilm1-2016000702">urn:nbn:de:gbv:ilm1-2016000702</a>
+							</dd>
+							<dt>Sprache:</dt>
+							<dd>
+								Englisch
+								<meta property="inLanguage" content="en">
+							</dd>
+							<dt>
+								Ressourcentyp
+								<text>:</text>
+							</dt>
+							<dd>Text</dd>
+							<dt>Umfang:</dt>
+							<dd>xi, 117 Seiten</dd>
+							<dt>Erscheinungsort:</dt>
+							<dd>Ilmenau</dd>
+							<dt>Verlag:</dt>
+							<dd>Universit&auml;tsbibliothek</dd>
+							<dt>Schlagw&ouml;rter:</dt>
+							<dd>Lorentz-Kraft; Wirbelstromverfahren; Zerst&ouml;rungsfreie Werkstoffpr&uuml;fung; Evolution&auml;rer Algorithmus; Inverse Methode;
+								Verbundwerkstoff</dd>
+							<dt>DDC-Sachgruppe der DNB:</dt>
+							<dd>620 Ingenieurwissenschaften und Maschinenbau</dd>
+							<dt>Einrichtung:</dt>
+							<dd>Technische Universit&auml;t Ilmenau, Fakult&auml;t f&uuml;r Informatik und Automatisierung</dd>
+						</dl>
+					</div>
+				</div>
+				<div class="col-xs-12 col-sm-4" id="aux_col">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Zitieren</h3>
+						</div>
+						<div class="panel-body">
+							<div data-theme="white" class="shariff"></div>
+							<div id="citation-style">
+								<span><strong>Zitierform:</strong></span>
+								<p id="citation-text">
+									Mengelkamp
+									<tex>, </tex>
+									Judith: Forward and inverse calculation methods for Lorentz force evaluation applied to laminated composites. gw&nbsp;2017.
+									Universit&auml;tsbibliothek.
+								</p>
+							</div>
+							<p id="cite_link_box">
+								<a class="label label-info" href="#" id="copy_cite_link">Zitier-Link kopieren</a>
+							</p>
+							<div aria-hidden="true" aria-labelledby="modal frame" role="dialog" tabindex="-1" id="identifierModal" class="modal fade">
+								<div style="width: 930px" class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button aria-label="Close" data-dismiss="modal" class="close modalFrame-cancel" type="button">
+												<i aria-hidden="true" class="fa fa-times"></i>
+											</button>
+											<h4 id="modalFrame-title" class="modal-title">Zitier-Link kopieren</h4>
+										</div>
+										<div style="max-height: 560px; overflow: auto" class="modal-body" id="modalFrame-body">
+											<div class="mir_identifier">
+												<p>URN (urn:nbn:de:gbv:ilm1-2016000702)</p>
+												<div class="mir_copy_wrapper">
+													<span data-org-title="Copy Identifier" title="Copy Identifier" aria-hidden="true" data-placement="left" data-toggle="tooltip"
+														class="glyphicon glyphicon-copy mir_copy_identifier"
+													></span>
+												</div>
+												<pre>
+<a href="http://nbn-resolving.org/urn:nbn:de:gbv:ilm1-2016000702">http://nbn-resolving.org/urn:nbn:de:gbv:ilm1-2016000702</a>
+</pre>
+												<input value="http://nbn-resolving.org/urn:nbn:de:gbv:ilm1-2016000702" class="hidden mir_identifier_hidden_input" type="text">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default" id="mir_access_rights_panel">
+						<div class="panel-heading">
+							<h3 class="panel-title">Rechte</h3>
+						</div>
+						<div class="panel-body">
+							<p>
+								<strong>Nutzung und Vervielf&auml;ltigung:</strong> <br>Alle Rechte vorbehalten
+							</p>
+						</div>
+					</div>
+					<div class="panel panel-default" id="mir_export_panel">
+						<div class="panel-heading">
+							<h3 class="panel-title">Export</h3>
+						</div>
+						<div class="panel-body">
+							<a href="https://www.db-thueringen.de/receive/dbt_mods_00031398?XSL.Transformer=bibtex">BibTeX</a><span>, </span><a
+								href="https://www.db-thueringen.de/receive/dbt_mods_00031398?XSL.Transformer=mods"
+							>MODS</a><span>, </span><a href="https://www.db-thueringen.de/receive/dbt_mods_00031398?XSL.Transformer=ris">RIS</a><span>, </span><a
+								href="https://www.db-thueringen.de/receive/dbt_mods_00031398?XSL.Transformer=isi"
+							>ISI</a><span>, </span><a href="https://www.db-thueringen.de/receive/dbt_mods_00031398?XSL.Transformer=pica3">PICA</a><span>, </span><a
+								href="https://www.db-thueringen.de/receive/dbt_mods_00031398?XSL.Transformer=mods2csv"
+							>CSV</a><span>, </span><a href="https://www.db-thueringen.de/receive/dbt_mods_00031398?XSL.Transformer=mods2dc">DC</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="container-overlay" class="collapse" data-toggle="collapse" data-target="#navbar,#container-overlay" aria-expanded="false" aria-controls="navbar"></div>
+
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/js/layout.min.js"></script>
+	<script src="assets/js/anchorScrollFix.min.js"></script>
+	<script src="assets/js/waves.min.js"></script>
+	<script src="https://www.db-thueringen.de/assets/jquery/plugins/shariff/shariff.min.js"></script>
+	<script src="https://www.db-thueringen.de/assets/moment/moment.js"></script>
+	<script src="https://www.db-thueringen.de/assets/handlebars/handlebars.min.js"></script>
+	<script src="https://www.db-thueringen.de/js/mir/derivate-fileList.js"></script>
+	<link href="https://www.db-thueringen.de/rsc/stat/dbt_mods_00031398.css" rel="stylesheet">
+</body>
+</html>

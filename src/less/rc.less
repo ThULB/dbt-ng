@@ -1,0 +1,257 @@
+
+#rcSlots_wrapper {
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+#slot-head {
+  margin-bottom: 10px;
+  h1 {
+    border-bottom: 1px solid #eee;
+    margin: 20px 0 5px;
+    padding-bottom: 9px;
+    .hyphens ();
+  }
+
+  .info {
+    font-size: 12px;
+  }
+}
+
+#slot-body {
+  .slot-toc {
+    margin-bottom: 30px;
+  }
+
+  .slot-section {
+    margin-bottom: 10px;
+    h2 {
+      border-bottom: 1px solid #eee;
+      .hyphens ();
+    }
+
+    .new-entry-actions {
+      margin: 10px 0;
+    }
+
+    .entry-buttons {
+      position: relative;
+      > .btn-group {
+        cursor: pointer;
+        display: block;
+        font-size: 12px;
+        padding: 5px 8px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 10;
+        @media (min-width: 768px) {
+          opacity: 0.25;
+        }
+
+        > a {
+          color: @input-color;
+          > span {
+            padding: 3px;
+          }
+        }
+      }
+    }
+
+    .entry-infoline {
+      font-size: 0.8em;
+    }
+
+    .entry-text[format="preformatted"] {
+      .entry-buttons > .btn-group {
+        background-color: #fff;
+        border: 1px solid #e1e1e8;
+        border-radius: 0 4px;
+      }
+    }
+
+    .entry-webLink , .entry-text , .entry-headline , .entry-opcrecord , .entry-mcrobject , .entry-file {
+      margin-bottom: 10px;
+      .entry-buttons > .btn-group {
+        border: 1px solid transparent;
+        border-radius: 4px;
+      }
+
+      &:hover .entry-buttons > .btn-group {
+        @media (min-width: 768px) {
+          background-color: #fff;
+          border: 1px solid #e1e1e8;
+          opacity: 0.9;
+        }
+      }
+    }
+
+    .entry-opcrecord , .entry-file {
+      margin: 5px 0;
+      > h4 {
+        font-size: 15px;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      > p {
+        font-size: 13px;
+        margin: 0;
+      }
+
+      > .comment {
+        font-style: italic;
+        & + .label {
+          margin-left: 10px;
+        }
+      }
+    }
+
+    .entry-mcrobject {
+      margin: 5px 0;
+      .hit_download_box , .hit_tnd_container , .hit_source , .hit_abstract , .hit_pub_name {
+        display: none;
+      }
+
+      .hit_title , .hit_author {
+        padding-left: 0;
+      }
+
+      > h3 , .hit_title {
+        font-size: 15px;
+        margin: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .hit_author span[itemprop="name"]::before {
+        content: "/ ";
+      }
+
+      > .comment {
+        font-style: italic;
+      }
+    }
+
+    .entry-placeholder {
+      position: relative;
+      border: 1px dashed #ccc;
+      background-color: #fafafa;
+      margin: 5px 0;
+    }
+  }
+
+  .dragged {
+    position: absolute;
+    opacity: 0.5;
+    z-index: 2000;
+  }
+}
+
+// XEditor form
+.form-group > .entry-opcrecord {
+  margin: 5px 0;
+  > h4 {
+    font-size: 15px;
+    margin: 0;
+  }
+
+  > p {
+    font-size: 13px;
+  }
+}
+
+#validTo > option.not-setable {
+  color: @brand-danger;
+}
+
+// Drag and Drop for RC entries
+body.dragging , body.dragging * {
+  cursor: move ! important;
+}
+
+// Gradients
+//-------------------------
+.status-gradient (@startFrom , @startTo , @endFrom , @endTo , @ownerTransfer: false) {
+  background: transparent;
+  background: -moz-linear-gradient(left, @startFrom 0%, @startTo 5%, @endFrom 6%, fade(@endTo, 0%) 10%);
+  background: -webkit-linear-gradient(left, @startFrom 0%, @startTo 5%, @endFrom 6%, fade(@endTo, 0%) 10%);
+  background: linear-gradient(to right, @startFrom 0%, @startTo 5%, @endFrom 6%, fade(@endTo, 0%) 10%);
+  & when (@ownerTransfer=true) {
+    background: -moz-linear-gradient(left, @startFrom 0%, @startTo 5%, @endFrom 6%, @endTo 10%, #000 11%, rgba(255, 255, 255, 0) 14%);
+    background: -webkit-linear-gradient(left, @startFrom 0%, @startTo 5%, @endFrom 6%, @endTo 10%, #000 11%, rgba(255, 255, 255, 0) 14%);
+    background: linear-gradient(to right, @startFrom 0%, @startTo 5%, @endFrom 6%, @endTo 10%, #000 11%, rgba(255, 255, 255, 0) 14%);
+  }
+}
+
+#slots {
+  .slot-active > td:first-child {
+    .status-gradient (#bfd255 , #8eb92a , #72aa00 , #9ecb2d);
+  }
+
+  .slot-archived > td:first-child {
+    .status-gradient (#fceabb , #fccd4d , #f8b500 , #fbdf93);
+  }
+
+  .slot-free > td:first-child {
+    .status-gradient (#f85032 , #f16f5c , #f6290c , #e73827);
+  }
+
+  .slot-reserved > td:first-child {
+    .status-gradient (#e2e2e2 , #dbdbdb , #d1d1d1 , #fefefe);
+  }
+
+  .slot-active-ownerTransfer > td:first-child {
+    .status-gradient (#bfd255 , #8eb92a , #72aa00 , #9ecb2d , true);
+  }
+
+  .slot-archived-ownerTransfer > td:first-child {
+    .status-gradient (#fceabb , #fccd4d , #f8b500 , #fbdf93 , true);
+  }
+
+  .slot-free-ownerTransfer > td:first-child {
+    .status-gradient (#f85032 , #f16f5c , #f6290c , #e73827 , true);
+  }
+
+  .slot-reserved-ownerTransfer > td:first-child {
+    .status-gradient (#e2e2e2 , #dbdbdb , #d1d1d1 , #fefefe , true);
+  }
+
+  .slot-pending-active > td:first-child {
+    .status-gradient (#ebf1f6 , #abd3ee , #72aa00 , #9ecb2d);
+  }
+
+  .slot-pending-archived > td:first-child {
+    .status-gradient (#ebf1f6 , #abd3ee , #f8b500 , #fbdf93);
+  }
+
+  .slot-pending-free > td:first-child {
+    .status-gradient (#ebf1f6 , #abd3ee , #f6290c , #e73827);
+  }
+
+  .slot-pending-reserved > td:first-child {
+    .status-gradient (#ebf1f6 , #abd3ee , #d1d1d1 , #fefefe);
+  }
+
+  .slot-pending-validating > td:first-child {
+    .status-gradient (#ebf1f6 , #abd3ee , #89c3eb , #d5ebfb);
+  }
+}
+
+#mail-dialog {
+  .mail-content .tab-pane {
+    padding: 0;
+    border-top: 1px solid #c0c0c0;
+    font-size: 90%;
+    pre {
+      background: none;
+      border: 0;
+    }
+  }
+}
+
