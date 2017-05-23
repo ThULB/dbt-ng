@@ -29,7 +29,7 @@
         "grunt-contrib-less": "latest",
         "grunt-contrib-watch": "latest",
         "grunt-connect-proxy": "0.1.10",
-        "grunt-google-fonts": "0.5.0",
+        "grunt-google-fonts": "latest",
         "grunt-responsive-images": "latest",
         "grunt-newer": "latest",
         "serve-static": "latest",
