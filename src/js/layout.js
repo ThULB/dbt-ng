@@ -1,10 +1,11 @@
 /**
  * Set global variables
  */
-var webApplicationBaseURL = document.location.protocol + "//" + document.location.host + document.location.pathname.substring(1, document.location.pathname.lastIndexOf("/")) + "dbt/";
+var virtualPath = document.location.pathname.substring(0, document.location.pathname.lastIndexOf("/"));
+var webApplicationBaseURL = document.location.protocol + "//" + document.location.host + virtualPath + "/dbt/";
 var host2proxy = "https?://(www.db-thueringen.de|mcrsrv4.thulb.uni-jena.de)/";
-var proxyHost = document.location.protocol + "//" + document.location.host+ document.location.pathname.substring(1, document.location.pathname.lastIndexOf("/"));
-var proxyURL = proxyHost + "dbt/";
+var proxyHost = document.location.protocol + "//" + document.location.host + virtualPath;
+var proxyURL = proxyHost + "/dbt/";
 
 /**
  * Cache MutationObserver
