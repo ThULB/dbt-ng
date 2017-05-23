@@ -28,6 +28,11 @@ module.exports = function(grunt) {
 					fontPath : "build/www/assets/fonts/",
 					cssFile : "build/www/assets/css/fonts.css",
 					httpPath : "../fonts/",
+					formats : {
+						eot : true,
+						woff : true,
+						svg : true
+					},
 					fonts : [ {
 						family : "Open Sans",
 						styles : [ 300, 400, 600, 700, 800, "300i", "400i", "600i", "700i", "800i" ]
