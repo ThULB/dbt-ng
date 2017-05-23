@@ -14,7 +14,7 @@
   	},
     "devDependencies": {
     	"bower": "latest",
-        "grunt": "latest",
+        "grunt": ">=0.4.5 <1.0.0",
         "grunt-bowercopy": "latest",
         "grunt-cli": "latest",
         "grunt-contrib-clean": "latest",
