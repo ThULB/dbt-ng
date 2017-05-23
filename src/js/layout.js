@@ -44,7 +44,7 @@ var hookLoaderOnLinks = function() {
 
 			var h2pExp = new RegExp("^" + host2proxy);
 			if (href.match(h2pExp) !== null) {
-				href = proxyHost + "/dynamic.html?url=" + encodeURIComponent(proxyHost + "/dbt/" + href.split(h2pExp)[2]);
+				href = proxyHost + "/dynamic.html?url=" + encodeURIComponent(proxyURL + href.split(h2pExp)[2]);
 			} else if (href.match("^" + proxyURL) !== null) {
 				href = proxyHost + "/dynamic.html?url=" + encodeURIComponent(href);
 			}
