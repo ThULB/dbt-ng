@@ -412,9 +412,9 @@ var init = function() {
 		Waves.attach(".btn-default");
 		Waves.attach("#container-overlay", [ "waves-light" ]);
 		Waves.attach(".dropdown-toggle", [ "waves-light" ]);
-		Waves.attach(".dropdown-menu li.active a", [ "waves-light" ]);
-		Waves.attach(".dropdown-menu li a");
-		Waves.attach(".navbar-dbt .navbar-nav > li a", [ "waves-light" ]);
+		Waves.attach(".dropdown-menu li > a");
+		Waves.attach(".dropdown-menu li.active > a", [ "waves-light" ]);
+		Waves.attach(".navbar-dbt .navbar-nav > li > a", [ "waves-light" ]);
 		Waves.attach(".nav-tabs > li > a");
 		Waves.attach(".navbar-toggle", [ "waves-light" ]);
 		Waves.attach(".pagination li a");
