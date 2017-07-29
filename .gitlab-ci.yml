@@ -8,3 +8,6 @@ build:
   script:
    - npm install
    - ./node_modules/grunt-cli/bin/grunt
+  artifacts:
+    paths:
+    - dist/
