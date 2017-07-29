@@ -21,6 +21,7 @@
         "grunt-bowercopy": "latest",
         "grunt-cli": "latest",
         "grunt-contrib-clean": "latest",
+        "grunt-contrib-compress": "latest",
         "grunt-contrib-concat": "latest",
         "grunt-contrib-connect": "latest",
         "grunt-contrib-copy": "latest",

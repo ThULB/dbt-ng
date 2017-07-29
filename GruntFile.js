@@ -5,6 +5,7 @@ module.exports = function(grunt) {
 	var sslRootCAs = require("ssl-root-cas/latest");
 
 	grunt.initConfig({
+		pkg : grunt.file.readJSON("package.json"),
 		clean : {
 			build : {
 				src : [ "build" ]
@@ -162,6 +163,19 @@ module.exports = function(grunt) {
 				} ]
 			}
 		},
+		compress : {
+			dist : {
+				options : {
+					archive : "dist/<%= pkg.name %>.zip"
+				},
+				files : [ {
+					expand : true,
+					cwd : "build/www",
+					src : [ "**/*" ],
+					dest : ""
+				} ]
+			}
+		},
 		connect : {
 			server : {
 				options : {
@@ -218,6 +232,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-bowercopy");
 	grunt.loadNpmTasks("grunt-contrib-clean");
 	grunt.loadNpmTasks("grunt-contrib-copy");
+	grunt.loadNpmTasks("grunt-contrib-compress");
 	grunt.loadNpmTasks("grunt-contrib-connect");
 	grunt.loadNpmTasks("grunt-contrib-imagemin");
 	grunt.loadNpmTasks("grunt-contrib-less");
@@ -229,6 +244,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-newer");
 
 	grunt.registerTask("serve", [ "configureProxies:server", "connect:server", "watch" ]);
-	grunt.registerTask("build", [ "clean", "bowercopy", "googlefonts", "copy", "less", "uglify", "responsive_images", "imagemin" ]);
+	grunt.registerTask("build", [ "clean", "bowercopy", "googlefonts", "copy", "less", "uglify", "responsive_images", "imagemin", "compress" ]);
 	grunt.registerTask("default", [ "build" ]);
 };
