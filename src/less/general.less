@@ -58,9 +58,64 @@ hgroup {
   @media (min-width: @grid-float-breakpoint) {
     margin-top: 20px;
   }
-  
+
   .dropdown-toggle.waves-effect {
     display: inline;
+  }
+}
+
+.scroll-container {
+  @fade-color: fade(darken(@content-bg-color, 2%), 40%);
+  position: relative;
+  .scrolling-container {
+    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    .hide-scrollbar ();
+  }
+
+  .fade-left , .fade-right {
+    visibility: hidden;
+    opacity: 0;
+    z-index: 2;
+    position: absolute;
+    display: block;
+    width: 30px;
+    top: 0;
+    bottom: 0;
+    transition-duration: .3s;
+    -webkit-transform: translateZ(0);
+    margin: 0;
+    text-align: center;
+    &.scrolling {
+      visibility: visible;
+      opacity: 1;
+      transition-duration: .3s
+    }
+
+    .fa {
+      position: relative;
+      top: 5px;
+      font-size: 18px;
+      color: @brand-primary;
+    }
+  }
+
+  .fade-left {
+    background: linear-gradient(to right, @content-bg-color 45%, @fade-color);
+    left: -10px;
+    .fa {
+      left: -2px
+    }
+  }
+
+  .fade-right {
+    background: linear-gradient(to left, @content-bg-color 45%, @fade-color);
+    right: -10px;
+    .fa {
+      right: -2px
+    }
   }
 }
 

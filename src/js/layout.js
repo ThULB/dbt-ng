@@ -390,6 +390,94 @@ var initBreadcrumb = function() {
 	$(".breadcrumb > li:first-child:last-child").parent().hide();
 };
 
+var updateOverlayScroller = function() {
+	$(".scroll-container").each(function() {
+		$this = $(this);
+		var $fadeLeft = $(".fade-left", this);
+		var $fadeRight = $(".fade-right", this);
+		$container = $(".scrolling-container", this);
+		
+		var outerWidth = 0;
+		$container.children().each(function() {
+			outerWidth += $(this).outerWidth(true);
+		});
+		console.log(outerWidth, $this.innerWidth())
+		if (outerWidth > $this.innerWidth()) {
+			$fadeRight.addClass("scrolling");
+			
+			if (!$container.hasClass("is-init")) {
+				$container.on("scroll", function() {
+					if ($(this).scrollLeft() > 0) {
+						$fadeLeft.addClass("scrolling");
+						if ((outerWidth - $(this).scrollLeft()) <= $container.innerWidth()) {
+							$fadeRight.removeClass("scrolling");
+						}
+					} else {
+						$fadeLeft.removeClass("scrolling");
+						$fadeRight.addClass("scrolling");
+					}
+				});
+				$container.addClass("is-init");
+			}
+		} else {
+			$fadeLeft.removeClass("scrolling");
+			$fadeRight.removeClass("scrolling");
+		}
+	});
+};
+
+var initOverlayScroller = function() {
+	$("*").each(function() {
+		var $this = $(this);
+		if (!$this.hasClass("table-responsive") && ($this.css("overflow-y") === "hidden") && ($this.css("overflow-x") === "auto")) {
+			var $fadeLeft = $(document.createElement("div")).html("<i aria-hidden=\"true\" data-hidden=\"true\" class=\"fa fa-angle-left\"></i>").addClass("fade-left");
+			var $fadeRight = $(document.createElement("div")).html("<i aria-hidden=\"true\" data-hidden=\"true\" class=\"fa fa-angle-right\"></i>").addClass("fade-right");
+			var $container = $(document.createElement("div")).addClass("scroll-container");
+			
+			var $parent = $this.parent();
+			
+			$container.append($fadeLeft);
+			$container.append($fadeRight);
+			$container.append($this.detach());
+			$parent.append($container);
+			
+			$container.height($this.height());
+			$.each([$fadeLeft, $fadeRight], function() {
+				$(this).children().css("top", Math.floor(($container.innerHeight() - $(this).children().height()) / 2));
+			});
+			
+			$this.addClass("scrolling-container");
+			
+			var outerWidth = 0;
+			$this.children().each(function() {
+				outerWidth += $(this).outerWidth(true);
+			});
+			
+			if (outerWidth > $container.innerWidth()) {
+				$fadeRight.addClass("scrolling");
+				
+				if (!$this.hasClass("is-init")) {
+					$this.on("scroll", function() {
+						if ($(this).scrollLeft() > 0) {
+							$fadeLeft.addClass("scrolling");
+							if ((outerWidth - $(this).scrollLeft()) <= $container.innerWidth()) {
+								$fadeRight.removeClass("scrolling");
+							}
+						} else {
+							$fadeLeft.removeClass("scrolling");
+							$fadeRight.addClass("scrolling");
+						}
+					});
+					$this.addClass("is-init");
+				}
+			}
+		} 
+	});
+	
+	window.addEventListener("resize", updateOverlayScroller);
+	window.addEventListener("orientationchange", updateOverlayScroller);
+};
+
 /**
  * Remove loader on page load/show.
  */
@@ -405,7 +493,8 @@ var init = function() {
 	initAffixes();
 	initAbstractEllipsis();
 	initBreadcrumb();
-
+	initOverlayScroller();
+	
 	if (Waves) {
 		Waves.attach(".btn-primary", [ "waves-light" ]);
 		Waves.attach(".btn");

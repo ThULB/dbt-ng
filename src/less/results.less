@@ -1,3 +1,9 @@
+#search_options {
+  span.glyphicon-chevron-right {
+    float: right;
+  }
+}
+
 .result_head {
   @media (min-width: @grid-float-breakpoint) {
     margin-left: 0;
@@ -146,10 +152,7 @@
       }
 
       &:nth-last-child(1) .hit_item_body {
-        border-bottom: @section-border;
-        @media (max-width: @grid-float-breakpoint-max) {
-          border-bottom: 1px solid @panel-default-border;
-        }
+        border-bottom: 0;
       }
 
       .hit_download_box {
@@ -277,6 +280,7 @@
       .hit_title {
         font-size: 140%;
         .hyphens ();
+        margin-top: 5px;
       }
 
       .hit_abstract {
