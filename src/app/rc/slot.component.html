@@ -1,0 +1,79 @@
+<div class="container" *ngIf="slot">
+  <ng-template #labelsWithParentsTemplate let-labels="labels" let-separator="separator">
+    <ng-container *ngIf="labels && labels.length">
+      <ng-container *ngFor="let label of labels; let i = index">
+        <a uiSref="rc" [uiParams]="{term: quote(label)}">{{ label }}</a>
+        <ng-container *ngIf="i < labels.length - 1">{{ separator || ', ' }}</ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="labels && !labels.length">{{ labels }}</ng-container>
+  </ng-template>
+  
+	<div id="slot-head">
+		<h1>{{ slot.title }}</h1>
+		<div class="info">
+			<span>
+			 <a *ngFor="let lecturer of slot.lecturers.lecturer" class="lecturer" [href]="'mailto:' + !slot.contact ? lecturer.email : slot.contact.email">{{
+					lecturer.name }}</a>
+		  </span>
+		  <ng-container> - {{ 'rc.slot.breadcrumb' | translate:slot }}</ng-container>
+		  <ng-container>
+			  (<ng-container 
+	        *ngTemplateOutlet="labelsWithParentsTemplate;context:{labels: (slot.id | slice:0:10 | classification:'RCLOC':true:true), separator: ' / '}">
+	      </ng-container>)
+		  </ng-container>
+		  <ng-container> - {{ slot.validTo | period:false }}</ng-container>
+		</div>
+	</div>
+	<div class="slot-body mt-3">
+		<div *ngIf="!$auth.isLoggedIn()" role="alert" class="alert alert-warning">Der Zugang zu diesem Semesterapparat ist nur nach Login möglich.</div>
+		
+		<ng-container *ngIf="$auth.isLoggedIn()">
+			<ng-container *ngFor="let group of groupEntries(); let i = index">
+			  
+			  <section [id]="'slot-group-' + i" class="my-2">
+				  <ng-container *ngFor="let entry of group">
+						<ng-container [ngSwitch]="entry.type">
+			        
+			       <div [attr.id]="entry.id" [class]="'entry-' + entry.type">			
+							 <ng-container *ngSwitchCase="'headline'">
+							   <h3>{{ entry.headline }}</h3>
+							 </ng-container>
+							 
+							 <ng-container *ngSwitchCase="'file'">
+				         <a [href]="entry.name">{{ entry.comment || entry.name }}</a>
+				         <span> - {{ entry.size | bytes }}</span>
+				       </ng-container>
+							 
+							 <ng-container *ngSwitchCase="'text'">
+				         <ng-container [ngSwitch]="entry.format">
+				          <ng-container *ngSwitchCase="'html'">
+				            <p [innerHtml]="entry.text"></p>
+				          </ng-container>
+				          <ng-container *ngSwitchCase="'plain'">
+				            <p class="text-justify">{{ entry.text }}</p>
+				          </ng-container>
+				          <ng-container *ngSwitchDefault>
+				            <pre><code>{{ entry.text }}</code></pre>
+				          </ng-container>
+				         </ng-container>
+				       </ng-container>
+				       
+				       <ng-container *ngSwitchCase="'opcrecord'">
+				         <span>{{ entry.type }}</span>
+				       </ng-container>
+				       
+				       <ng-container *ngSwitchCase="'webLink'">
+				         <a [href]="entry.url">{{ entry.label || entry.url }}</a>
+				       </ng-container>
+			       </div>
+			       
+						</ng-container>
+				  </ng-container>
+				</section>
+				
+			</ng-container>
+		</ng-container>
+	</div>
+<!-- 	<pre>{{ slot | json }}</pre> -->
+</div>

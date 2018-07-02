@@ -1,0 +1,58 @@
+#teaser {
+  display: block;
+  height: 100%;
+  margin-top: $navbar-height * -2 - $content-padding-top;
+  
+  .carousel-item {
+    background-color: #777;
+    background-size: cover;
+    background-position: 50% 0;
+    background-repeat: no-repeat;
+    > img {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+
+  .carousel-indicators li {
+    width: 15px;
+    height: 15px;
+  }
+
+  .carousel-control-prev , .carousel-control-next {
+    z-index: 1000;
+  }
+
+  .carousel-caption {
+    z-index: 1020;
+    text-align: left;
+    @include media-breakpoint-up($float-breakpoint) {
+      h1 {
+        @include hyphens ();
+      }
+    }
+  
+    .animated {
+      animation-delay: 0.5s;
+    }
+ 
+    .btn-default {
+      background-color: #fff;
+      border-color: #fff;
+      color: #fff;
+      &:hover , &:focus , &:active , &.active {
+        background: #fff;
+        border-color: #fff;
+        color: $body-color;
+      }
+    }
+
+    .btn {
+      background: transparent;
+      border-radius: 0;
+      border-width: 2px;
+      transition: all 0.1s ease-out 0s;
+    }
+  }
+}

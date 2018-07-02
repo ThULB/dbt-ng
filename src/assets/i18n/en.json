@@ -1,0 +1,215 @@
+{
+	"alert": {
+		"network": {
+			"error": {
+				"401": "Unauthorized.",
+				"403": "No access right.",
+				"500": "Internal Servererror"
+			},
+			"unknown": "Unknown error occurred.",
+			"unreachable": "URL \"{url}\" was unreachable."
+		},
+		"type": {
+			"error": "Error",
+			"info": "Info",
+			"success": "Success",
+			"warning": "Warning"
+		}
+	},
+	"basket": {
+		"breadcrumb": "Basket",
+		"numDocuments": "{count, plural, =0{No documents} =1{One document} other{There are # documents}} in your basket."
+	},
+	"browse": {
+		"breadcrumb": "Browse",
+		"in": "Browse in {label}"
+	},
+	"button": {
+		"add": "Add",
+		"cancel": "Cancel",
+		"close": "Close",
+		"details": "Details",
+		"edit": "Edit",
+		"encode": "Encode",
+		"login": "Login",
+		"logout": "Logout",
+		"ok": "Ok",
+		"remove": "Remove",
+		"save": "Save",
+		"send": "Send",
+		"share": "Share"
+	},
+	"dataTable": {
+		"filter": "Filter",
+		"filterInfo": "{start} to {limit} of {total} entries",
+		"first": "First",
+		"last": "Last",
+		"lengthMenu": "Items to show",
+		"next": "Next",
+		"noItemFound": "No Items found!",
+		"previous": "Back"
+	},
+	"general": {
+		"action": "Action",
+		"actions": {
+			"created": "created",
+			"modified": "modified",
+			"deleted": "deleted"
+		},
+		"boolean": {
+			"false": "No",
+			"true": "Yes"
+		},
+		"buildIn": "build in",
+		"copyright": "© 2000 - 2018 UrMEL. All rights reserved.",
+		"created": "Created",
+		"date": "Date",
+		"from": "From",
+		"lastModified": "Modified",
+		"loading": "Loading...",
+		"noResult": "Seach has no result.",
+		"notset": "not set",
+		"pageOf": "{page} of {total, plural, =1{# page} other{# pages}}",
+		"pleaseSelect": "(please select)",
+		"to": "To",
+		"typeToSearch": "Type to search",
+		"user": "User",
+		"validUntil": "Valid until"
+	},
+	"language": {
+		"de": "German",
+		"en": "English"
+	},
+	"login": {
+		"breadcrumb": "Login",
+		"headline": "User-Login"
+	},
+	"metadata": {
+		"addToBasket": "Add to basket",
+		"breadcrumb": "Details for {id}",
+		"citation": "Citation",
+		"citationStyle": "Citation style",
+		"citationStyles": {
+			"deutsche-sprache": "German",
+			"apa": "APA",
+			"bibtex": "Bibtex",
+			"elsevier-harvard": "Elsevier",
+			"ieee": "IEEE",
+			"springer-basic-author-date": "Springer (basic)",
+			"din-1505-2": "DIN-1505-2"
+		},
+		"classification": {
+			"generic": "Classification",
+			"sdnb": "DDC-Sachgruppe der DNB"
+		},
+		"corporate": "Hosting institution",
+		"createdby": "Created by",
+		"createdate": "Created at",
+		"dateAccepted": "Date Accepted",
+		"dateCreated": "Date Created",
+		"dateIssued": "Date Issued",
+		"dateSubmitted": "Date Submitted",
+		"issue": "Issue",
+		"language": "Language",
+		"modifydate": "Last modified",
+		"modifiedby": "Last modified by",
+		"physicalDescription": "Extent",
+		"place": "Place Term",
+		"preview": {
+			"confirm": "Click here to activate the preview."
+		},
+		"relatedItem": {
+			"host": "Host",
+			"references": "Reference",
+			"series": "Series"
+		},
+		"revision": "Revision",
+		"rights": "Rights",
+		"section": {
+			"content": "Content",
+			"derivate": "{count, plural, =1{File area} other{File areas}}",
+			"details": "Details"
+		},
+		"shelfLocator": "Selfmark",
+		"subjects": "Subjects",
+		"sysinfos": "System informations",
+		"titleTranslated": "Translated title",
+		"typeOfResource": "Type of Resource",
+		"upload": {
+      "placeholderDrop": "Drop files here or click to choose!"
+    },
+		"useAndReproduction": "Use and reproduction",
+		"version": "Version",
+		"versionHistory": "Version history",
+		"volume": "Volume"
+	},
+	"navigation": {
+		"browse": "Browse",
+		"faq": "FAQ",
+		"genres": "Genres",
+		"guidelines": "Guidelines",
+		"home": "Home",
+		"institutions": "Institutions",
+		"login": "Login",
+		"logout": "Logout",
+		"persons": "Persons",
+		"publish": "Publish",
+		"rc": {
+			"currentList": "Current list",
+			"establish": "Establish"
+		},
+		"reserveCollections": "Reserve Collections",
+		"basket": "Basket",
+		"basketOpen": "Open basket",
+		"subjectGroups": "Subject groups",
+		"submitDocument": "Publish document",
+		"termsAndConditions": "Terms & Conditions"
+	},
+  "persons": {
+    "breadcrumb": "Persons from A-Z"
+  },
+  "person": {
+    "alternateName": "Alternate Name",
+    "dateOfBirth": "Date of birth",
+    "dateOfDeath": "Date of death",
+    "details": "Persondetails",
+    "documents": "Documents",
+    "gender": "Gender",
+    "gender_female": "female",
+    "gender_male": "male",
+    "mappedIds": "Mapped Id",
+    "moreDocuments": "Show more documents...",
+    "placeOfActivity": "Place of activity",
+    "placeOfBirth": "Place of birth",
+    "placeOfDeath": "Place of death"
+  },
+	"rc": {
+		"breadcrumb": "Reserve Collection List",
+		"id": "Number",
+		"lecturer": "Lecturer",
+		"location": "Location",
+		"period": "Period",
+		"title": "Title",
+		"slot": {
+			"breadcrumb": "Reserve Collection {id}"
+		}
+	},
+	"search": {
+		"breadcrumb": "Search result",
+		"facet_field": {
+			"mods.genre": "Genre",
+			"worldReadableComplete": "Availability",
+			"yearOfPublication": "Year of publication"
+		},
+		"foundDocs": "{count, plural, =0{No document} =1{1 document} other{# documents}} found",
+		"placeholder": "Search",
+		"worldReadableComplete": {
+			"true": "open",
+			"false": "restricted"
+		}
+	},
+	"user": {
+		"name": "Username",
+		"password": "Password"
+	}
+}

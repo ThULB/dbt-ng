@@ -1,0 +1,40 @@
+<ng-container *ngIf="items.length !== 0 || allowFilter">
+  <div class="children card mt-2 mb-2">
+    <h5 class="card-header">{{ 'metadata.section.content' | translate }}</h5>
+    <div class="card-body p-0">
+      <form *ngIf="allowFilter">
+        <div class="form-group flex-fill bg-light m-0 p-1">
+          <label class="d-inline-flex justify-content-start flex-row w-100 align-items-center">
+            <span aria-hidden="true" class="fa fa-filter mr-1"></span> {{ 'dataTable.filter' | translate }}
+            <input id="filter" type="search" class="form-control ml-1" name="query" [(ngModel)]="query"
+              (ngModelChange)="filter($event)">
+          </label>
+        </div>
+      </form>  
+      <div class="text-center m-3" [hidden]="!loading">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <ul class="list-unstyled m-1 mb-0" [hidden]="loading">
+        <li *ngIf="allowFilter && items.length === 0" class="text-center">{{ 'general.noResult' | translate }}</li>
+        <li *ngFor="let child of items | slice:start:end; let i = index" class="pl-3 pr-3" [ngClass]="{'bg-light': odd(i)}">
+          <a *ngIf="child" uiSref="metadata" [uiParams]="{id: child.id}">
+            <ng-container *ngIf="child.part">{{ child.part }} - </ng-container>
+            <ng-container *ngIf="child.title">{{ child.title }}</ng-container>
+            <ng-container *ngIf="child.subTitle">: {{ child.subTitle }}</ng-container>
+          </a>
+        </li>
+      </ul>
+      
+      <ng-container *ngIf="itemsTotal > rows">
+        <div class="d-flex justify-content-between mt-2 px-1">
+          <div>
+            <span class="d-none d-md-inline-block pt-2 pb-2">{{ 'dataTable.filterInfo' | translate:{start: start + 1, limit: end, total: itemsTotal} }}</span>
+          </div>
+				  <ngb-pagination 
+				    (pageChange)="pageChange($event)" [collectionSize]="itemsTotal" 
+				    [(page)]="page" [maxSize]="5" [pageSize]="rows" [rotate]="true" [ellipses]="false" [boundaryLinks]="false"></ngb-pagination>
+        </div>
+			</ng-container>
+    </div>
+  </div>
+</ng-container>

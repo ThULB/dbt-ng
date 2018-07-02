@@ -1,0 +1,53 @@
+.scroll-container {
+  $fade-color: transparentize(darken($content-bg-color, 2%), 0.9);
+  position: relative;
+
+  .scrolling-container {
+    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    @include hide-scrollbar ();
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .fade-left , .fade-right {
+    visibility: hidden;
+    opacity: 0;
+    z-index: 2;
+    position: absolute;
+    display: flex;
+    width: 1.8rem;
+    top: 0;
+    bottom: 0;
+    transition-duration: .3s;
+    margin: 0;
+    align-items: center;
+    &.scrolling {
+      visibility: visible;
+      opacity: 1;
+      transition-duration: .3s
+    }
+
+    > * {
+      color: $primary;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .fade-left {
+    background: linear-gradient(to right, rgba(255,255,255,0.9) 45%, $fade-color);
+    left: 0;
+    > * {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .fade-right {
+    background: linear-gradient(to left, rgba(255,255,255,0.9) 45%, $fade-color);
+    right: 0;
+    > * {
+      margin-right: 0.5rem;
+    }
+  }
+}

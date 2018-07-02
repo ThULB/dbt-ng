@@ -1,0 +1,9 @@
+@mixin download-icon($url) {
+  background:url($url);
+  background-size: 90% 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100px;
+  min-width: 75px;
+  max-width: 75px;
+}

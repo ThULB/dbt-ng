@@ -1,0 +1,66 @@
+// Bootstrap alert
+.alert {
+  border: 0;
+  border-left: 3px solid #EEEEEE;
+  border-radius: 2px;
+  margin: 20px 0;
+  padding: 20px;
+  h4 {
+    margin-bottom: 5px;
+    margin-top: 0;
+  }
+}
+
+.alert-info {
+  background-color: $alert-info;
+  border-color: $alert-info-color;
+  h4 {
+    color: $alert-info-color;
+  }
+}
+
+.alert-warning {
+  background-color: $alert-warning;
+  border-color: $alert-warning-color;
+  h4 {
+    color: $alert-warning-color;
+  }
+}
+
+.alert-danger {
+  background-color: $alert-danger;
+  border-color: $alert-danger-color;
+  h4 {
+    color: $alert-danger-color;
+  }
+}
+
+.alert-success {
+  background-color: $alert-success; 
+  border-color: $alert-success-color; 
+  h4 {
+    color: $alert-success-color;
+  }
+}
+
+.alert + .alert {
+  margin-top: -5px;
+}
+
+// Bootstrap - cards
+
+.card {
+  .card-header {
+    -webkit-hyphens: inherit;
+    -ms-hyphens: inherit;
+    hyphens: inherit;
+  }
+}
+
+// Bootstrap - carousel indicators
+.carousel-indicators {
+  li {
+    @include border-radius (0);
+    @include skew (-20deg , 0);
+  }
+}

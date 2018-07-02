@@ -1,0 +1,86 @@
+// ---------------------------------------------------
+// Loader
+// ---------------------------------------------------
+
+$loader-spinner-size: 150px !default;
+
+.spinner-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1020;
+  @include media-breakpoint-down($float-breakpoint) {
+    @media (orientation: landscape) {
+      z-index: 1030;
+    }
+
+    @media (max-height: 479px) {
+      z-index: 1030;
+    }
+  }
+
+  .loader-backdrop {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #fefefe;
+    z-index: 1000;
+    opacity: 1;
+  }
+
+  .loaded & {
+    visibility: hidden;
+    opacity: 0;
+    @include transition(all 0.5s 0.1s ease-out);
+  }
+
+  .loader {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: $loader-spinner-size;
+    height: $loader-spinner-size;
+    border-radius: 50%;
+    margin-left: -($loader-spinner-size / 2);
+    margin-top: -($loader-spinner-size / 2);
+    border: 3px solid transparent;
+    border-top-color: $primary;
+    @include animation (spin 2s linear infinite);
+    z-index: 1001;
+    &:before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: lighten($primary, 20%);
+      @include animation (spin 3s linear infinite);
+    }
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-top-color: lighten($primary, 40%);
+      @include animation (spin 1.5s linear infinite);
+    }
+
+    .loaded & {
+      opacity: 0;
+      @include transition (all 0.3s ease-out);
+    }
+  }
+}
+

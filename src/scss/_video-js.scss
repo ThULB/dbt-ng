@@ -1,0 +1,68 @@
+$icon-font-path:"../../node_modules/video.js/dist/font/";
+@import "~video.js/src/css/video-js.scss";
+
+.video-js {
+    color: #000;
+    background-color: rgba(0, 0, 0, 0.5);
+    &:focus {
+      outline-style: none ! important;
+      outline-color: transparent ! important;
+      outline-width: 0 ! important;
+    }
+
+    video {
+      margin-bottom: -2px;
+    }
+
+    .vjs-big-play-button {
+      background-color: transparentize($primary, 0.2);
+      border-color: #fff;
+      left: 50%;
+      margin: -0.75em 0 0 -1.5em;
+      top: 50%;
+      &:before {
+        color: #fff;
+      }
+      > .vjs-icon-placeholder {
+        color: #fff;
+      }
+    }
+
+    .vjs-control-bar {
+      background-color: rgba(255, 255, 255, 0.85);
+      position: absolute;
+      bottom: 0px;
+      .vjs-icon-placeholder:hover {
+        color: $primary;
+      }
+    }
+
+    .vjs-menu-button-popup {
+      .vjs-menu {
+        .vjs-menu-content {
+          background-color: rgba(255, 255, 255, 0.85);
+        }
+      }
+    }
+
+    .vjs-menu {
+      li.vjs-menu-item {
+        &:hover {
+          background-color: transparentize($primary, 0.8);
+          color: $primary;
+        }
+      }
+    }
+
+    .vjs-slider {
+      background: transparentize(#808080, 0.4);
+    }
+
+    .vjs-play-progress , .vjs-volume-level {
+      background-color: #000;
+    }
+
+    .vjs-load-progress , .vjs-load-progress div {
+      background: transparentize($primary, 0.6);
+    }
+  }

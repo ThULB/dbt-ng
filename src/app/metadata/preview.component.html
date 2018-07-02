@@ -1,0 +1,97 @@
+<ng-template #previewConfirmTemplate>
+  <div *ngIf="!previewConfirmed" class="card">
+    <div class="card-body d-flex justify-content-center">
+      <a href="#" (click)="confirmPreview()">{{ 'metadata.preview.confirm' | translate }}</a>
+    </div>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="mediaSources">
+  <ng-template #audioPlayerTemplate>
+		<ng-container *ngIf="previewConfirmed; else previewConfirmTemplate">
+			<div class="card">
+				<div class="card-body p-1">
+					<div class="text-center m-2" [hidden]="done">
+						<i class="fas fa-spinner fa-spin"></i> <span class="ml-1">{{ loadingPercent || 0 }}%</span>
+					</div>
+					<div #playerElement id="media-stream" class="audio-preview w-100" [hidden]="!done"></div>
+				</div>
+				<div *ngIf="done" class="card-footer">
+					<div class="d-flex justify-content-between">
+						<div class="controls btn-group">
+							<button type="button" class="btn btn-default" (click)="player.skipBackward()">
+								<i class="fas fa-step-backward"></i>
+							</button>
+							<button type="button" class="btn btn-default" (click)="player.playPause()">
+								<i class="fas" [ngClass]="{'fa-play': !player?.isPlaying(), 'fa-pause': player?.isPlaying()}"></i>
+							</button>
+							<button type="button" class="btn btn-default" (click)="player.skipForward()">
+								<i class="fas fa-step-forward"></i>
+							</button>
+							<button type="button" class="btn btn-default" (click)="player.toggleMute()">
+								<i class="fas" [ngClass]="{'fa-volume-off': player?.getMute(), 'fa-volume-up': !player?.getMute()}"></i>
+							</button>
+						</div>
+						<span class="file mt-auto mb-auto d-none d-md-inline-flex">{{ file }}</span>
+					</div>
+				</div>
+			</div>
+		</ng-container>
+	</ng-template>
+
+  <ng-template #videoPlayerTemplate>
+		<div class="embed-responsive embed-responsive-16by9">
+			<video #playerElement id="media-stream" class="video-preview video-js vjs-default-skin vjs-big-play-centered embed-responsive-item" controls preload="metadata"
+				data-setup="{}"
+			>
+			</video>
+		</div>
+  </ng-template>
+  
+  <ng-container *ngIf="isAudioStream() then audioPlayerTemplate else videoPlayerTemplate"></ng-container>
+</ng-container>
+
+<ng-container *ngIf="supportedImage.indexOf(fileExtension(file)) !== -1">
+	<ng-template #imageViewerTemplate let-url="url">
+	<div class="card">
+	  <div class="card-body p-1 text-center">
+		  <div class="m-2" [hidden]="url && done">
+	      <i class="fas fa-spinner fa-spin"></i> <span class="ml-1">{{ loadingPercent || 0 }}%</span>
+	    </div>
+			<img *ngIf="url" [src]="url" class="img-fluid">
+		</div>
+	</div>
+	</ng-template>
+	
+	<ng-container *ngIf="previewConfirmed; else previewConfirmTemplate">
+    <ng-container *ngTemplateOutlet="imageViewerTemplate;context:($api.fileUrl(derivate.objectId, derivate.id, file, path) | objectUrl:progress:true)"></ng-container>
+	</ng-container>
+</ng-container>
+
+<ng-container *ngIf="'pdf|ps'.indexOf(fileExtension(file)) !== -1">
+	<ng-template #pdfViewerTemplate let-url="url">
+	<div class="card">
+		<div class="card-body p-1">
+		  <div class="text-center m-2" [hidden]="done">
+        <i class="fas fa-spinner fa-spin"></i> <span class="ml-1">{{ loadingPercent || 0 }}%</span>
+      </div>
+			<pdf-viewer class="d-block" *ngIf="url" [src]="{url: url}" [(page)]="page" [fit-to-page]="true" [autoresize]="false"
+				[original-size]="false" [stick-to-page]="true" [show-all]="false" [render-text]="true" (after-load-complete)="onPDFLoaded($event)"
+			></pdf-viewer>
+		</div>
+		<div class="card-footer navbar p-2" *ngIf="url" [hidden]="!done">
+			<button type="button" class="btn btn-default" (click)="previousPage()" [disabled]="page == 1">
+				<i class="fas fa-arrow-left"></i> <span class="d-none d-md-inline">{{ 'general.previous' | translate }}</span>
+			</button>
+			{{ 'general.pageOf' | translate:{page: page, total: totalPages || page} }}
+			<button type="button" class="btn btn-default" (click)="nextPage()" [disabled]="page == totalPages">
+				<span class="d-none d-md-inline">{{ 'general.next' | translate }}</span> <i class="fas fa-arrow-right"></i>
+			</button>
+		</div>
+	</div>
+	</ng-template>
+	
+	<ng-container *ngIf="previewConfirmed; else previewConfirmTemplate">
+    <ng-container *ngTemplateOutlet="pdfViewerTemplate;context:($api.fileUrl(derivate.objectId, derivate.id, file, path) | objectUrl:progress)"></ng-container>
+	</ng-container>
+</ng-container>
