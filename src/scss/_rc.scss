@@ -1,0 +1,36 @@
+#rc-list {
+  table {
+    margin-bottom: 0;
+    
+    & > tbody {
+      td {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+      }
+    }
+  }
+
+  .pagination {
+    margin: 0;
+  }
+}
+
+.slot-body {
+  .entry-headline {
+    h3 {
+      border-bottom: 1px solid #f0f0f0;
+    }
+  }
+
+  .entry-text {
+    img {
+      max-width: 100%;
+    }
+  }
+
+  .entry-text {
+    pre > code {
+      white-space: pre-wrap;
+    }
+  }
+}

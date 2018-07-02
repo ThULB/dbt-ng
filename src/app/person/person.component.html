@@ -1,0 +1,120 @@
+<ng-template #personDetailsTemplate>
+  <div *ngIf="person.details" class="card mb-2">
+    <h5 class="card-header">{{ 'person.details' | translate }}</h5>
+    <div class="card-body">
+      <dl *ngIf="person.details" class="row mb-0">
+      <ng-container *ngFor="let key of ['alternateName', 'gender', 'dateOfBirth', 'placeOfBirth', 'dateOfDeath', 'placeOfDeath', 'placeOfActivity', 'mappedIds']">
+			  <ng-container *ngIf="person.details[key]" [ngSwitch]="key">
+			    <ng-container *ngSwitchCase="'alternateName'">
+			      <ng-container *ngIf="person.details[key].length !== 0">
+			      <dt class="col-sm-4">{{ 'person.' + key | translate }}</dt>
+			      <dd class="col-sm-8 d-inline-flex flex-column">
+			        <i *ngFor="let name of person.details[key]">{{ name }}</i>
+			      </dd>
+			      </ng-container>
+			    </ng-container>
+			    <ng-container *ngSwitchCase="'gender'">
+			      <dt class="col-sm-4">{{ 'person.' + key | translate }}</dt>
+			      <dd class="col-sm-8">{{ 'person.' + key + '_' + person.details[key] | translate }}</dd>
+			    </ng-container>
+			    <ng-container *ngSwitchCase="'dateOfBirth'">
+			      <dt class="col-sm-4">{{ 'person.' + key | translate }}</dt>
+			      <dd class="col-sm-8">{{ person.details[key] | dateOrText:'dd.MM.yyyy' }}</dd>
+			    </ng-container>
+			    <ng-container *ngSwitchCase="'dateOfDeath'">
+			      <dt class="col-sm-4">{{ 'person.' + key | translate }}</dt>
+			      <dd class="col-sm-8">{{ person.details[key] | dateOrText:'dd.MM.yyyy' }}</dd>
+			    </ng-container>
+			    <ng-container *ngSwitchCase="'placeOfActivity'">
+			      <ng-container *ngIf="person.details[key].length !== 0">
+			      <dt class="col-sm-4">{{ 'person.' + key | translate }}</dt>
+			      <dd class="col-sm-8 d-inline-flex flex-column">
+			        <span *ngFor="let place of person.details[key]">{{ place.name }}</span>
+			      </dd>
+			      </ng-container>
+			    </ng-container>
+			    <ng-container *ngSwitchCase="'mappedIds'">
+			      <dt class="col-sm-4">{{ 'person.' + key | translate }}</dt>
+			      <dd class="col-sm-8">
+						  <ng-template #idBadgeTemplate let-prefix="prefix" let-id="id">
+						    <ng-container [ngSwitch]="prefix">
+						      <a *ngSwitchCase="'dnb'" 
+						        class="badge badge-success mr-1" [href]="'http://d-nb.info/gnd/' + id">GND</a>
+						      <a *ngSwitchCase="'jpg'" 
+                    class="badge badge-dark mr-1" [href]="'http://vocab.getty.edu/ulan/' + id" title="Getty ULAN">{{ prefix | uppercase }}</a>
+						      <a *ngSwitchCase="'lc'" 
+                    class="badge badge-warning mr-1" [href]="'http://id.loc.gov/authorities/names/' + id" title="Library of Congress">{{ prefix | uppercase }}</a>
+                  <a *ngSwitchCase="'orcid'" 
+                    class="badge badge-danger mr-1" [href]="'https://orcid.org/' + id">{{ prefix | uppercase }}</a>
+						      <a *ngSwitchCase="'viaf'" 
+						        class="badge badge-info mr-1" [href]="'http://viaf.org/viaf/' + id">{{ prefix | uppercase }}</a>
+						      <span *ngSwitchDefault 
+						        class="badge badge-dark mr-1">{{ prefix | uppercase }}:{{ id }}</span>
+						    </ng-container>
+						  </ng-template>
+						  <ng-container *ngFor="let mid of getObjectKeys(person.details[key])">
+						    <ng-container *ngFor="let id of person.details[key][mid]">
+						      <ng-container *ngTemplateOutlet="idBadgeTemplate;context:{prefix: mid, id: id}"></ng-container>
+						    </ng-container>
+						  </ng-container>
+			      </dd>
+			    </ng-container>
+			    <ng-container *ngSwitchDefault>
+			      <dt class="col-sm-4">{{ 'person.' + key | translate }}</dt>
+			      <dd class="col-sm-8">{{ person.details[key].name || person.details[key] }}</dd>
+			    </ng-container>
+			  </ng-container>
+      </ng-container>
+      </dl>
+    </div>
+  </div>
+  
+  <div *ngIf="person.documents && person.documents.length !== 0" class="card">
+    <h5 class="card-header">{{ 'person.documents' | translate }}</h5>
+    <div class="card-body">
+      <ng-container *ngFor="let item of person.documents">
+			  <div class="media p-1" *ngIf="item">
+			    <div *ngIf="!mds.isPhone()" class="media-thumb loading align-self-start my-1 ml-1 mr-2 d-none d-md-flex">
+			      <img class="border" [src]="thumb(item)" (load)="thumbLoaded($event)" (error)="defaultThumb($event, item)" alt="Thumbnail for Object {{ itemId }}">
+			    </div>
+			    <div class="media-body w-100">
+			      <h5>
+						  <a uiSref="metadata" [uiParams]="{id : item['id']}">
+						    {{ item['mods.title.main'] + (item['mods.title.subtitle'] ? ' : ' + item['mods.title.subtitle'] : '') }}
+						  </a>
+			      </h5>
+			      <div class="badges d-flex flex-row" scrollContainer>
+						  <!-- access -->
+						  <span class="badge"
+						    [ngClass]="{'badge-success': item['worldReadable'] && item['worldReadableComplete'], 'badge-warning': item['worldReadable'] && !item['worldReadableComplete'], 'badge-danger': !item['worldReadable'] && !item['worldReadableComplete']}"
+						        ><i class="fas"
+						    [ngClass]="{'fa-unlock': item['worldReadable'] && item['worldReadableComplete'], 'fa-lock': item['worldReadable'] && !item['worldReadableComplete'] || !item['worldReadable'] && !item['worldReadableComplete']}"
+						        ></i></span>
+						  <!-- genre -->
+						  <span class="badge badge-info" *ngIf="item['mods.type']">{{ (item['mods.type'] | classification:'mir_genres') }}</span>
+						  <!-- license -->
+						  <span class="badge badge-primary" *ngIf="item['link']">{{ (item['link'] | callbackFilter:licenseFilter)[0] | classification }}</span>
+						  <!-- date issued -->
+						  <span class="badge badge-primary" *ngIf="item['mods.dateIssued']">{{ item['mods.dateIssued'] | dateOrText:'dd.MM.yyyy' }}</span>
+						</div>
+            <div class="authors">
+						  <ng-container
+						    *ngTemplateOutlet="personsTemplate;context:{persons: item['mods.nameByRole.personal.aut']}"
+              ></ng-container>
+            </div>
+            <p class="abstract text-justify mb-0">{{ item['mods.abstract.result'] }}</p>
+          </div>
+        </div>
+      </ng-container>
+      
+      <a *ngIf="person.documentCount > 5" uiSref="search" [uiParams]="{query: buildQuery(person.id || person.name)}">{{ 'person.moreDocuments' | translate }}</a>
+    </div>
+  </div>
+</ng-template>
+
+<ng-container *ngIf="person && !included; else personDetailsTemplate">
+	<div class="container">
+    <h2>{{ person.name }}</h2>
+	  <ng-container *ngTemplateOutlet="personDetailsTemplate"></ng-container>
+	</div>
+</ng-container>

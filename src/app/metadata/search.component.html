@@ -1,0 +1,118 @@
+<div class="container">
+
+  <ng-template #personTemplate let-name="name" let-id="id"> 
+   <!-- person name -->
+   <a uiSref="search" [uiParams]="{query: id ? ['mods.nameIdentifier:(', id.prefix, '\\:', id.id, ')'].join('') : name}">{{ name }}</a>
+   <!-- name identifier -->
+   <a *ngIf="id" [href]="categoryLabelFilter((id.prefix | classification:'nameIdentifier':false)?.labels || [], 'x-uri')[0]?.text + id.id">
+     <sup class="ml-1">{{ (id.prefix | classification:'nameIdentifier') || (id.prefix | uppercase) }}</sup>
+   </a>
+  </ng-template>
+  
+  <ng-template #personsTemplate let-persons="persons">
+    <ng-container *ngFor="let p of persons; let i = index">
+      <ng-container *ngTemplateOutlet="personTemplate;context:personDetails(p)"></ng-container>
+      <ng-container *ngIf="i < persons.length - 1">; </ng-container> 
+    </ng-container>
+  </ng-template>
+
+	<h2>{{ 'search.foundDocs' | translate: {count: result?.response?.numFound || 0} }}</h2>
+	
+  <div class="d-lg-flex flex-lg-row-reverse">
+  
+    <ng-container *ngIf="result?.facet_counts?.facet_fields">
+	   <div class="d-lg-inline-flex flex-lg-column ml-lg-3 flex-shrink-1">
+	     <div class="facets">
+	       <ng-container *ngFor="let field of getObjectKeys(result.facet_counts.facet_fields)">
+		       <div class="facet card mb-2" *ngIf="result.facet_counts.facet_fields[field].length !== 0">
+		         <h5 class="card-header">{{ 'search.facet_field.' + field | translate }}</h5>
+		         <div class="card-body">
+		           <div class="form-check" *ngFor="let facet of parseFacets(result.facet_counts.facet_fields[field]) trackBy:trackByIdx; let i = index">
+		            <input class="form-check-input" type="checkbox" name="{{field}}_{{i}}" id="{{field}}_{{i}}" [checked]="isFacetSelected(field, facet.label)" (change)="facetSelect(field, facet.label)">
+		            <label class="form-check-label d-inline-flex flex-row w-100 justify-content-between align-items-center" for="{{field}}_{{i}}" [ngSwitch]="field">
+		              <ng-container *ngSwitchCase="'mods.genre'">
+			              <span class="text-nowrap text-truncate">{{ facet.label | classification:'mir_genres' }}</span> 
+                    <span class="badge badge-primary ml-1 my-auto">{{ facet.count }}</span>
+		              </ng-container>
+		              <ng-container *ngSwitchCase="'worldReadableComplete'">
+	                  <span class="text-nowrap text-truncate" [ngClass]="{'text-success': facet.label === 'true', 'text-warning': facet.label !== 'true'}">
+	                    <i class="fas" [ngClass]="{'fa-unlock': facet.label === 'true', 'fa-lock': facet.label !== 'true'}"></i> {{ 'search.worldReadableComplete.' + facet.label | translate }}
+	                  </span>
+	                  <span class="badge ml-1 my-auto" [ngClass]="{'badge-success': facet.label === 'true', 'badge-warning': facet.label !== 'true'}">{{ facet.count }}</span>
+	                </ng-container>
+		              <ng-container *ngSwitchDefault>
+		                <span class="text-nowrap text-truncate">{{ facet.label }}</span>
+		                <span class="badge badge-primary ml-1 my-auto">{{ facet.count }}</span>
+		              </ng-container>
+		            </label>
+		          </div>
+		         </div>
+		       </div>
+	       </ng-container>
+	       
+	       <div class="facet card mb-2">
+	         <h5 class="card-header">
+	           <a class="d-flex flex-row justify-content-between align-items-center" href="#" data-toggle="collapse" data-target="#yearOfPublication" 
+	           [attr.aria-expanded]="!mds.isPhone() || yearFrom || yearTo" aria-controls="yearOfPublication">
+	           {{ 'search.facet_field.yearOfPublication' | translate }}
+	           </a>
+	         </h5>
+	         <div id="yearOfPublication" class="card-body collapse" [ngClass]="{show: !mds.isPhone() || yearFrom || yearTo}">
+	           <div class="form-row">
+              <div class="form-group col-sm-6">
+                <label for="yearFrom">{{ 'general.from' | translate }}</label>
+                <input type="number" class="form-control" id="yearFrom" [(ngModel)]="yearFrom" (ngModelChange)="changeYear($event)">
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="yearTo">{{ 'general.to' | translate }}</label>
+                <input type="number" class="form-control" id="yearTo" [(ngModel)]="yearTo" (ngModelChange)="changeYear($event)">
+              </div>
+            </div>
+	         </div>
+	       </div>
+	       
+	     </div>	    
+	   </div>
+	  </ng-container>
+	  
+	  <div class="d-lg-inline-flex flex-lg-column flex-grow-1">
+			<div class="media p-1" *ngFor="let item of result?.response.docs; let i = index" id="hit-{{ i }}">
+			  <div *ngIf="!mds.isPhone()" class="media-thumb loading align-self-start my-1 ml-1 mr-2 d-none d-md-flex">
+			     <img class="border" [src]="thumb(item)" (load)="thumbLoaded($event)" (error)="defaultThumb($event, item)" alt="Thumbnail for Object {{ item['id'] }}">
+			  </div>
+			  <div class="media-body w-100">
+		      <h5>
+		        <a uiSref="metadata" [uiParams]="{id : item['id']}">
+		          {{ item['mods.title.main'] + (item['mods.title.subtitle'] ? ' : ' + item['mods.title.subtitle'] : '') }}
+		        </a>
+		      </h5>
+					<div class="badges flex-row d-flex" scrollContainer>
+						<!-- access -->
+						<span class="badge"
+							[ngClass]="{'badge-success': item['worldReadable'] && item['worldReadableComplete'], 'badge-warning': item['worldReadable'] && !item['worldReadableComplete'], 'badge-danger': !item['worldReadable'] && !item['worldReadableComplete']}"
+						><i class="fas"
+							[ngClass]="{'fa-unlock': item['worldReadable'] && item['worldReadableComplete'], 'fa-lock': item['worldReadable'] && !item['worldReadableComplete'] || !item['worldReadable'] && !item['worldReadableComplete']}"
+						></i></span>
+						<!-- genre -->
+						<span class="badge badge-info" *ngIf="item['mods.type']">{{ (item['mods.type'] | classification:'mir_genres') }}</span>
+						<!-- license -->
+						<span class="badge badge-primary" *ngIf="item['link']">{{ (item['link'] | callbackFilter:licenseFilter)[0] | classification }}</span>
+						<!-- date issued -->
+						<span class="badge badge-primary" *ngIf="item['mods.dateIssued']">{{ item['mods.dateIssued'] | dateOrText:'dd.MM.yyyy' }}</span>
+					</div>
+		      <div class="authors">
+		        <ng-container
+		          *ngTemplateOutlet="personsTemplate;context:{persons: item['mods.nameByRole.personal.aut']}"
+		        ></ng-container>
+		      </div>
+		      <p class="abstract text-justify">{{ item['mods.abstract.result'] }}</p>
+				</div>
+			</div>
+		
+		  <ng-container *ngIf="page && result?.response?.numFound && result.response.numFound > rows">
+		    <ngb-pagination class="d-flex justify-content-end mt-2" (pageChange)="pageChange($event)" [collectionSize]="result.response.numFound" [(page)]="page" [maxSize]="mds.isPhone() ? 4 : 5" [pageSize]="rows" [rotate]="true" [ellipses]="false" [boundaryLinks]="!mds.isPhone()"></ngb-pagination>
+		  </ng-container>
+	  </div>
+  
+  </div>
+</div>

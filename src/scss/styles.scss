@@ -1,0 +1,39 @@
+@import "./_variables";
+
+@import "~animate-sass/animate";
+
+/*
+ * FontAwesome
+ */
+$fa-font-path: "../../node_modules/@fortawesome/fontawesome-free-webfonts/webfonts/";
+
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fontawesome.scss";
+//@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-brands.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-solid.scss";
+@import "~@fortawesome/fontawesome-free-webfonts/scss/fa-regular.scss";
+
+@import "~bootstrap/scss/bootstrap";
+
+@import "~ngx-toastr/toastr.css";
+
+@import "~node-waves/src/scss/waves.scss";
+
+@import "./mixins/_animation";
+@import "./mixins/_download-icon";
+@import "./mixins/_gradients";
+@import "./mixins/_transform";
+@import "./mixins/_helpers";
+
+@import "./_animations";
+@import "./_navigation";
+@import "./_footer";
+@import "./_spinner";
+@import "./_scroll-container";
+@import "./_general";
+@import "./_overwrites";
+@import "./_panel";
+@import "./_teaser";
+@import "./_metadata";
+@import "./_browse";
+@import "./_rc";
+@import "./_video-js";

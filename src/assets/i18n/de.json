@@ -1,0 +1,217 @@
+{
+	"alert": {
+		"network": {
+			"error": {
+				"401": "Nicht autorisiert.",
+				"403": "Keine Zugriffsberechtigung.",
+				"500": "Interner Serverfehler"
+			},
+			"unknown": "Unbekannter Fehler aufgetreten.",
+			"unreachable": "Konnte URL \"{url}\" nicht erreichen."
+		},
+		"type": {
+			"error": "Fehler",
+			"info": "Info",
+			"success": "Erfolg",
+			"warning": "Warnung"
+		}
+	},
+	"basket": {
+		"breadcrumb": "Merkliste",
+		"numDocuments": "Auf ihrer Merkliste befinden sich {count, plural, =0{keine Dokumente} =1{ein Dokument} other{# Dokumente}}."
+	},
+	"browse": {
+		"breadcrumb": "Blättern",
+		"in": "Blättern in {label}"
+	},
+	"button": {
+		"add": "Hinzufügen",
+		"cancel": "Abbrechen",
+		"close": "Schließen",
+		"details": "Details",
+		"edit": "Bearbeiten",
+		"encode": "Enkodieren",
+		"login": "Anmelden",
+		"logout": "Abmelden",
+		"ok": "Ok",
+		"remove": "Entfernen",
+		"save": "Speichern",
+		"send": "Abschicken",
+		"share": "Teilen"
+	},
+	"dataTable": {
+		"filter": "Filter",
+		"filterInfo": "{start} bis {limit} von {total} Einträgen",
+		"first": "Erster",
+		"last": "Letzter",
+		"lengthMenu": "Einträge anzeigen",
+		"next": "Nächster",
+		"noItemFound": "Kein Eintrag gefunden!",
+		"previous": "Zurück"
+	},
+	"general": {
+		"action": "Aktion",
+		"actions": {
+			"created": "erzeugt",
+			"modified": "bearbeitet",
+			"deleted": "gelöscht"
+		},
+		"boolean": {
+			"false": "Nein",
+			"true": "Ja"
+		},
+		"buildIn": "eingebaut",
+		"copyright": "© 2000 - 2018 UrMEL. Alle Rechte vorbehalten.",
+		"created": "Erzeugt",
+		"date": "Datum",
+		"from": "Von",
+		"lastModified": "Bearbeitet",
+		"loading": "Lade...",
+		"next": "Vorwärts",
+		"noResult": "Suche liefert kein Ergebnis.",
+		"notset": "nicht gesetzt",
+		"pageOf": "{page} von {total, plural, =1{# Seite} other{# Seiten}}",
+		"pleaseSelect": "(bitte wählen)",
+		"previous": "Zurück",
+		"to": "Bis",
+		"typeToSearch": "Tippen um zu suchen",
+		"user": "Benutzer",
+		"validUntil": "Aktiv bis"
+	},
+	"language": {
+		"de": "Deutsch",
+		"en": "Englisch"
+	},
+	"login": {
+		"breadcrumb": "Anmelden",
+		"headline": "Anmeldung"
+	},
+	"metadata": {
+		"addToBasket": "Zur Merkliste hinzufügen",
+		"breadcrumb": "Details für {id}",
+		"citation": "Zitieren",
+		"citationStyle": "Zitierform",
+		"citationStyles": {
+			"deutsche-sprache": "Deutsch",
+			"apa": "APA",
+			"bibtex": "Bibtex",
+			"elsevier-harvard": "Elsevier",
+			"ieee": "IEEE",
+			"springer-basic-author-date": "Springer (basic)",
+			"din-1505-2": "DIN-1505-2"
+		},
+		"classification": {
+			"generic": "Klassifikation",
+			"sdnb": "DDC-Sachgruppe der DNB"
+		},
+		"corporate": "Einrichtung",
+		"createdby": "Erstellt von",
+		"createdate": "Erstellt am",
+		"dateAccepted": "Datum der Annahme der Promotion / des Abschlusses",
+		"dateCreated": "Datum der Erstellung",
+		"dateIssued": "Datum der Veröffentlichung",
+		"dateSubmitted": "Datum der Einreichung",
+		"issue": "Heft",
+		"language": "Sprache",
+		"modifydate": "Letzte Änderung",
+		"modifiedby": "Zuletzt geändert von",
+		"physicalDescription": "Umfang",
+		"place": "Erscheinungsort",
+		"preview": {
+			"confirm": "Hier klicken um Vorschau zu aktivieren."
+		},
+		"relatedItem": {
+			"host": "Erschienen in",
+			"references": "Referenziert",
+			"series": "Serie"
+		},
+		"revision": "Revision",
+		"rights": "Rechte",
+		"section": {
+			"content": "Inhalt",
+			"derivate": "{count, plural, =1{Dateibereich} other{Dateibereiche}}",
+			"details": "Details"
+		},
+		"shelfLocator": "Bibliothekssignatur",
+		"subjects": "Schlagwörter",
+		"sysinfos": "Systeminformation",
+		"titleTranslated": "Titelübersetzung",
+		"typeOfResource": "Ressourcentyp",
+		"upload": {
+		  "placeholderDrop": "Dateien hier fallen lassen oder klicken um auszuwählen!"
+		},
+		"useAndReproduction": "Nutzung und Vervielfältigung",
+		"version": "Version",
+		"versionHistory": "Versionsgeschichte",
+		"volume": "Band"
+	},
+	"navigation": {
+		"browse": "Blättern",
+		"faq": "FAQ",
+		"genres": "Dokumenttypen",
+		"guidelines": "Leitlinien",
+		"home": "Startseite",
+		"institutions": "Einrichtungen",
+		"login": "Anmelden",
+		"logout": "Abmelden",
+		"persons": "Personen",
+		"publish": "Publizieren",
+		"rc": {
+			"currentList": "Aktuelle Liste",
+			"establish": "Einrichten"
+		},
+		"reserveCollections": "Semesterapparate",
+		"basket": "Merkliste",
+		"basketOpen": "Merkliste öffnen",
+		"subjectGroups": "Sachgruppen",
+		"submitDocument": "Dokument einreichen",
+		"termsAndConditions": "Vertragsbedingungen"
+	},
+	"persons": {
+		"breadcrumb": "Personen von A-Z"
+	},
+	"person": {
+		"alternateName": "Namensvariante",
+		"dateOfBirth": "Geburtstag",
+		"dateOfDeath": "Todestag",
+		"details": "Personendetails",
+		"documents": "Dokumente",
+		"gender": "Geschlecht",
+		"gender_female": "weiblich",
+		"gender_male": "männlich",
+		"mappedIds": "Verknüpfte ID",
+		"moreDocuments": "Weitere Dokumente anzeigen...",
+		"placeOfActivity": "Wirkungsort",
+		"placeOfBirth": "Geburtsort",
+		"placeOfDeath": "Todesort"
+	},
+	"rc": {
+		"breadcrumb": "Semesterapparate Liste",
+		"id": "Nummer",
+		"lecturer": "DozentIn",
+		"location": "Standort",
+		"period": "Semester",
+		"title": "Titel",
+		"slot": {
+			"breadcrumb": "Semesterapparat {id}"
+		}
+	},
+	"search": {
+		"breadcrumb": "Suchergebnisse",
+		"facet_field": {
+			"mods.genre": "Genre",
+			"worldReadableComplete": "Verfügbarkeit",
+			"yearOfPublication": "Erscheinungsjahr"
+		},
+		"foundDocs": "{count, plural, =0{Kein Dokument} =1{1 Dokument} other{# Dokumente}} gefunden",
+		"placeholder": "Suchen",
+		"worldReadableComplete": {
+			"true": "frei",
+			"false": "beschränkt"
+		}
+	},
+	"user": {
+		"name": "Benutzername",
+		"password": "Passwort"
+	}
+}

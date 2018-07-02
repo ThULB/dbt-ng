@@ -1,0 +1,378 @@
+<div class="container metadata" *ngIf="mods">
+
+	<ng-template #personTemplate let-name="name" let-id="id"> 
+	  <ng-template #personIdLinkTemplate let-id="id" let-uri="uri">
+      <a *ngIf="id && uri" [href]="uri + id.id">
+        <sup class="ml-1">{{ (id.prefix | classification:'nameIdentifier') || (id.prefix | uppercase) }}</sup>
+      </a>
+	  </ng-template>
+    <!-- person name -->
+    <a uiSref="search" [uiParams]="{query: id ? ['mods.nameIdentifier:(', id.prefix, '\\:', id.id, ')'].join('') : name}">{{ name }}</a>
+    <!-- name identifier -->
+    <ng-container 
+      *ngTemplateOutlet="personIdLinkTemplate;context:{id: id, uri: categoryLabelFilter((id?.prefix | classification:'nameIdentifier':false)?.labels || [], 'x-uri')[0]?.text}"></ng-container>
+  </ng-template>
+	
+	<ng-template #personsTemplate let-persons="persons">
+    <ng-container *ngFor="let p of persons; let i = index">
+      <ng-container *ngTemplateOutlet="personTemplate;context:mods.personDetails(p)"></ng-container>
+      <ng-container *ngIf="i < persons.length - 1">; </ng-container>
+     </ng-container>
+  </ng-template>
+  
+  <ng-template #abstractsTemplate let-abstracts="abstracts">
+    <div class="abstracts">
+	    <ng-container *ngIf="abstracts.length == 1">
+	      <div class="ellipsis ellipsis-text">
+	        <p class="abstract pb-3">{{ abstracts[0].text }}</p>
+	      </div>
+	    </ng-container>
+	    <ng-container *ngIf="abstracts.length > 1">
+	      <ul role="tablist" class="nav nav-tabs justify-content-end" id="abstracts-tabs">
+	        <li *ngFor="let al of abstracts; let i = index" class="nav-item">
+	          <a class="nav-link" [ngClass]="{active: i == 0}" data-toggle="tab" href="#abstract-{{i}}" role="tab">{{ al.getAttributeValue('xml:lang') | classification:'rfc4646' }}</a>
+	        </li>
+	      </ul>
+	      <div class="tab-content" id="abstracts-content">
+	        <div *ngFor="let abstract of abstracts; let i = index" class="tab-pane fade" [ngClass]="{show: i == 0, active: i == 0}" id="abstract-{{i}}" role="tabpanel">
+	          <div class="ellipsis ellipsis-text">
+              <p class="abstract pb-3">{{ abstract.text }}</p>
+            </div>
+	        </div>
+	      </div>
+	    </ng-container>
+    </div>
+  </ng-template>
+  
+  <ng-template #topicTemplate let-topic="topic">
+    <a uiSref="search" [uiParams]="{query: 'topic:(&quot;' + topic.text + '&quot;)'}">{{ topic.text }}</a>
+    <a *ngIf="topic.getAttribute('authority')" [href]="topic.getAttributeValue('valueURI')"><sup class="ml-1">{{ topic.getAttributeValue('authority') | classification:'nameIdentifier' }}</sup></a>
+  </ng-template>
+        
+  <ng-template #topicsTemplate let-topics="topics">
+    <ng-container *ngFor="let topic of topics; let i = index">
+      <ng-container *ngTemplateOutlet="topicTemplate;context:{topic: topic}"></ng-container>
+      <ng-container *ngIf="i < topics.length - 1">; </ng-container>
+    </ng-container>
+  </ng-template>
+  
+  <ng-template #labelsWithParentsTemplate let-labels="labels" let-separator="separator">
+    <ng-container *ngIf="labels && labels.length">
+      <ng-container *ngFor="let label of labels; let i = index">
+        {{ label }}<ng-container *ngIf="i < labels.length - 1">{{ separator || ', ' }}</ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="labels && !labels.length">{{ labels }}</ng-container>
+  </ng-template>
+  
+  <div class="d-lg-flex flex-lg-row">
+  
+	  <div class="metadata-column d-lg-inline-flex flex-lg-column flex-row-1">
+	  
+		  <div class="metadata-header">
+				<div class="badges flex-row d-flex" scrollContainer>
+					<!-- access -->
+					<!-- 
+					<span class="badge"
+						[ngClass]="{'badge-success': item['worldReadable'] && item['worldReadableComplete'], 'badge-warning': item['worldReadable'] && !item['worldReadableComplete'], 'badge-danger': !item['worldReadable'] && !item['worldReadableComplete']}"
+					><i class="fas"
+						[ngClass]="{'fa-lock-open': item['worldReadable'] && item['worldReadableComplete'], 'fa-lock': item['worldReadable'] && !item['worldReadableComplete'] || !item['worldReadable'] && !item['worldReadableComplete']}"
+					></i></span>
+					 -->
+					<!-- genre -->
+					<span class="badge badge-info" *ngIf="mods.getElementWithAttribute('mods:genre', {type: 'intern'})">
+					  {{ mods.getElementWithAttribute('mods:genre', {type: 'intern'})?.getAttributeValue('valueURI') | classification }}
+					</span>
+					<!-- license -->
+					<span class="badge badge-success" *ngIf="mods.getElementWithAttribute('mods:accessCondition', {type: 'use and reproduction'})">
+					  {{ mods.getElementWithAttribute('mods:accessCondition', {type: 'use and reproduction'}).getAttributeValue('xlink:href') | classification }}</span>
+					<!-- date issued -->
+					<span class="badge badge-primary" *ngIf="mods.getElement('mods:dateIssued', true)">
+					  {{ mods.getElement('mods:dateIssued', true).text | dateOrText:'dd.MM.yyyy' }}
+					</span>
+					<span class="badge badge-primary" *ngIf="object.getElementWithAttribute('servstate', {classid: 'state'}, true)">
+					  {{ object.getElementWithAttribute('servstate', {classid: 'state'}, true).getAttributeValue('categid') | classification:'state' }}
+					</span>
+				</div>
+		
+			  <div class="float-right btn-group btn-group-sm mt-2 ml-2">
+					<button type="button" class="btn" title="{{ 'metadata.addToBasket' | translate }}" (click)="toggleBasket()"
+					  [ngClass]="{'btn-outline-primary': basket.isInBasket(id), 'btn-outline-secondary': !basket.isInBasket(id)}"
+					>
+			      <i class="far fa-bookmark"></i>
+				  </button>
+			  </div>
+			  
+				<h2 *ngIf="mods.filterAltFormat(mods.getElements('mods:titleInfo', mods.lang))">{{ mods.buildTitle(mods.filterAltFormat(mods.getElements('mods:titleInfo', mods.lang))[0]) }}</h2>
+			</div>
+		
+		  <div class="metadata-body">
+				<div class="authors" *ngIf="mods.getPersonsByTerm('aut').length != 0">
+					<ng-container *ngTemplateOutlet="personsTemplate;context:{persons: mods.getPersonsByTerm('aut')}"></ng-container>
+				</div>
+			  
+			  <ng-container *ngTemplateOutlet="abstractsTemplate;context:{abstracts: mods.filterAltFormat(mods.getElements('mods:abstract'))}"></ng-container>
+			  
+			  <ui-relateditems [(object)]="object"></ui-relateditems>
+			  
+			  <ng-template #derivatesTemplate let-derivates="derivates">
+			    <ui-preview [(selectedDerivate)]="selectedDerivate" [(selectedFile)]="selectedFile"></ui-preview>
+			    <ng-container *ngIf="derivates && derivates.length > 0">
+				    <div class="derivates card mt-2 mb-2">
+				      <ng-container *ngIf="derivates.length == 1">
+				        <h5 class="card-header">{{ 'metadata.section.derivate' | translate:{count: derivates.length} }}</h5>
+				        <div class="card-body p-1">
+				          <ui-filelist [derivate]="derivates[0]" (selectedFile)="fileSelected($event)"></ui-filelist>
+				        </div>
+				      </ng-container>
+				      <ng-container *ngIf="derivates.length > 1">
+				        <div class="card-header">
+				          <h5>{{ 'metadata.section.derivate' | translate:{count: derivates.length} }}</h5>
+				          <ul class="nav nav-tabs card-header-tabs justify-content-end">
+				            <li class="nav-item" *ngFor="let derivate of derivates; let i = index">
+				              <a class="nav-link" [ngClass]="{active: i == 0}" data-toggle="tab" href="#derivate-{{i}}" role="tab">
+				                <i class="fas fa-folder pr-1"></i> {{ i + 1 }}
+				              </a>
+				            </li>
+				          </ul>
+				        </div>
+				        <div class="card-body p-1">
+				          <div class="tab-content" id="derivates-content">
+				            <ng-container *ngFor="let derivate of derivates let i = index">
+						          <div class="tab-pane fade" [ngClass]="{show: i == 0, active: i == 0}" id="derivate-{{i}}" role="tabpanel">
+						            <ng-container *ngIf="!derivate?.display">
+				                  <div class="alert alert-warning">{{ 'metadata.accessRestricted.derivate' | translate }}</div>
+				                </ng-container>
+						            <ng-container *ngIf="derivate?.display">
+						              <ui-filelist [derivate]="derivate" (selectedFile)="fileSelected($event)"></ui-filelist>
+						            </ng-container>
+						          </div>
+					          </ng-container>
+				          </div>
+				        </div>
+				      </ng-container>
+				    </div>
+			    </ng-container>
+			  </ng-template>
+			    
+			  <ng-container *ngTemplateOutlet="derivatesTemplate;context:{derivates: derivates}"></ng-container>  
+			  
+				<div class="details card mt-2 mb-2">
+					<h5 class="card-header">{{ 'metadata.section.details' | translate }}</h5>
+					<div class="card-body">
+					  <ng-template #dtPersonTemplate let-type="type">
+					    <ng-container *ngIf="mods.getPersonsByTerm(type).length != 0">
+				      <dt class="col-sm-4">{{ type | classification:'marcrelator' }}</dt>
+				      <dd class="col-sm-8">
+				        <ng-container *ngTemplateOutlet="personsTemplate;context:{persons: mods.getPersonsByTerm(type)}"></ng-container>
+				      </dd>
+				      </ng-container>
+			      </ng-template>
+			      
+			      <ng-template #relatedItemTemplate let-relatedItem="relatedItem">
+			        <ng-container *ngIf="relatedItem && mods.filterAltFormat(relatedItem.getElements('mods:titleInfo', mods.lang)).length != 0">
+			        <dt class="col-sm-4">{{ 'metadata.relatedItem.' + relatedItem.getAttributeValue('type') | translate }}</dt>
+			        <dd class="col-sm-8">
+			          <a uiSref="metadata" [uiParams]="{id: relatedItem.getAttributeValue('xlink:href')}">
+			          {{ mods.buildTitle(mods.filterAltFormat(relatedItem.getElements('mods:titleInfo', mods.lang))[0]) }}
+			          </a>
+			          <ng-container *ngIf="relatedItem.getElement('mods:part')">
+			            <br>
+			            <ng-container *ngIf="relatedItem.getElement('mods:part').getElementWithAttribute('mods:detail', {type: 'volume'})">
+			              {{ 'metadata.volume' | translate }} {{ relatedItem.getElement('mods:part').getElementWithAttribute('mods:detail', {type: 'volume'}).getElement('mods:number').text }}
+			            </ng-container>
+			            <ng-container *ngIf="relatedItem.getElement('mods:part').getElementWithAttribute('mods:detail', {type: 'issue'})">
+			              <ng-container *ngIf="relatedItem.getElement('mods:part').getElementWithAttribute('mods:detail', {type: 'volume'})">; </ng-container>
+			              {{ 'metadata.issue' | translate }} {{ relatedItem.getElement('mods:part').getElementWithAttribute('mods:detail', {type: 'issue'}).getElement('mods:number').text }}
+			            </ng-container>
+			          </ng-container>
+			        </dd>
+			        </ng-container>
+			      </ng-template>
+			      
+			      <ng-template #relatedItemsTemplate let-relatedItems="relatedItems">
+			        <ng-container *ngFor="let relatedItem of relatedItems">
+			          <ng-container *ngTemplateOutlet="relatedItemTemplate;context:{relatedItem: relatedItem}"></ng-container>
+			        </ng-container>
+			      </ng-template>
+			      
+			      <ng-template #translatedTitleTemplate let-titles="titles">
+			        <ng-container *ngIf="titles.length !== 0">
+			          <dt class="col-sm-4">{{ 'metadata.titleTranslated' | translate }}</dt>
+			          <dd class="col-sm-8">
+					        <ng-container *ngFor="let titleInfo of titles; let i = index">
+					          {{ mods.buildTitle(titleInfo) }}
+					          <ng-container *ngIf="titleInfo.getAttributeValue('xml:lang')">
+					          ({{ titleInfo.getAttributeValue('xml:lang') | classification:'rfc4646' }})
+					          </ng-container>
+					        </ng-container>
+					        <br *ngIf="i < titles - 1">
+				        </dd>
+			        </ng-container>
+			      </ng-template>
+			        
+						<dl class="row">
+						  <ng-container *ngTemplateOutlet="relatedItemsTemplate;context:{relatedItems: mods.getElements('mods:relatedItem')}"></ng-container>
+						  
+						  <ng-container *ngTemplateOutlet="translatedTitleTemplate;context:{titles:(mods.filterLang(mods.filterAltFormat(mods.getElements('mods:titleInfo', {type: 'translated'})), translate.currentLang, true) | slice:1)}"></ng-container>
+						
+						  <ng-container *ngFor="let type of ['ths', 'rev', 'isb', 'ctb']">
+			          <ng-container *ngTemplateOutlet="dtPersonTemplate;context:{type: type}"></ng-container>
+						  </ng-container> 
+						  
+			        <ng-template #creationDatesTemplate let-creation="creation">
+			          <ng-container *ngIf="creation?.getElement('mods:dateCreated')">
+			          <dt class="col-sm-4">{{ 'metadata.dateCreated' | translate }}</dt>
+			          <dd class="col-sm-8">{{ creation.getElement('mods:dateCreated')?.text | dateOrText:'dd.MM.yyyy' }}</dd>
+			          </ng-container>
+			          
+				        <ng-container *ngIf="creation?.getElementWithAttribute('mods:dateOther', {'type': 'submitted'})">
+				        <dt class="col-sm-4">{{ 'metadata.dateSubmitted' | translate }}</dt>
+				        <dd class="col-sm-8">{{ creation.getElementWithAttribute('mods:dateOther', {'type': 'submitted'})?.text | dateOrText:'dd.MM.yyyy' }}</dd>
+				        </ng-container>
+				        
+								<ng-container *ngIf="creation?.getElementWithAttribute('mods:dateOther', {'type': 'accepted'})">
+								<dt class="col-sm-4">{{ 'metadata.dateAccepted' | translate }}</dt>
+								<dd class="col-sm-8">{{ creation.getElementWithAttribute('mods:dateOther', {'type': 'accepted'})?.text | dateOrText:'dd.MM.yyyy' }}</dd>
+								</ng-container>
+							</ng-template>
+			
+							<ng-container *ngTemplateOutlet="creationDatesTemplate;context:{creation:mods.getElementWithAttribute('mods:originInfo', {'eventType': 'creation'})}"></ng-container>
+							
+							<ng-container *ngIf="mods.getElementWithAttribute('mods:originInfo', {'eventType': 'publication'})?.getElement('mods:dateIssued')">
+			        <dt class="col-sm-4">{{ 'metadata.dateIssued' | translate }}</dt>
+			        <dd class="col-sm-8">{{ mods.getElementWithAttribute('mods:originInfo', {'eventType': 'publication'}).getElement('mods:dateIssued')?.text | dateOrText:'dd.MM.yyyy' }}</dd>
+			        </ng-container>
+			
+							<ng-container *ngFor="let id of mods.getElements('mods:identifier')">
+								<ng-container *ngIf="id.text.indexOf('gvk:ppn') !== -1">
+								 <dt class="col-sm-4">PPN</dt>
+								 <dd class="col-sm-8"><a [href]="'http://gsoapi.gbv.de/DB=2.1/PPNSET?PPN=' + extractPPN(id.text)">{{ extractPPN(id.text) }}</a></dd>
+								</ng-container>
+								<ng-container *ngIf="id.text.indexOf('gvk:ppn') === -1">
+									<dt class="col-sm-4">{{ (id.getAttributeValue('type') | classification:'identifier') || (id.getAttributeValue('type') | uppercase) }}</dt>
+									<dd class="col-sm-8" [ngSwitch]="id.getAttributeValue('type')">
+										<a *ngSwitchCase="'doi'" [href]="'https://doi.org/' + id.text">{{ id.text }}</a>
+										<a *ngSwitchCase="'oclc'" [href]="'http://www.worldcat.org/title/plos-one/oclc/' + id.text">{{ id.text }}</a>
+										<a *ngSwitchCase="'urn'" [href]="'http://nbn-resolving.de/' + id.text">{{ id.text }}</a>
+										<a *ngSwitchCase="'uri'" [href]="id.text">{{ id.text }}</a>
+					          <ng-container *ngSwitchDefault>{{ id.text }}</ng-container>
+									</dd>
+								</ng-container>
+							</ng-container>
+							
+							<ng-container *ngIf="mods.lang">
+			        <dt class="col-sm-4">{{ 'metadata.language' | translate }}</dt>
+			        <dd class="col-sm-8">{{ mods.lang | classification:'rfc4646' }}</dd>
+			        </ng-container>
+			        
+			        <ng-container *ngIf="mods.getElement('mods:typeOfResource')">
+			        <dt class="col-sm-4">{{ 'metadata.typeOfResource' | translate }}</dt>
+			        <dd class="col-sm-8">{{ mods.getElement('mods:typeOfResource').text | classification:'typeOfResource' }}</dd>
+			        </ng-container>
+			        
+			        <ng-container *ngIf="mods.getElement('mods:physicalDescription')?.getElement('mods:extent')">
+			        <dt class="col-sm-4">{{ 'metadata.physicalDescription' | translate }}</dt>
+			        <dd class="col-sm-8">{{ mods.getElement('mods:physicalDescription').getElement('mods:extent')?.text }}</dd>
+			        </ng-container>
+			        
+			        <ng-container *ngIf="mods.getElementWithAttribute('mods:originInfo', {'eventType': 'publication'})?.getElementWithAttribute('mods:placeTerm', {type: 'text'}, true)">
+			        <dt class="col-sm-4">{{ 'metadata.place' | translate }}</dt>
+			        <dd class="col-sm-8">{{ mods.getElementWithAttribute('mods:originInfo', {'eventType': 'publication'}).getElementWithAttribute('mods:placeTerm', {type: 'text'}, true)?.text }}</dd>
+			        </ng-container>
+			        
+			        <ng-container *ngTemplateOutlet="dtPersonTemplate;context:{type: 'pbl'}"></ng-container>
+			
+			        <ng-container *ngIf="mods.getPersonsByTerm('pbl').length == 0 && mods.getElementWithAttribute('mods:originInfo', {'eventType': 'publication'})?.getElement('mods:publisher', true)">
+			        <dt class="col-sm-4">{{ 'pbl' | classification:'marcrelator' }}</dt>
+			        <dd class="col-sm-8">{{ mods.getElementWithAttribute('mods:originInfo', {'eventType': 'publication'}).getElement('mods:publisher', true).text }}</dd>
+			        </ng-container>
+			        
+			        <ng-container *ngIf="mods.getElements('mods:subject').length != 0">
+			        <dt class="col-sm-4">{{ 'metadata.subjects' | translate }}</dt>
+			        <dd class="col-sm-8">
+			          <ng-container 
+			            *ngTemplateOutlet="topicsTemplate;context:{topics: mods.getElement('mods:subject').getElements('mods:topic')}"></ng-container>
+			        </dd>
+			        </ng-container>
+			        
+			        <ng-container *ngIf="mods.getElement('mods:shelfLocator', true)">
+			        <dt class="col-sm-4">{{ 'metadata.shelfLocator' | translate }}</dt>
+			        <dd class="col-sm-8">{{ mods.getElement('mods:shelfLocator', true).text }}</dd>
+			        </ng-container>
+			        
+			        <ng-container *ngFor="let sdnb of mods.getElementsWithAttribute('mods:classification', {'authority': 'sdnb'})">
+			        <dt class="col-sm-4">{{ 'metadata.classification.sdnb' | translate }}</dt>
+			        <dd class="col-sm-8">
+			          <a uiSref="search" [uiParams]="{query: 'category:(SDNB\\:' + sdnb.text + ')'}">{{ sdnb.text | classification:'SDNB' }}</a>
+			        </dd>
+			        </ng-container>
+			        
+			        <ng-container *ngFor="let class of mods.getElementsWithAttribute('mods:classification', 'authorityURI')">
+			          <ng-template #classifUriTemplate let-uri="uri" let-classRoot="classRoot">
+			            <ng-container *ngIf="uri && ['diniPublType', 'XMetaDissPlusThesisLevel'].indexOf(classRoot) === -1">
+			            <dt class="col-sm-4">{{ ( trimIdFromValueUri(uri) | classification) || ('metadata.classification.generic' | translate) }}</dt>
+					        <dd class="col-sm-8">
+					          <a uiSref="search" [uiParams]="{query: 'category:(' + classRoot + '\\:' + (uri | classification:null:false)?.ID + ')'}">
+					            <ng-container *ngIf="['KONFERENZEN'].indexOf(classRoot) !== -1">
+					              <ng-container *ngTemplateOutlet="labelsWithParentsTemplate;context:{labels: (uri | classification:null:true:true)}"></ng-container>
+					            </ng-container>
+					            <ng-container *ngIf="['KONFERENZEN'].indexOf(classRoot) === -1">
+					              {{ uri | classification }}
+					            </ng-container>
+					          </a>
+					        </dd>
+					        </ng-container>
+			          </ng-template>
+			          <ng-container *ngTemplateOutlet="classifUriTemplate;context:{uri: class.getAttributeValue('valueURI'), classRoot: getClassificationFromValue(class.getAttributeValue('valueURI'))}"></ng-container>
+			        </ng-container>
+			        
+			        <ng-container *ngIf="mods.getElementWithAttribute('mods:name', {type: 'corporate'})?.getAttribute('valueURI')">
+			        <dt class="col-sm-4">{{ 'metadata.corporate' | translate }}</dt>
+			        <dd class="col-sm-8">
+			          <ng-container *ngTemplateOutlet="labelsWithParentsTemplate;context:{labels: (mods.getElementWithAttribute('mods:name', {type: 'corporate'})?.getAttributeValue('valueURI') | classification:null:true:true)}"></ng-container>
+			        </dd>
+			        </ng-container>
+			        
+			        <ng-container *ngFor="let note of mods.getElements('mods:note')">
+			        <dt class="col-sm-4">{{ note.getAttributeValue('type') | classification:'noteTypes' }}</dt>
+			        <dd class="col-sm-8">{{ note.text }}</dd>
+			        </ng-container>
+			        
+						</dl>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="metadata-column d-lg-inline-flex flex-lg-column ml-lg-3 flex-shrink-1">
+		  <ui-citation [object]="object"></ui-citation>
+		  
+		  <div class="card" *ngIf="mods.getElementWithAttribute('mods:accessCondition', {type: 'use and reproduction'})">
+		    <ng-template #licenseDisplayTemplate let-id="ID" let-labels="labels" let-url="url">
+		      <ng-template #licenseInfoTemplate let-text="text" let-description="description">
+		        <strong>{{ 'metadata.useAndReproduction' | translate }}</strong><br>
+		        <span>{{ text }}</span>
+            <p *ngIf="description"><i>{{ description }}</i></p>
+            
+            <a *ngIf="url && url.indexOf('creativecommons') !== -1" [href]="url">
+              <img [src]="ccLicenseImage(url)" [attr.alt]="text">
+            </a>
+		      </ng-template>
+		      <ng-container *ngTemplateOutlet="licenseInfoTemplate;context:categoryLabelFilter(labels || [], translate.currentLang)[0]"></ng-container>
+        </ng-template>
+		    <h5 class="card-header">{{ 'metadata.rights' | translate }}</h5>
+		    <div class="card-body">
+		      <ng-container *ngTemplateOutlet="licenseDisplayTemplate;context:mods.getElementWithAttribute('mods:accessCondition', {type: 'use and reproduction'}).getAttributeValue('xlink:href') | classification:null:false"></ng-container>
+		    </div>
+		  </div>
+		  
+		  <ng-container *ngIf="isAdmin || isEditor">
+		    <ui-sysinfo [object]="object"></ui-sysinfo>
+		  </ng-container>
+		</div>
+	
+	</div>
+
+</div>

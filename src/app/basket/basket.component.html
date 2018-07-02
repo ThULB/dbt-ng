@@ -1,0 +1,66 @@
+<div id="basket" class="container">
+  
+  <ng-template #personTemplate let-name="name" let-id="id"> 
+   <!-- person name -->
+   <a uiSref="search" [uiParams]="{query: id ? ['mods.nameIdentifier:(', id.prefix, '\\:', id.id, ')'].join('') : name}">{{ name }}</a>
+   <!-- name identifier -->
+   <a *ngIf="id" [href]="categoryLabelFilter((id.prefix | classification:'nameIdentifier':false)?.labels || [], 'x-uri')[0]?.text + id.id">
+     <sup class="ml-1">{{ (id.prefix | classification:'nameIdentifier') || (id.prefix | uppercase) }}</sup>
+   </a>
+  </ng-template>
+  
+  <ng-template #personsTemplate let-persons="persons">
+    <ng-container *ngFor="let p of persons; let i = index">
+      <ng-container *ngTemplateOutlet="personTemplate;context:personDetails(p)"></ng-container>
+      <ng-container *ngIf="i < persons.length - 1">; </ng-container> 
+    </ng-container>
+  </ng-template>
+  
+  <h2>{{ 'basket.breadcrumb' | translate }}</h2>
+  
+  <ng-container *ngIf="!basket.items || basket.items.length === 0">
+    <div class="alert alert-info">{{ 'basket.numDocuments' | translate:{count: 0} }}</div>
+  </ng-container>
+  
+  <ng-container *ngFor="let item of basket.items">
+		<div class="media p-1" *ngIf="item.document">
+		  <div *ngIf="!mds.isPhone()" class="media-thumb loading align-self-start my-1 ml-1 mr-2 d-none d-md-flex">
+        <img class="border" [src]="item.thumbnail" (load)="thumbLoaded($event)" (error)="defaultThumb($event, item)" alt="Thumbnail for Object {{ item.documentId }}">
+      </div>
+			<div class="media-body w-100">
+			  <div class="d-flex flex-row justify-content-between">
+				  <div class="d-inline-flex flex-column w-75">
+						<h5>
+							<a uiSref="metadata" [uiParams]="{id : item.documentId}">
+							  {{ item.document['mods.title.main'] + (item.document['mods.title.subtitle'] ? ' : ' + item.document['mods.title.subtitle'] : '') }}
+							</a>
+						</h5>
+						<div class="badges d-flex flex-nowrap w-auto" scrollContainer>
+		          <!-- access -->
+		          <span class="badge"
+		            [ngClass]="{'badge-success': item.document['worldReadable'] && item.document['worldReadableComplete'], 'badge-warning': item.document['worldReadable'] && !item.document['worldReadableComplete'], 'badge-danger': !item.document['worldReadable'] && !item.document['worldReadableComplete']}"
+		          ><i class="fas"
+		            [ngClass]="{'fa-unlock': item.document['worldReadable'] && item.document['worldReadableComplete'], 'fa-lock': item.document['worldReadable'] && !item.document['worldReadableComplete'] || !item.document['worldReadable'] && !item.document['worldReadableComplete']}"
+		          ></i></span>
+		          <!-- genre -->
+		          <span class="badge badge-info" *ngIf="item.document['mods.type']">{{ (item.document['mods.type'] | classification:'mir_genres') }}</span>
+		          <!-- license -->
+		          <span class="badge badge-primary" *ngIf="item.document['link']">{{ (item.document['link'] | callbackFilter:licenseFilter)[0] | classification }}</span>
+		          <!-- date issued -->
+		          <span class="badge badge-primary" *ngIf="item.document['mods.dateIssued']">{{ item.document['mods.dateIssued'] | dateOrText:'dd.MM.yyyy' }}</span>
+		        </div>
+	        </div>
+	        <div class="flex-column btn-group">
+            <button type="button" class="btn btn-outline-danger" (click)="removeFromBasket(item.documentId)"><i class="fa fa-trash"></i></button>
+          </div>
+        </div>
+				<div class="authors">
+	        <ng-container
+	          *ngTemplateOutlet="personsTemplate;context:{persons: item.document['mods.nameByRole.personal.aut']}"
+	        ></ng-container>
+	      </div>
+	      <p class="abstract text-justify mb-0">{{ item.document['mods.abstract.result'] }}</p>
+      </div>
+		</div>
+	</ng-container>
+</div>

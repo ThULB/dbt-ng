@@ -1,0 +1,48 @@
+$panel-default-border: $table-border-color !default;
+$panel-default-heading-bg: $table-head-bg !default;
+$panel-footer-bg: $table-head-bg !default;
+
+.panel-default {
+  border: 1px solid $panel-default-border;
+  border-radius: 2px;
+  @include box-shadow (0 1px 1px rgba(0, 0, 0, 0.05));
+  .panel-heading {
+    background-color: $panel-default-heading-bg;
+    @include border-top-radius (2px);
+    @include box-shadow (0 -2px 0 rgba(0, 0, 0, 0.05) inset);
+    border-bottom: 1px solid $panel-default-border;
+    color: $text-color;
+  }
+
+  .panel-footer {
+    background-color: $panel-footer-bg;
+    @include border-bottom-radius (2px);
+    border-top: 1px solid $panel-default-border;
+  }
+}
+
+.panel {
+  .panel-heading.with-tabs {
+    position: relative;
+    > .panel-title {
+      display: block;
+      line-height: ceil(($font-size-base * 1.125) * 2 - 1);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    > .nav-tabs {
+      position: absolute;
+      right: 0;
+      border-bottom: 0 none;
+      bottom: 0;
+      display: block;
+      > li {
+        a {
+          @include border-top-radius (0);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,135 @@
+
+<ui-spinner></ui-spinner>
+
+<nav class="navbar navbar-expand-md navbar-light navbar-dbt fixed-top scrolling-navbar">
+	<div class="container">
+		<a class="navbar-brand" uiSref="home"><span class="img-placeholder"></span></a>
+		<button type="button" class="navbar-toggler collapsed plus-sign" data-toggle="collapse" data-target="#navbar,#container-overlay" aria-expanded="false"
+			aria-controls="navbar"
+		>
+			<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+		</button>
+		<div id="navbar" class="navbar-collapse collapse">
+			<ul class="navbar-nav">
+				<li class="nav-item dropdown"><a href="#rc" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"
+				>{{ 'navigation.reserveCollections' | translate }}</a>
+					<ul class="dropdown-menu">
+						<li class="dropdown-item" uiSrefActive="active" uiSref="rc">{{ 'navigation.rc.currentList' | translate }}</li>
+						<li class="dropdown-item" *ngIf="$auth.hasRole('admin') || $auth.hasRole('editor') || $auth.hasRole('submitter')"><a href="#">{{ 'navigation.rc.establish' | translate }}</a></li>
+					</ul></li>
+				<li class="nav-item dropdown"><a href="#publish" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"
+				>{{ 'navigation.publish' | translate }}</a>
+					<ul class="dropdown-menu">
+						<li class="dropdown-item"><a href="#">{{ 'navigation.submitDocument' | translate }}</a></li>
+						<li class="dropdown-item"><a href="#">{{ 'navigation.guidelines' | translate }}</a></li>
+						<li class="dropdown-item"><a href="#">{{ 'navigation.termsAndConditions' | translate }}</a></li>
+					</ul></li>
+				<li class="nav-item dropdown d-xs-inline d-sm-inline d-md-none"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"
+				>{{ 'navigation.browse' | translate }}</a>
+					<ul class="dropdown-menu">
+						<li class="dropdown-item" uiSrefActive="active" uiSref="browse" [uiParams]="{id: 'mir_institutes'}">{{ 'navigation.institutions' | translate }}</li>
+						<li class="dropdown-item" uiSrefActive="active" uiSref="browse" [uiParams]="{id: 'mir_genres'}">{{ 'navigation.genres' | translate }}</li>
+						<li class="dropdown-item" uiSrefActive="active" uiSref="browse" [uiParams]="{id: 'SDNB'}">{{ 'navigation.subjectGroups' | translate }}</li>
+						<li class="dropdown-item" uiSrefActive="active" uiSref="persons">{{ 'navigation.persons' | translate }}</li>
+					</ul></li>
+				<li class="nav-item d-xs-inline d-sm-inline d-md-none"><a href="faq.html" class="nav-link">{{ 'navigation.faq' | translate }}</a></li>
+				<li class="nav-item dropdown d-xs-inline d-sm-inline d-md-none"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"
+				>{{ 'navigation.basket' | translate }} <sup class="ml-1">{{ basket.items.length || 0 }}</sup>
+				</a>
+					<ul role="menu" class="dropdown-menu">
+						<li class="dropdown-item disabled">{{ 'basket.numDocuments' | translate:{count: basket.items.length} }}</li>
+						<li class="dropdown-divider"></li>
+						<li class="dropdown-item" uiSrefActive="active" uiSref="basket">{{ 'navigation.basketOpen' | translate }}</li>
+					</ul></li>
+			</ul>
+			<ul class="navbar-nav navbar-right">
+				<li class="nav-item dropdown d-none d-md-inline"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"
+				><i class="fa fa-bookmark" aria-hidden="true"></i> <sup class="ml-1">{{ basket.items.length || 0 }}</sup> </a>
+					<ul role="menu" class="dropdown-menu dropdown-menu-right">
+						<li class="dropdown-item disabled">{{ 'basket.numDocuments' | translate:{count: basket.items.length} }}</li>
+						<li class="dropdown-divider"></li>
+						<li class="dropdown-item" uiSrefActive="active" uiSref="basket">{{ 'navigation.basketOpen' | translate }}</li>
+					</ul></li>
+				<li class="nav-item dropdown d-none d-md-inline"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+					aria-expanded="false"
+				><i class="fa fa-sitemap" aria-hidden="true"></i> <span class="d-none d-xl-inline ml-1">{{ 'navigation.browse' | translate }}</span> </a>
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li class="dropdown-item" uiSrefActive="active" uiSref="browse" [uiParams]="{id: 'mir_institutes'}">{{ 'navigation.institutions' | translate }}</li>
+						<li class="dropdown-item" uiSrefActive="active" uiSref="browse" [uiParams]="{id: 'mir_genres'}">{{ 'navigation.genres' | translate }}</li>
+						<li class="dropdown-item" uiSrefActive="active" uiSref="browse" [uiParams]="{id: 'SDNB'}">{{ 'navigation.subjectGroups' | translate }}</li>
+						<li class="dropdown-item" uiSrefActive="active" uiSref="persons">{{ 'navigation.persons' | translate }}</li>
+					</ul></li>
+				<li class="nav-item d-none d-md-inline"><a href="faq.html" class="nav-link"><i class="fa fa-question-circle" aria-hidden="true"></i> <span
+						class="d-none d-xl-inline ml-1"
+					>{{ 'navigation.faq' | translate }}</span> </a></li>
+				<li class="nav-item"><a *ngIf="$auth.isLoggedIn()" class="nav-link" href="#" (click)="$auth.logout()"> <i class="fa fa-power-off"
+						aria-hidden="true"
+					></i> <span class="d-inline d-xl-inline d-sm-inline d-md-none ml-1">{{ $auth.user.name || $auth.user.username }}</span>
+				</a> <a *ngIf="!$auth.isLoggedIn()" class="nav-link" uiSref="login"> <i class="fa fa-power-off" aria-hidden="true"></i> <span
+						class="d-inline d-xl-inline d-sm-inline d-md-none ml-1"
+					>{{ 'navigation.login' | translate }}</span>
+				</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
+<div class="searchbar">
+	<div class="container">
+		<form class="navbar-form navbar-right" role="search" (ngSubmit)="search()">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="{{ 'search.placeholder' | translate }}" name="query" [(ngModel)]="query"> <span
+					class="input-group-btn"
+				>
+					<button type="submit" class="btn btn-default">
+						<span class="fa fa-search" aria-hidden="true"></span>
+					</button>
+				</span>
+			</div>
+		</form>
+	</div>
+</div>
+
+<div id="container-main">
+	<a id="top"></a>
+	<ui-breadcrumb></ui-breadcrumb>
+	<ui-view class="w-100"></ui-view>
+</div>
+
+<footer>
+	<div class="container">
+		<div class="d-flex justify-content-between align-items-center">
+			<div>
+				<ul class="nav-footer">
+					<li class=""><a href="https://www.db-thueringen.de/content/footer/impressum.xml">Impressum</a></li>
+					<li class=""><a href="https://www.db-thueringen.de/content/footer/contact.xml">Kontakt</a></li>
+				</ul>
+				<p class="info">{{ 'general.copyright' | translate }}</p>
+			</div>
+			<div>
+				<div class="btn-group dropup float-right language-select">
+					<button data-toggle="dropdown" class="btn btn-default btn-sm dropdown-toggle">
+						<span class="language" [ngClass]="{'de': translate.currentLang === 'de', 'en': translate.currentLang === 'en'}">{{ 'language.' +
+							translate.currentLang | translate }}</span>
+					</button>
+					<ul class="dropdown-menu dropdown-menu-right">
+						<li *ngFor="let lang of translate.getLangs()" class="dropdown-item language"
+							[ngClass]="{'de': lang === 'de', 'en': lang === 'en', 'active': lang === translate.currentLang}" (click)="setCurrentLang(lang)"
+						>{{ 'language.' + lang | translate }}</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-center align-items-center" id="powered_by">
+      <a href="http://www.mycore.de"><img alt="powered by MyCoRe" class="img-responsive"
+        src="/assets/images/mycore_logo_powered_120x30_blaue_schrift_frei.png"
+      ></a>
+		</div>
+	</div>
+</footer>
+
+<div id="container-overlay" class="collapse" data-toggle="collapse" data-target="#navbar,#container-overlay" aria-expanded="false" aria-controls="navbar"></div>

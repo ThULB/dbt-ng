@@ -1,0 +1,76 @@
+footer {
+  padding-top: 10px;
+  padding-bottom: 20px;
+  line-height: 2.1818em;
+  color: lighten($text-color, 15%);
+  #footer-nav {
+    @include media-breakpoint-down($float-breakpoint-max) {
+      text-align: center;
+    }
+  }
+
+  .info {
+    line-height: 0.75em;
+    font-size: 0.846em;
+  }
+
+  ul.nav-footer {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      float: left;
+      padding: 0 0 0 5px;
+      &:first-child {
+        padding: 0;
+      }
+
+      &:last-child {
+        &:after {
+          content: "";
+          padding-left: 0;
+        }
+      }
+
+      &:after {
+        content: "|";
+        padding: 0 5px 0 10px;
+      }
+    }
+  }
+
+  .language-select {
+    %language {
+      background-repeat: no-repeat;
+      background-size: 18px 12px;
+      background-position: center center;
+      &.de {
+        background-image: url('/assets/images/icons/lng_de.gif') !important;
+      }
+
+      &.en {
+        background-image: url('/assets/images/icons/lng_en.gif');
+      }
+    }
+
+    button {
+      margin-top: -15px;
+      span.language {
+        @extend %language;
+        display: inline-block;
+        text-indent: -9999px;
+        width: 30px;
+      }
+    }
+
+    ul {
+      .language {
+        @extend %language;
+        padding-left: 30px;
+        background-position: 5px center;
+      }
+    }
+  }
+}
+

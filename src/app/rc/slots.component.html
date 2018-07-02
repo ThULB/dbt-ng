@@ -1,0 +1,102 @@
+<div class="container">
+  <ng-template #labelsWithParentsTemplate let-labels="labels" let-separator="separator">
+    <ng-container *ngIf="labels && labels.length">
+      <ng-container *ngFor="let label of labels; let i = index">
+        <a uiSref="rc" [uiParams]="{term: quote(label), page: 1}">{{ label }}</a>
+        <ng-container *ngIf="i < labels.length - 1">{{ separator || ', ' }}</ng-container>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="labels && !labels.length">{{ labels }}</ng-container>
+  </ng-template>
+  
+	<h2>{{ 'rc.breadcrumb' | translate }}</h2>
+	<div id="rc-list" class="datatable panel panel-default">
+		<div class="panel-heading">
+			<form role="form" class="form-inline d-flex justify-content-between p-2">
+        <div class="form-group flex-fill m-0">
+          <label class="d-inline-flex justify-content-start flex-row w-100 align-items-center">
+            <span aria-hidden="true" class="fa fa-filter mr-1"></span> {{ 'dataTable.filter' | translate }}
+            <input id="filter" type="search" class="form-control ml-1" name="term" [(ngModel)]="term"
+              (keydown)="changeFilter($event)">
+          </label>
+        </div>
+        <div class="form-group m-0">
+          <select size="1" name="numPerPage" [(ngModel)]="numPerPage" (ngModelChange)="numPerPageChange($event)" class="form-control d-none d-sm-inline">
+            <option *ngFor="let np of [10, 25, 50, 100]" [ngValue]="np">{{ np }}</option>
+          </select> <label class="d-none d-sm-inline ml-1">{{ 'dataTable.lengthMenu' | translate }} </label>
+        </div>
+			</form>
+		</div>
+		<div class="table-responsive">
+			<table id="slots" class="table table-striped">
+				<thead>
+					<tr>
+					  <th width="15%" *ngIf="isAdmin || isEditor">
+					   <a class="d-flex justify-content-between align-items-center" href="#" (click)="sortChange('slotId')">
+                {{ 'rc.id' | translate }}
+                <span class="fa fa-sort sort-icon" [ngClass]="{'fa-sort-up': sortType('slotId') === 1, 'fa-sort-down': sortType('slotId') === -1}"></span>
+              </a>
+					  </th>
+						<th width="15%">
+						  <a class="d-flex justify-content-between align-items-center" href="#" (click)="sortChange('slot.lecturers')">
+						    {{ 'rc.lecturer' | translate }}
+						    <span class="fa fa-sort sort-icon" [ngClass]="{'fa-sort-up': sortType('slot.lecturers') === 1, 'fa-sort-down': sortType('slot.lecturers') === -1}"></span>
+						  </a>
+						</th>
+						<th width="*">
+						  <a class="d-flex justify-content-between align-items-center" href="#" (click)="sortChange('slot.title')">
+						    {{ 'rc.title' | translate }}
+						    <span class="fa fa-sort sort-icon" [ngClass]="{'fa-sort-up': sortType('slot.title') === 1, 'fa-sort-down': sortType('slot.title') === -1}"></span>
+						  </a>
+						</th>
+						<th width="15%">
+						  <a class="d-flex justify-content-between align-items-center" href="#" (click)="sortChange('slot.validTo')">
+						    {{ 'rc.period' | translate }}
+						    <span class="fa fa-sort sort-icon" [ngClass]="{'fa-sort-up': sortType('slot.validTo') === 1, 'fa-sort-down': sortType('slot.validTo') === -1}"></span>
+						  </a>
+						</th>
+						<th width="25%">
+						  <a class="d-flex justify-content-between align-items-center" href="#" (click)="sortChange('slotId')">
+						    {{ 'rc.location' | translate }}
+						    <span class="fa fa-sort sort-icon" [ngClass]="{'fa-sort-up': sortType('slotId') === 1, 'fa-sort-down': sortType('slotId') === -1}"></span>
+						  </a>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngIf="!slots || slots.total === 0">
+						<td class="text-center" [attr.colspan]="isAdmin || isEditor ? 5 : 4">{{ 'general.noResult' | translate }}</td>
+					</tr>
+					<ng-container *ngIf="slots">
+					<tr *ngFor="let slot of slots.slot" [hidden]="slots.total === 0">
+					  <td *ngIf="isAdmin || isEditor">
+              <a uiSref="rc-slot" [uiParams]="{ id: slot.id }">{{ slot.id }}</a>
+					  </td>
+						<td>
+						  <ng-container *ngFor="let lecturer of slot.lecturers.lecturer; let i = index">
+						    <a uiSref="rc" [uiParams]="{term: quote(lecturer.name), page: 1}">{{ lecturer.name }}</a>
+						    <br *ngIf="i < slot.lecturers.lecturer.length - 1">
+						  </ng-container>
+						</td>
+						<td><a uiSref="rc-slot" [uiParams]="{ id: slot.id }">{{ slot.title }}</a></td>
+						<td>{{ slot.validTo | period }}</td>
+						<td>
+						  <ng-container 
+						    *ngTemplateOutlet="labelsWithParentsTemplate;context:{labels: (locationId(slot.id) | classification:'RCLOC':true:true), separator: ' / '}">
+						  </ng-container>
+						</td>
+					</tr>
+					</ng-container>
+				</tbody>
+			</table>
+		</div>
+		<div class="panel-footer d-flex justify-content-between p-2" *ngIf="slots && slots.total !== 0">
+		  <div class="align-self-center">
+			 <span class="d-none d-sm-inline" [ngClass]="{'d-inline': slots.total <= numPerPage}">{{ 'dataTable.filterInfo' | translate:{start: (page - 1) * numPerPage + 1, limit: (page * numPerPage > slots.total ? slots.total : page * numPerPage), total: slots.total} }}</span>
+			</div>
+			<ng-container *ngIf="page && slots.total > numPerPage">
+        <ngb-pagination (pageChange)="pageChange($event)" [collectionSize]="slots.total" [(page)]="page" [maxSize]="mds.isPhone() ? 4 : 5" [pageSize]="numPerPage" [rotate]="true" [ellipses]="false" [boundaryLinks]="!mds.isPhone()"></ngb-pagination>
+      </ng-container>
+		</div>
+	</div>
+</div>

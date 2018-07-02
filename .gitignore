@@ -4,3 +4,5 @@
 /.DS_Store
 /.project
 /dist/
+/.settings/
+/package-lock.json

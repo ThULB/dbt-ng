@@ -1,0 +1,110 @@
+// ---------------------------------------------------
+// animate-sass
+// ---------------------------------------------------
+
+$use-fade: true;
+
+// ---------------------------------------------------
+// Boostrap Overwrites
+// ---------------------------------------------------
+
+$primary: #008855;
+
+$body-color: #333;
+
+$border-radius:    .1rem;
+$border-radius-lg: .2rem;
+$border-radius-sm: .05rem;
+
+$input-focus-border-color: $primary;
+$input-btn-focus-box-shadow: none; 
+
+$enable-shadows: true;
+
+// ---------------------------------------------------
+// General
+// ---------------------------------------------------
+
+$text-color: $body-color;
+
+$content-padding-top: 15px;
+$content-bg-color: #fff;
+
+$body-bg-color: darken($content-bg-color, 5%);
+
+// ---------------------------------------------------
+// Breadcrumb
+// ---------------------------------------------------
+
+$breadcrumb-bg:            #fafafa;
+$breadcrumb-divider-color: darken($breadcrumb-bg, 40%);
+$breadcrumb-active-color:  darken($breadcrumb-bg, 40%);
+$breadcrumb-divider:       quote("/");
+
+// ---------------------------------------------------
+// Float Breakpoints
+// ---------------------------------------------------
+
+$float-breakpoint: "sm" !default;
+$float-breakpoint-max: "md" !default;
+
+// ---------------------------------------------------
+// Container
+// ---------------------------------------------------
+// Define the maximum width of `.container` for different screen sizes.
+$container-max-widths: (
+  sm: 100%,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px
+);
+
+// ---------------------------------------------------
+// Navbar and Searchbar
+// ---------------------------------------------------
+
+$navbar-margin: 15px;
+$navbar-height: 50px;
+$navbar-font-size: 1rem;
+$navbar-brand-height: 115px;
+$navbar-brand-width: 150px;
+$navbar-brand-padding-y: 5px;
+
+$searchbar-padding: 10px;
+
+// ---------------------------------------------------
+// Sections (Metadata)
+// ---------------------------------------------------
+
+$section-header-bg: $primary;
+$section-font-size: 16px;
+$section-border: 2px solid $section-header-bg;
+
+// ---------------------------------------------------
+// Inputs and Buttons
+// ---------------------------------------------------
+
+$input-color: #333;
+
+// ---------------------------------------------------
+// Alerts
+// ---------------------------------------------------
+
+$alert-info: #f4f8fa;
+$alert-warning: #fcf8f2;
+$alert-danger: #fdf7f7;
+$alert-success: #dff0d8;
+
+$alert-info-color: #5bc0de;
+$alert-warning-color: #f0ad4e;
+$alert-danger-color: #d9534f;
+$alert-success-color: #298703;
+
+
+// ---------------------------------------------------
+// Panels
+// ---------------------------------------------------
+
+$panel-default-heading-bg: #fafafa;
+$panel-footer-bg: #fff;
+$panel-default-border: #ddd;

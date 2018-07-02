@@ -1,0 +1,65 @@
+<div class="file-list">
+  <ng-container *ngIf="writeAllowed">
+    <ui-fileupload [derivate]="derivate" [path]="path" (reload)="onReload($event)"></ui-fileupload>
+  </ng-container>
+	<div class="text-center m-2" [hidden]="!loading">
+		<i class="fas fa-spinner fa-spin"></i>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-sm table-striped table-hover mb-0" *ngIf="dirEntries">
+			<tr *ngIf="path" (click)="cd('..')">
+	      <td [attr.colspan]="deleteAllowed ? 4 : 3">
+	        <a href="javascript:void(0)">
+	          <i class="fas fa-folder-open pr-1"></i><strong>..</strong>
+	        </a>
+	      </td>
+			</tr>
+			<ng-container *ngFor="let entry of dirEntries.entries | slice:start:end">
+			  <ng-container [ngSwitch]="entry.type">
+			    <ng-container *ngSwitchCase="'dir'">
+			      <tr>
+				      <td colspan="3" (click)="cd(entry.name)">
+				        <a href="javascript:void(0)">
+				          <i class="fas fa-folder pr-1"></i><strong>{{ entry.name }}</strong>
+				        </a>
+				      </td>
+				      <td *ngIf="deleteAllowed" class="text-center">
+	             <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteFile(entry.name)"><i class="fas fa-trash"></i></button>
+	            </td>
+				    </tr>
+			    </ng-container>
+			    <ng-container *ngSwitchCase="'file'">
+			      <tr>
+							<td class="text-truncate" (click)="selectFile(entry.name)">
+							 <i class="far pr-1" [ngClass]="fileType(entry.name)?.icon"></i>
+							 <a [href]="$api.fileUrl(derivate.objectId, derivate.id, entry.name)" (click)="selectFile(entry.name)">
+								 <ng-container *ngIf="isMainFile(entry.name)">
+								   <strong>{{ entry.name }}</strong>
+								 </ng-container>
+								 <ng-container *ngIf="!isMainFile(entry.name)">
+					         {{ entry.name }}
+					       </ng-container>
+				       </a>
+							</td>
+							<td class="text-right" (click)="selectFile(entry.name)">{{ entry.modified | date:'dd.MM.yyyy' }}</td>
+							<td class="text-right text-nowrap" (click)="selectFile(entry.name)">{{ entry.size | bytes }}</td>
+							<td *ngIf="deleteAllowed" class="text-center">
+							 <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteFile(entry.name)"><i class="fas fa-trash"></i></button>
+							</td>
+						</tr>
+					</ng-container>
+				</ng-container>
+			</ng-container>
+		</table>
+	</div>
+</div>
+<ng-container *ngIf="dirEntries && dirEntries.entries?.length > 10">
+  <div class="d-flex justify-content-between mt-2">
+    <div>
+      <span class="d-none d-md-inline-block pt-2 pb-2">{{ 'dataTable.filterInfo' | translate:{start: start + 1, limit: end, total: dirEntries.entries.length} }}</span>
+    </div>
+    <ngb-pagination
+      (pageChange)="pageChange($event)" [collectionSize]="dirEntries.entries.length" 
+      [(page)]="page" [maxSize]="5" [pageSize]="rows" [rotate]="true" [ellipses]="false" [boundaryLinks]="false"></ngb-pagination>
+   </div>
+</ng-container>

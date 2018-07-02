@@ -1,0 +1,22 @@
+<div fileDropZone (files)="onFiles($event)" class="file-drop-zone d-flex justify-content-center align-items-center mb-1 p-1">
+  <div>
+		<label for="files" class="m-0">{{ 'metadata.upload.placeholderDrop' | translate }}</label>
+		<input #filesInput type="file" id="files" name="files" multiple [hidden]="true">
+	</div>
+</div>
+<ul *ngIf="queue && queue.length !== 0" class="file-queue list-group mb-1">
+	<li *ngFor="let item of queue" class="list-group-item d-inline-flex flex-row justify-content-between p-2"
+	 [ngClass]="{'list-group-item-danger': item.error}"
+	>
+		<span class="text-truncate mr-1">{{ item.file.filepath || item.file.name }}</span>
+		<div class="d-inline-flex flex-row w-25">
+			<a *ngIf="item.error" class="text-dark mr-1" (click)="retry(item)">
+				<i class="fas fa-sync"></i>
+			</a>
+			<div *ngIf="item.progress" class="w-100 mt-auto mb-auto">
+				<ngb-progressbar [type]="!item.complete ? 'info' : item.error !== true ? 'success' : 'danger'" [value]="item.progress" [animated]="item.processing" [striped]="true" [showValue]="true">
+				</ngb-progressbar>
+			</div>
+		</div>
+	</li>
+</ul>

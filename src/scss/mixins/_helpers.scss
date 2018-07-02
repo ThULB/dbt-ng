@@ -1,0 +1,15 @@
+// DBT - hide scrollbars for overflow
+@mixin hide-scrollbar () {
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// DBT - break text
+@mixin hyphens () {
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto
+}

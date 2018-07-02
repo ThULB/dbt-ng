@@ -1,0 +1,47 @@
+<ng-template #altmericTemplate let-type="type" let-value="value" let-altmetric="altmetric">
+  <ng-container *ngIf="altmetric === true">
+    <ng-container [ngSwitch]="type">
+      <div *ngSwitchCase="'doi'" class="altmetric-embed" 
+        data-hide-no-mentions="true" data-badge-type="donut" data-badge-details="right" [attr.data-doi]="value"></div>
+      <div *ngSwitchCase="'handle'" class="altmetric-embed" 
+        data-hide-no-mentions="true" data-badge-type="donut" data-badge-details="right" [attr.data-handle]="value"></div>
+      <div *ngSwitchCase="'isbn'" class="altmetric-embed" 
+        data-hide-no-mentions="true" data-badge-type="donut" data-badge-details="right" [attr.data-doi]="value"></div>
+      <div *ngSwitchCase="'uri'" class="altmetric-embed" 
+        data-hide-no-mentions="true" data-badge-type="donut" data-badge-details="right" [attr.data-uri]="value"></div>
+      <div *ngSwitchCase="'urn'" class="altmetric-embed" 
+        data-hide-no-mentions="true" data-badge-type="donut" data-badge-details="right" [attr.data-urn]="value"></div>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #defaultCitation>
+  <div class="ellipsis ellipsis-text">
+    <p class="citation text-left pb-3" [innerHtml]="citation"></p>
+  </div>
+</ng-template>
+
+<div id="citation" class="card" *ngIf="citation || altmericEnabledId()">
+  <h5 class="card-header">{{ 'metadata.citation' | translate }}</h5>
+  <div class="card-body pb-0">
+    <ng-container *ngTemplateOutlet="altmericTemplate;context:altmericEnabledId()"></ng-container>
+    
+    <ng-container *ngIf="identifierByType('doi'); else defaultCitation">
+      <div class="form-group row">
+        <label for="citation-style" class="col-sm-4 col-form-label">{{ 'metadata.citationStyle' | translate }}</label>
+        <div class="col-sm-8">
+          <select id="citation-style" class="form-control" [ngModel]="style" (change)="selectStyle($event)">
+            <option *ngFor="let s of dataciteStyles" [value]="s">{{ 'metadata.citationStyles.' + s | translate }}</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="text-center m-2" [hidden]="!loading">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <div class="ellipsis ellipsis-text" [hidden]="loading">
+        <p class="citation text-left pb-3" [innerHtml]="citation"></p>
+      </div>
+    </ng-container>
+  </div>
+</div>
