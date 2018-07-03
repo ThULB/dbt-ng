@@ -200,6 +200,6 @@ export class FileListComponent implements OnInit {
 
     deleteFile(name: string) {
         this.$api.derivateDelete(this.derivate.objectId, this.derivate.id, (this.path ? [this.path, name].join("/") : name)).
-            subscribe(() => this.load(true));
+            subscribe(() => this.load(true), (err) => this.$error.handleError(err));
     }
 }
