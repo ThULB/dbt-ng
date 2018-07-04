@@ -7,20 +7,26 @@ import { Component, OnInit, Input, Output, EventEmitter, ElementRef, Renderer2, 
 })
 export class ConfirmButtonComponent implements OnInit {
 
+    private static CONFIRM_TIMEOUT = 5000;
+
+    private static CLICK_DELAY = 1000;
+
     @ViewChild("btnElm")
     private btnElm: ElementRef;
 
     private timer: any;
+
+    private lastClick = -1;
 
     @Input()
     public size: string;
 
     @Input()
     public type = "danger";
-    
+
     @Input()
     public typeConfirm = "info";
-    
+
     @Input()
     public typeDone = "success";
 
@@ -67,7 +73,7 @@ export class ConfirmButtonComponent implements OnInit {
                     this.value = this.text;
                     clearTimeout(this.timer);
                     this.timer = null;
-                }, 3000);
+                }, ConfirmButtonComponent.CONFIRM_TIMEOUT);
             }
         });
 
@@ -91,11 +97,13 @@ export class ConfirmButtonComponent implements OnInit {
         const elm: HTMLElement = this.btnElm.nativeElement;
 
         if (!elm.classList.contains("confirm")) {
+            this.lastClick = Date.now();
             this.value = this.textConfirm;
             this.renderer.addClass(elm, "confirm");
             this.renderer.removeClass(elm, this.classForType());
             this.renderer.addClass(elm, this.classForType(this.typeConfirm));
-        } else {
+        } else if ((Date.now() - this.lastClick) >= ConfirmButtonComponent.CLICK_DELAY) {
+            this.lastClick = -1;
             this.value = this.textDone;
             this.renderer.addClass(elm, "done");
             this.renderer.removeClass(elm, this.classForType(this.typeConfirm));
