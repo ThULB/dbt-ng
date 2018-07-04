@@ -43,8 +43,14 @@
 							</td>
 							<td class="text-right" (click)="selectFile(entry.name)">{{ entry.modified | date:'dd.MM.yyyy' }}</td>
 							<td class="text-right text-nowrap" (click)="selectFile(entry.name)">{{ entry.size | bytes }}</td>
-							<td *ngIf="deleteAllowed" class="text-center">
-							 <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteFile(entry.name)"><i class="fas fa-trash"></i></button>
+							<td *ngIf="deleteAllowed">
+							 <ng-confirm-button class="d-flex justify-content-end" 
+							   [text]="'button.delete' | translate" 
+							   [textConfirm]="'button.confirm.delete' | translate" 
+							   [textDone]="'button.confirmed.delete' | translate" 
+							   (confirmed)="deleteFile(entry.name)"
+							   size="sm" [outline]="true">
+							 </ng-confirm-button>
 							</td>
 						</tr>
 					</ng-container>

@@ -1,0 +1,71 @@
+button {
+  overflow: hidden;
+  transition: .3s all;
+  
+  .icon {
+    overflow: hidden;
+    & > * {
+      transition: .2s all;
+    }
+    
+    .icon-question {
+      transform: translateY(30px);
+      height: 0;
+    }
+  
+    .icon-done {
+      transform: translateY(30px);
+      height: 0;
+    }
+  }
+
+  .text {
+    width: 0;
+    opacity: 0;
+    > * {
+      transition: .2s all;
+    }
+  }
+
+  &:hover {
+    .text {
+      width: auto;
+      opacity: 1;
+      margin-left: 0.5rem;
+    }
+  }
+
+  &.confirm {
+    .icon {
+      .icon-delete {
+        transform: translateY(-30px);
+        height: 0;
+      }
+    
+      .icon-question {
+        transform: translateY(0px);
+        height: auto;
+      }
+    }
+  
+    .text {
+      width: auto;
+      opacity: 1;
+      margin-left: 0.5rem;
+    }
+  }
+
+  &.done {
+    .icon {
+      .icon-question {
+        transform: translateY(-30px);
+        height: 0;
+      }
+    
+      .icon-done {
+        transform: translateY(0px);
+        height: auto;
+      }
+    }
+  }
+}

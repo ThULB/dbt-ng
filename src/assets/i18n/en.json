@@ -28,7 +28,14 @@
 		"add": "Add",
 		"cancel": "Cancel",
 		"close": "Close",
+		"confirm": {
+			"delete": "Sure?"
+		},
+		"confirmed": {
+			"delete": "Deleted"
+		},
 		"details": "Details",
+		"delete": "Delete",
 		"edit": "Edit",
 		"encode": "Encode",
 		"login": "Login",
@@ -136,8 +143,8 @@
 		"titleTranslated": "Translated title",
 		"typeOfResource": "Type of Resource",
 		"upload": {
-      "placeholderDrop": "Drop files here or click to choose!"
-    },
+			"placeholderDrop": "Drop files here or click to choose!"
+		},
 		"useAndReproduction": "Use and reproduction",
 		"version": "Version",
 		"versionHistory": "Version history",
@@ -165,24 +172,24 @@
 		"submitDocument": "Publish document",
 		"termsAndConditions": "Terms & Conditions"
 	},
-  "persons": {
-    "breadcrumb": "Persons from A-Z"
-  },
-  "person": {
-    "alternateName": "Alternate Name",
-    "dateOfBirth": "Date of birth",
-    "dateOfDeath": "Date of death",
-    "details": "Persondetails",
-    "documents": "Documents",
-    "gender": "Gender",
-    "gender_female": "female",
-    "gender_male": "male",
-    "mappedIds": "Mapped Id",
-    "moreDocuments": "Show more documents...",
-    "placeOfActivity": "Place of activity",
-    "placeOfBirth": "Place of birth",
-    "placeOfDeath": "Place of death"
-  },
+	"persons": {
+		"breadcrumb": "Persons from A-Z"
+	},
+	"person": {
+		"alternateName": "Alternate Name",
+		"dateOfBirth": "Date of birth",
+		"dateOfDeath": "Date of death",
+		"details": "Persondetails",
+		"documents": "Documents",
+		"gender": "Gender",
+		"gender_female": "female",
+		"gender_male": "male",
+		"mappedIds": "Mapped Id",
+		"moreDocuments": "Show more documents...",
+		"placeOfActivity": "Place of activity",
+		"placeOfBirth": "Place of birth",
+		"placeOfDeath": "Place of death"
+	},
 	"rc": {
 		"breadcrumb": "Reserve Collection List",
 		"id": "Number",

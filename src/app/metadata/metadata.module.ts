@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { ComponentsModule } from "../_components/components.module";
 import { DirectivesModule } from "../_directives/directives.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -22,6 +23,7 @@ import { SysInfoComponent } from "./sysInfo.component";
 @NgModule({
     imports: [
         CommonModule,
+        ComponentsModule,
         DirectivesModule,
         FormsModule,
         ReactiveFormsModule,
