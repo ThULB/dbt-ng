@@ -51,7 +51,13 @@
 		        </div>
 	        </div>
 	        <div class="flex-column btn-group">
-            <button type="button" class="btn btn-outline-danger" (click)="removeFromBasket(item.documentId)"><i class="fa fa-trash"></i></button>
+            <ng-confirm-button
+              [text]="'button.delete' | translate" 
+              [textConfirm]="'button.confirm.delete' | translate" 
+              [textDone]="'button.confirmed.delete' | translate" 
+              (confirmed)="removeFromBasket(item.documentId)"
+              [outline]="true">
+            </ng-confirm-button>
           </div>
         </div>
 				<div class="authors">

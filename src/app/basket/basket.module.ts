@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { TranslateModule } from "@ngx-translate/core";
 import { UIRouterModule } from "@uirouter/angular";
 
+import { ComponentsModule } from "../_components/components.module";
 import { DirectivesModule } from "../_directives/directives.module";
 import { PipesModule } from "../_pipes/pipes.module";
 
@@ -13,6 +14,7 @@ import { BasketComponent, BasketStates } from "./basket.component";
 @NgModule({
     imports: [
         CommonModule,
+        ComponentsModule,
         DirectivesModule,
         PipesModule,
         TranslateModule,
