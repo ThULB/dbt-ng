@@ -9,7 +9,7 @@ export class ConfirmButtonComponent implements OnInit {
 
     private static CONFIRM_TIMEOUT = 5000;
 
-    private static CLICK_DELAY = 1000;
+    private static CLICK_DELAY = 250;
 
     @ViewChild("btnElm")
     private btnElm: ElementRef;
