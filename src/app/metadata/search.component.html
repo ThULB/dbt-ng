@@ -2,7 +2,7 @@
 
   <ng-template #personTemplate let-name="name" let-id="id"> 
    <!-- person name -->
-   <a uiSref="search" [uiParams]="{query: id ? ['mods.nameIdentifier:(', id.prefix, '\\:', id.id, ')'].join('') : name}">{{ name }}</a>
+   <a uiSref="search" [uiParams]="{query: id ? ['mods.nameIdentifier:(', id.prefix, '\\:', id.id, ')'].join('') : name, page: 1}">{{ name }}</a>
    <!-- name identifier -->
    <a *ngIf="id" [href]="categoryLabelFilter((id.prefix | classification:'nameIdentifier':false)?.labels || [], 'x-uri')[0]?.text + id.id">
      <sup class="ml-1">{{ (id.prefix | classification:'nameIdentifier') || (id.prefix | uppercase) }}</sup>

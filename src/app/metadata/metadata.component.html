@@ -7,7 +7,7 @@
       </a>
 	  </ng-template>
     <!-- person name -->
-    <a uiSref="search" [uiParams]="{query: id ? ['mods.nameIdentifier:(', id.prefix, '\\:', id.id, ')'].join('') : name}">{{ name }}</a>
+    <a uiSref="search" [uiParams]="{query: id ? ['mods.nameIdentifier:(', id.prefix, '\\:', id.id, ')', page: 1].join('') : name}">{{ name }}</a>
     <!-- name identifier -->
     <ng-container 
       *ngTemplateOutlet="personIdLinkTemplate;context:{id: id, uri: categoryLabelFilter((id?.prefix | classification:'nameIdentifier':false)?.labels || [], 'x-uri')[0]?.text}"></ng-container>
@@ -45,7 +45,7 @@
   </ng-template>
   
   <ng-template #topicTemplate let-topic="topic">
-    <a uiSref="search" [uiParams]="{query: 'topic:(&quot;' + topic.text + '&quot;)'}">{{ topic.text }}</a>
+    <a uiSref="search" [uiParams]="{query: 'topic:(&quot;' + topic.text + '&quot;)', page: 1}">{{ topic.text }}</a>
     <a *ngIf="topic.getAttribute('authority')" [href]="topic.getAttributeValue('valueURI')"><sup class="ml-1">{{ topic.getAttributeValue('authority') | classification:'nameIdentifier' }}</sup></a>
   </ng-template>
         
@@ -304,7 +304,7 @@
 			        <ng-container *ngFor="let sdnb of mods.getElementsWithAttribute('mods:classification', {'authority': 'sdnb'})">
 			        <dt class="col-sm-4">{{ 'metadata.classification.sdnb' | translate }}</dt>
 			        <dd class="col-sm-8">
-			          <a uiSref="search" [uiParams]="{query: 'category:(SDNB\\:' + sdnb.text + ')'}">{{ sdnb.text | classification:'SDNB' }}</a>
+			          <a uiSref="search" [uiParams]="{query: 'category:(SDNB\\:' + sdnb.text + ')', page: 1}">{{ sdnb.text | classification:'SDNB' }}</a>
 			        </dd>
 			        </ng-container>
 			        
@@ -313,7 +313,7 @@
 			            <ng-container *ngIf="uri && ['diniPublType', 'XMetaDissPlusThesisLevel'].indexOf(classRoot) === -1">
 			            <dt class="col-sm-4">{{ ( trimIdFromValueUri(uri) | classification) || ('metadata.classification.generic' | translate) }}</dt>
 					        <dd class="col-sm-8">
-					          <a uiSref="search" [uiParams]="{query: 'category:(' + classRoot + '\\:' + (uri | classification:null:false)?.ID + ')'}">
+					          <a uiSref="search" [uiParams]="{query: 'category:(' + classRoot + '\\:' + (uri | classification:null:false)?.ID + ')', page: 1}">
 					            <ng-container *ngIf="['KONFERENZEN'].indexOf(classRoot) !== -1">
 					              <ng-container *ngTemplateOutlet="labelsWithParentsTemplate;context:{labels: (uri | classification:null:true:true)}"></ng-container>
 					            </ng-container>
