@@ -189,6 +189,7 @@ export const PersonBrowseStates = {
         },
         selectedIndex: {
             type: "int",
+            value: 0,
             squash: true
         },
         page: {
