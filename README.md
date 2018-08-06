@@ -5,18 +5,18 @@ DBT Angular 6.x based
 
 Install/update needed dependencies:
 
-  $ npm install
+    $ npm install
   
 Startup Development Server:
 
-  $ npm run start
+    $ npm run start
   
 ## Build Project for deployment
 
 Install/update needed dependencies:
 
-  $ npm install
+    $ npm install
 
 Build the project:
 
-  $ npm run build && npm run optimize
+    $ npm run build && npm run optimize
