@@ -11,9 +11,9 @@ const distDir = process.argv[2];
 const walk = (dir, done) => {
 	let results = [];
 	fs.readdir(dir, (err, list) => {
-		if (err) return { 
-			done(err) 
-		};
+		if (err) { 
+			return done(err); 
+		}
 
 		let pending = list.length;
 		if (!pending) {
