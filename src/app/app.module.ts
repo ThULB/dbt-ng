@@ -95,7 +95,7 @@ export const SearchFutureState = {
         SpinnerModule,
         NgPipesModule,
         PipesModule,
-        NgbModule.forRoot(),
+        NgbModule,
         ToastrModule.forRoot({
             autoDismiss: true,
             timeOut: 10000,

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ElementRef, Renderer2, ViewChild, HostListener } from "@angular/core";
 
 @Component({
-    selector: "ng-confirm-button",
+    selector: "ui-confirm-button",
     templateUrl: "./confirmButton.component.html",
     styleUrls: ["confirmButton.component.scss"]
 })
