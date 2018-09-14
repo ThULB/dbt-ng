@@ -5,7 +5,7 @@ import { Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
 import { ErrorService } from "../_services/error.service";
-import { MetadataApiService } from "./api.service";
+import { ApiService } from "../_services/api.service";
 
 interface FileItem {
     file: File | any;
@@ -41,7 +41,7 @@ export class FileUploadComponent implements OnInit, OnChanges {
 
     public queue: Array<FileItem> = new Array();
 
-    constructor(private $api: MetadataApiService, private $error: ErrorService) {
+    constructor(private $api: ApiService, private $error: ErrorService) {
     }
 
     ngOnInit() {

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 
 import { AuthService } from "../_services/auth.service";
 import { ErrorService } from "../_services/error.service";
-import { MetadataApiService } from "./api.service";
+import { ApiService } from "../_services/api.service";
 
 import { MCRDerivate, MCRDerivateContent } from "../_datamodels/datamodel.def";
 import { PreviewComponent } from "./preview.component";
@@ -98,7 +98,7 @@ export class FileListComponent implements OnInit {
         }
     };
 
-    constructor(private $api: MetadataApiService, private $auth: AuthService, private $error: ErrorService) {
+    constructor(private $api: ApiService, private $auth: AuthService, private $error: ErrorService) {
     }
 
     ngOnInit() {

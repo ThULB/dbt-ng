@@ -21,7 +21,6 @@ import { AuthHttpInterceptor } from "./_services/http.service";
 import { BasketService } from "./basket/basket.service";
 import { CacheService } from "./_services/cache.service";
 import { ErrorService } from "./_services/error.service";
-import { MetadataApiService } from "./metadata/api.service";
 import { MobileDetectService } from "./_services/mobileDetect.service";
 import { PersonApiService } from "./person/api.service";
 import { ScriptService } from "./_services/script.service";
@@ -76,7 +75,7 @@ export const RCFutureState = {
 export const SearchFutureState = {
     name: "search.**",
     url: "/search",
-    loadChildren: "./metadata/search.module#SearchModule"
+    loadChildren: "./search/search.module#SearchModule"
 };
 
 @NgModule({
@@ -146,7 +145,6 @@ export const SearchFutureState = {
         BasketService,
         CacheService,
         ErrorService,
-        MetadataApiService,
         MobileDetectService,
         PersonApiService,
         ScriptService,

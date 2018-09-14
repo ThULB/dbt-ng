@@ -282,4 +282,24 @@ export class ApiService {
     thumbUrl(id: string, size: number = 150, ext: string = "jpg") {
         return `${this.base}/api/v2/objects/${id}/thumb-${size}.${ext}`;
     }
+
+    /**
+     * Media APIs
+     */
+
+    mediaSources(id: string) {
+        return this.$http.get(`${this.base}/rsc/media/sources/${id}`, this.httpOptions);
+    }
+
+    mediaProgressivUrl(id: string, fileName: string) {
+        return `${this.base}/rsc/media/progressiv/${id}/${fileName}`;
+    }
+
+    mediaThumbs(id: string) {
+        return this.$http.get(`${this.base}/rsc/media/thumbs/${id}`, this.httpOptions);
+    }
+
+    mediaThumbUrl(id: string, fileName: string) {
+        return `${this.base}/rsc/media/thumb/${id}/${fileName}`;
+    }
 }

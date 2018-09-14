@@ -10,8 +10,6 @@ import { NgPipesModule } from "angular-pipes";
 import { PipesModule } from "../_pipes/pipes.module";
 import { PdfViewerModule } from "ng2-pdf-viewer";
 
-import { MetadataApiService } from "./api.service";
-
 import { CitationComponent } from "./citation.component";
 import { MetadataComponent, MetadataStates } from "./metadata.component";
 import { FileListComponent } from "./fileList.component";
@@ -57,9 +55,6 @@ import { SysInfoComponent } from "./sysInfo.component";
         RelatedItemsComponent,
         PreviewComponent,
         SysInfoComponent
-    ],
-    providers: [
-        MetadataApiService
     ]
 })
 export class MetadataModule { }

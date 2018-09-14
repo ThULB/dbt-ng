@@ -8,8 +8,6 @@ import { UIRouterModule } from "@uirouter/angular";
 import { NgPipesModule } from "angular-pipes";
 import { PipesModule } from "../_pipes/pipes.module";
 
-import { MetadataApiService } from "./api.service";
-
 import { SearchComponent, SearchStates } from "./search.component";
 
 @NgModule({
@@ -33,9 +31,6 @@ import { SearchComponent, SearchStates } from "./search.component";
     ],
     exports: [
         SearchComponent,
-    ],
-    providers: [
-        MetadataApiService
     ]
 })
 export class SearchModule { }

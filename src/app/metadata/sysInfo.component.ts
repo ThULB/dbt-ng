@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 import { ErrorService } from "../_services/error.service";
-import { MetadataApiService } from "./api.service";
+import { ApiService } from "../_services/api.service";
 
 import { MCRObject, MCRObjectVersion } from "../_datamodels/datamodel.def";
 
@@ -20,7 +20,7 @@ export class SysInfoComponent implements OnInit {
 
     public versions: Array<MCRObjectVersion>;
 
-    constructor(private $api: MetadataApiService, private $error: ErrorService, private modalService: NgbModal) {
+    constructor(private $api: ApiService, private $error: ErrorService, private modalService: NgbModal) {
     }
 
     ngOnInit() {

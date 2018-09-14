@@ -1,7 +1,7 @@
 import { Component, Renderer2, OnInit } from "@angular/core";
 
 import { BasketService, BasketItem } from "./basket.service";
-import { MetadataApiService } from "../metadata/api.service";
+import { ApiService } from "../_services/api.service";
 import { MobileDetectService } from "../_services/mobileDetect.service";
 
 import { MetadataHelpers } from "../_helpers/metadataHelpers.class";
@@ -15,7 +15,7 @@ import { SolrSelectResponse } from "../_datamodels/datamodel.def";
 })
 export class BasketComponent extends MetadataHelpers implements OnInit {
 
-    constructor(public basket: BasketService, private $api: MetadataApiService, private renderer: Renderer2,
+    constructor(public basket: BasketService, private $api: ApiService, private renderer: Renderer2,
         public mds: MobileDetectService) {
         super();
     }

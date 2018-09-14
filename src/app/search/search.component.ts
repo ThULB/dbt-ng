@@ -5,7 +5,7 @@ import { debounceTime, filter, map } from "rxjs/operators";
 
 import { CacheService } from "../_services/cache.service";
 import { ErrorService } from "../_services/error.service";
-import { MetadataApiService } from "./api.service";
+import { ApiService } from "../_services/api.service";
 import { MobileDetectService } from "../_services/mobileDetect.service";
 import { SpinnerService } from "../spinner/spinner.service";
 import { StateService, Transition } from "@uirouter/core";
@@ -33,7 +33,7 @@ export class SearchComponent extends MetadataHelpers {
 
     @Input() public result: SolrSelectResponse;
 
-    constructor(public $api: MetadataApiService, private $state: StateService, private renderer: Renderer2,
+    constructor(public $api: ApiService, private $state: StateService, private renderer: Renderer2,
         public mds: MobileDetectService) {
         super();
 
@@ -248,7 +248,7 @@ export const SearchStates = {
     resolve: [
         {
             token: "result",
-            deps: [MetadataApiService, ErrorService, SpinnerService, Transition],
+            deps: [ApiService, ErrorService, SpinnerService, Transition],
             resolveFn: resolveFnSearch
         },
     ],

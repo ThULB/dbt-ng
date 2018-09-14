@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, Input, EventEmitter, ViewChildren, QueryL
 import { Subject } from "rxjs/Subject";
 
 import { ErrorService } from "../_services/error.service";
-import { MetadataApiService } from "./api.service";
+import { ApiService } from "../_services/api.service";
 import { MobileDetectService } from "../_services/mobileDetect.service";
 
 import { PDFDocumentProxy } from "ng2-pdf-viewer";
@@ -97,7 +97,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
         return PreviewComponent.supportedExtensions.indexOf(ext) !== -1;
     }
 
-    constructor(private $api: MetadataApiService, private $error: ErrorService, public mds: MobileDetectService) {
+    constructor(private $api: ApiService, private $error: ErrorService, public mds: MobileDetectService) {
         this.previewConfirmed = !this.mds.isPhone();
     }
 

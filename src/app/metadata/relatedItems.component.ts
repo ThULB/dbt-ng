@@ -4,7 +4,7 @@ import { Observable } from "rxjs/Observable";
 import { debounceTime } from "rxjs/operators";
 
 import { ErrorService } from "../_services/error.service";
-import { MetadataApiService } from "./api.service";
+import { ApiService } from "../_services/api.service";
 
 import { SolrSelectResponse, MCRObject } from "../_datamodels/datamodel.def";
 
@@ -45,7 +45,7 @@ export class RelatedItemsComponent implements OnInit {
 
     public items: Array<RelatedItem> = new Array();
 
-    constructor(private $api: MetadataApiService, private $error: ErrorService) {
+    constructor(private $api: ApiService, private $error: ErrorService) {
     }
 
     ngOnInit() {

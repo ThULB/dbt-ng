@@ -6,7 +6,7 @@ import { AuthService } from "../_services/auth.service";
 import { BasketService } from "../basket/basket.service";
 import { CacheService } from "../_services/cache.service";
 import { ErrorService } from "../_services/error.service";
-import { MetadataApiService } from "./api.service";
+import { ApiService } from "../_services/api.service";
 import { StateService, Transition } from "@uirouter/core";
 import { SpinnerService } from "../spinner/spinner.service";
 import { TranslateService } from "@ngx-translate/core";
@@ -71,7 +71,7 @@ export class MetadataComponent extends MetadataHelpers implements OnInit {
 }
 
 export function MetadataTitleResolver($injector, params) {
-    const api = $injector.get(MetadataApiService);
+    const api = $injector.get(ApiService);
     return api.solrCondQuery("id\:" + params.id, 0, 1).pipe(
         map((res: SolrSelectResponse) => {
             const doc = res.response.docs[0];
@@ -170,12 +170,12 @@ export const MetadataStates = {
     resolve: [
         {
             token: "object",
-            deps: [MetadataApiService, ErrorService, SpinnerService, Transition],
+            deps: [ApiService, ErrorService, SpinnerService, Transition],
             resolveFn: resolveFnObject
         },
         {
             token: "derivates",
-            deps: [MetadataApiService, ErrorService, SpinnerService, Transition],
+            deps: [ApiService, ErrorService, SpinnerService, Transition],
             resolveFn: resolveFnDerivates
         }
     ]
