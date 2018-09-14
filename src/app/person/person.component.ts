@@ -231,10 +231,11 @@ export function resolveFnPerson($api, $error, $spinner, trans) {
 }
 
 export const PersonStates = {
-    name: "person",
+    name: "persons.person",
     url: "/person?id&name",
     component: PersonComponent,
     data: {
+        parentState: "persons",
         breadcrumbLabelResolver: personTitleResolver,
         requiresAuth: false
     },
