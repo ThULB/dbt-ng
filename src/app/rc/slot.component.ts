@@ -101,8 +101,8 @@ export function resolveFnSlot($api, $error, $spinner, trans) {
 }
 
 export const SlotStates = {
-    name: "rc-slot",
-    url: "/rc/:id",
+    name: "rc.slot",
+    url: "/:id",
     component: SlotComponent,
     data: {
         breadcrumb: "rc.slot.breadcrumb",

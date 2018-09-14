@@ -1,3 +1,4 @@
+<ui-view>
 <div class="container">
   <ng-template #labelsWithParentsTemplate let-labels="labels" let-separator="separator">
     <ng-container *ngIf="labels && labels.length">
@@ -70,7 +71,7 @@
 					<ng-container *ngIf="slots">
 					<tr *ngFor="let slot of slots.slot" [hidden]="slots.total === 0">
 					  <td *ngIf="isAdmin || isEditor">
-              <a uiSref="rc-slot" [uiParams]="{ id: slot.id }">{{ slot.id }}</a>
+              <a uiSref="rc.slot" [uiParams]="{ id: slot.id }">{{ slot.id }}</a>
 					  </td>
 						<td>
 						  <ng-container *ngFor="let lecturer of slot.lecturers.lecturer; let i = index">
@@ -78,7 +79,7 @@
 						    <br *ngIf="i < slot.lecturers.lecturer.length - 1">
 						  </ng-container>
 						</td>
-						<td><a uiSref="rc-slot" [uiParams]="{ id: slot.id }">{{ slot.title }}</a></td>
+						<td><a uiSref="rc.slot" [uiParams]="{ id: slot.id }">{{ slot.title }}</a></td>
 						<td>{{ slot.validTo | period }}</td>
 						<td>
 						  <ng-container 
@@ -100,3 +101,4 @@
 		</div>
 	</div>
 </div>
+</ui-view>
