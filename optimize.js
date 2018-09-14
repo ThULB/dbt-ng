@@ -1,3 +1,4 @@
+const { Console } = require("console");
 const fs = require("fs");
 const path = require("path");
 const imagemin = require("imagemin");
@@ -5,6 +6,8 @@ const imageminMozjpeg = require("imagemin-mozjpeg");
 const imageminPngquant = require("imagemin-pngquant");
 const imageminGiflossy = require("imagemin-giflossy");
 const imageminSvgo = require("imagemin-svgo");
+
+const logger = new Console(process.stdout, process.stderr);
 
 const distDir = process.argv[2];
 
@@ -42,13 +45,13 @@ const walk = (dir, done) => {
 };
 
 if (!distDir) {
-	console.error("Need \"dist\" path!");
+	logger.error("Need \"dist\" path!");
 	return;
 }
 
 walk(distDir, (err, files) => {
 	if (err) {
-		console.error(err);
+		logger.error(err);
 		return;
 	}
 	
@@ -62,10 +65,10 @@ walk(distDir, (err, files) => {
 				imageminGiflossy({lossy: 80, optimizationLevel: 3}),
 				imageminSvgo()
 			]
-		}).then(done => {
+		}).then((done) => {
 			if (done[0]) {
 				const afsize = fs.statSync(done[0].path).size;
-				console.log("optimized " + done[0].path + " (" + fsize + " -> " + afsize + ").");
+				logger.log("optimized " + done[0].path + " (" + fsize + " -> " + afsize + ").");
 			}
 		});
 	});
