@@ -39,6 +39,7 @@
 		"ngx-toastr": "^9.0.2",
 		"ngx-translate-messageformat-compiler": "^4.3.0",
 		"node-waves": "^0.7.6",
+		"open-sans-fontface": "^1.4.0",
 		"popper.js": "^1.14.4",
 		"rxjs": "^6.3.2",
 		"rxjs-compat": "^6.3.2",
