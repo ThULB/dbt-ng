@@ -11,7 +11,7 @@ import { PDFDocumentProxy } from "ng2-pdf-viewer";
 import { ObjectUrlPipe } from "../_pipes/objectUrl.pipe";
 
 import * as CryptoJS from "crypto-js";
-import * as videojs from "video.js";
+import videojs from "video.js";
 import * as VideojsHLS from "videojs-contrib-hls";
 import * as WaveSurfer from "wavesurfer.js";
 
