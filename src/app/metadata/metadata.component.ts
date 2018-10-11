@@ -47,7 +47,7 @@ export class MetadataComponent extends MetadataHelpers implements OnInit {
 
     ngOnInit() {
         this.mods = new Mods(this.object.mods());
-        setTimeout(() => this.selectedDerivate.emit(this.derivates[0]));
+        setTimeout(() => this.derivates && this.derivates.length !== 0 && this.selectedDerivate.emit(this.derivates[0]));
     }
 
     fileSelected(file: string) {
@@ -136,7 +136,7 @@ export function resolveFnDerivates($api, $error, $spinner, trans) {
                             if (dl === 0) {
                                 resolve(derivates);
                             }
-                        });
+                        }, reject);
                     });
                 }
             }, reject);
