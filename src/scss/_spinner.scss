@@ -5,6 +5,7 @@
 $loader-spinner-size: 150px !default;
 
 .spinner-container {
+  cursor: wait;
   position: fixed;
   top: 0;
   left: 0;
@@ -22,6 +23,7 @@ $loader-spinner-size: 150px !default;
   }
 
   .loader-backdrop {
+    cursor: wait;
     position: fixed;
     top: 0;
     width: 100%;
@@ -38,6 +40,7 @@ $loader-spinner-size: 150px !default;
   }
 
   .loader {
+    cursor: wait;
     display: block;
     position: relative;
     left: 50%;
