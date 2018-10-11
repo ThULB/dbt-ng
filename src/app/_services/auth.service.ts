@@ -74,7 +74,6 @@ export class AuthService {
     logout() {
         this.user = null;
         window.localStorage.removeItem("token");
-        window.location.reload();
     }
 
     hasRole(role: string): boolean {

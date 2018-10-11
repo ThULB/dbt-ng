@@ -23,6 +23,10 @@ export class AuthHttpInterceptor implements HttpInterceptor {
 
         return next.handle(authReq).pipe(catchError((error, caught) => {
             if (error.status === 401 && (!this.$state || this.$state && this.$state.current.name !== "login")) {
+                if (this.$auth.isLoggedIn()) {
+                    this.$auth.logout();
+                }
+
                 if (this.$state.transition) {
                     const handlesAuth =
                         this.$state.transition.to().data && this.$state.transition.to().data.handlesAuth ||
