@@ -1,5 +1,7 @@
 <div class="file-list">
-	<ng-container *ngIf="writeAllowed"> <ui-fileupload [derivate]="derivate" [path]="path" (reload)="onReload($event)"></ui-fileupload> </ng-container>
+	<ng-container *ngIf="writeAllowed">
+	 <ui-fileupload [derivate]="derivate" [path]="path" (reload)="onReload($event)"></ui-fileupload>
+	</ng-container>
 	<div class="text-center m-2" [hidden]="!loading">
 		<i class="fas fa-spinner fa-spin"></i>
 	</div>

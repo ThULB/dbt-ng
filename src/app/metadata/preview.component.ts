@@ -110,7 +110,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
         this.selectedDerivate.subscribe((derivate) => {
             if (derivate) {
                 this.derivate = derivate;
-                this.mainFile = this.derivate.getElementsWithAttribute("internal", "mainfile", true)
+                this.mainFile = (this.derivate instanceof MCRDerivate) && this.derivate.getElementsWithAttribute("internal", "mainfile", true)
                     .find((e) => e.getAttributeValue("maindoc") !== null).getAttributeValue("maindoc");
 
                 if (this.mainFile) {
