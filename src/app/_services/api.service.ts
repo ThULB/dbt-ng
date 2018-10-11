@@ -60,7 +60,7 @@ export class ApiService {
      * APP Settings
      */
     settings() {
-        return this.$http.get(`${this.base}/assets/settings.json`, this.httpOptions);
+        return this.$http.get(`/assets/settings.json`, this.httpOptions);
     }
 
     /**
