@@ -190,6 +190,18 @@
 		"placeOfBirth": "Place of birth",
 		"placeOfDeath": "Place of death"
 	},
+	"realm":{
+		"local": {
+			"label": "DBT-Login",
+			"info": "Login with local user account",
+			"description": "This account is local for this application only."
+		},
+		"shibboleth": {
+			"label": "Uni-Login",
+			"info": "Login with your user credentials of your university",
+			"description": "<strong class=\"text-danger\">Login for university users of FSU Jena, TU Ilmenau, Erfurt and Nordhausen.</strong>"
+		}
+	},
 	"rc": {
 		"breadcrumb": "Reserve Collection List",
 		"id": "Number",

@@ -5,8 +5,10 @@
 
 export const environment = {
     production: false,
+    appName: "dbt-ng-dev",
     apiBaseUrl: "",
     solrBaseUrl: "/solr",
     lookupBaseUrl: "",
+    webAppBaseUrl: "https://dbttest.thulb.uni-jena.de/dbt-master",
     apiHttpOptions: {}
 };

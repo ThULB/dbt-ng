@@ -192,6 +192,18 @@
 		"placeOfBirth": "Geburtsort",
 		"placeOfDeath": "Todesort"
 	},
+	"realm":{
+		"local": {
+			"label": "DBT-Login",
+			"info": "Anmeldung mit lokaler Nutzerkennung",
+			"description": "Diese Kennung gilt nur für diese Anwendung."
+		},
+		"shibboleth": {
+			"label": "Uni-Login",
+			"info": "Anmelden mit dem Login Ihrer Hochschule",
+			"description": "<strong class=\"text-danger\">Anmeldung für Benutzer der FSU Jena, TU Ilmenau, Uni Erfurt und Hochschule Nordhausen.</strong>"
+		}
+	},
 	"rc": {
 		"breadcrumb": "Semesterapparate Liste",
 		"id": "Nummer",

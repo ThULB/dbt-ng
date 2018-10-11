@@ -1,0 +1,33 @@
+{
+	"formAuth": true,
+	"realm": [
+		{
+			"id": "local",
+			"login": true
+		},
+		{
+			"id": "shibboleth",
+			"login": true,
+			"loginUrl": "${webAppBaseUrl}/servlets/MCRShibbolethLoginServlet?url=${webAppBaseUrl}/servlets/LoginEndpoint?name=${appName}"
+		},
+		{
+			"id": "tu-ilmenau.de",
+			"login": false,
+			"passwordChangeUrl": "https://www.tu-ilmenau.de/unirz/it-service-desk/password/"
+		},
+		{
+			"id": "uni-jena.de",
+			"login": false,
+			"passwordChangeUrl": "https://portal.uni-jena.de/"
+		},
+		{
+			"id": "uni-erfurt.de",
+			"login": false,
+			"passwordChangeUrl": "https://idmweb.uni-erfurt.de/OAS/"
+		},
+		{
+			"id": "hs-nordhausen.de",
+			"login": false
+		}
+	]
+}

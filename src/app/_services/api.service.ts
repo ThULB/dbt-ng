@@ -57,6 +57,13 @@ export class ApiService {
     }
 
     /**
+     * APP Settings
+     */
+    settings() {
+        return this.$http.get(`${this.base}/assets/settings.json`, this.httpOptions);
+    }
+
+    /**
      * Access
      */
     login(username, password) {
@@ -68,10 +75,15 @@ export class ApiService {
         return this.$http.get(`${this.base}/api/v2/auth/renew`, this.httpOptions);
     }
 
+    sessionPing() {
+        return this.$http.get(`${this.base}/rsc/echo/ping`, { responseType: "text" as "text" }).pipe(
+            map(res => "pong" === res)
+        );
+    }
+
     /**
      * SOLR
      */
-
     solrCondQuery(query?: string, start: number = 0, rows: number = 20, params?: Map<string, any>) {
         query = query || "*";
         const p = ApiService.toQueryString(params);
