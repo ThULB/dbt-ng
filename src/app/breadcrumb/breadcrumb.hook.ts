@@ -1,10 +1,15 @@
+import { Injector } from "@angular/core";
+import { Title } from "@angular/platform-browser";
 import { TransitionService, Transition } from "@uirouter/core";
+import { TranslateService } from "@ngx-translate/core";
 
 import { BreadcrumbService } from "./breadcrumb.service";
 
-export function breadcrumbHook(transitionService: TransitionService, breadcrumbService: BreadcrumbService) {
+export function breadcrumbHook(injector: Injector, transitionService: TransitionService, breadcrumbService: BreadcrumbService) {
 
-    const beforeTransitionCriteria = {
+    const TITLE_SUFFIX = " - Digitale Bibliothek Thüringen";
+
+    const allStateCriteria = {
         to: (state) => {
             return true;
         }
@@ -14,5 +19,21 @@ export function breadcrumbHook(transitionService: TransitionService, breadcrumbS
         breadcrumbService.setBreadcrumb(transition);
     };
 
-    transitionService.onBefore(beforeTransitionCriteria, beforeTransisition, { priority: 10 });
+    const finishTransisition = (transition: Transition) => {
+        const translate = injector.get<TranslateService>(TranslateService);
+        const title = injector.get<Title>(Title);
+
+        const to = transition.to();
+        const breadcrumb = breadcrumbService.breadcrumbs[breadcrumbService.breadcrumbs.length - 1];
+        const labelResolver = breadcrumb && breadcrumb.labelResolver;
+
+        if (labelResolver) {
+            labelResolver.then(t => title.setTitle(t + TITLE_SUFFIX));
+        } else {
+            title.setTitle(translate.instant(to.data.breadcrumb || to.name, to.params) + TITLE_SUFFIX);
+        }
+    };
+
+    transitionService.onBefore(allStateCriteria, beforeTransisition, { priority: 10 });
+    transitionService.onFinish(allStateCriteria, finishTransisition, { priority: 10 });
 }

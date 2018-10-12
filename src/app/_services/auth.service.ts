@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Title } from "@angular/platform-browser";
 import { JwtHelperService } from "@auth0/angular-jwt";
 
 import { throwError } from "rxjs";
@@ -48,7 +47,7 @@ export class AuthService {
 
     public user: UserInformation;
 
-    constructor(private $api: ApiService, private titleService: Title) {
+    constructor(private $api: ApiService) {
         this.loadToken();
         setTimeout(() => this.getAppSettings());
     }
@@ -156,13 +155,8 @@ export class AuthService {
             this.replaceVars(settings);
 
             this.formAuth = settings.formAuth;
-            this.setTitle("Digitale Bibliothek Thüringen");
             this.realms = settings.realm;
         });
-    }
-
-    setTitle(title: string) {
-        this.titleService.setTitle(title || "Digitale Bibliothek Thüringen");
     }
 
     private replaceVars(obj: Object) {

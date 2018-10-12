@@ -11,7 +11,7 @@ export function breadcrumbConfigFn(router: UIRouter, injector: Injector) {
     const transitionService = router.transitionService;
     const breadcrumbService = injector.get(BreadcrumbService);
 
-    breadcrumbHook(transitionService, breadcrumbService);
+    breadcrumbHook(injector, transitionService, breadcrumbService);
 }
 
 @NgModule({
