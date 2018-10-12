@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { AfterViewInit, Component, Input } from "@angular/core";
 import { StateService } from "@uirouter/core";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -11,7 +11,7 @@ import { BasketService } from "./basket/basket.service";
     selector: "ui-root",
     templateUrl: "./app.component.html"
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements AfterViewInit {
 
     private langs = ["de", "en"];
 
@@ -24,10 +24,11 @@ export class AppComponent implements OnInit {
         translate.use(window.localStorage.getItem("lang") || translate.getBrowserLang());
     }
 
-    ngOnInit() {
+    ngAfterViewInit() {
         Waves.attach(".navbar-toggler", ["waves-block", "waves-light"]);
         Waves.attach("a.nav-link", ["waves-block", "waves-light"]);
-        Waves.attach("button.btn-default", ["waves-block"]);
+        Waves.attach(".btn.btn-default", ["waves-block"]);
+        Waves.attach(".btn.btn-primary", ["waves-block", "waves-light"]);
         Waves.attach(".dropdown-menu > .dropdown-item", ["waves-block", "waves-light"]);
 
         Waves.init({
