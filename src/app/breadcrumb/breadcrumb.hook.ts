@@ -30,7 +30,7 @@ export function breadcrumbHook(injector: Injector, transitionService: Transition
         if (labelResolver) {
             labelResolver.then(t => title.setTitle(t + TITLE_SUFFIX));
         } else {
-            title.setTitle(translate.instant(to.data.breadcrumb || to.name, to.params) + TITLE_SUFFIX);
+            title.setTitle(translate.instant(to.data.breadcrumb || breadcrumb.name || to.name, breadcrumb.params) + TITLE_SUFFIX);
         }
     };
 
