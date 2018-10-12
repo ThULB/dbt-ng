@@ -1,6 +1,28 @@
 
 <ui-spinner></ui-spinner>
 
+<ng-template #userMenu let-user="user" let-realm="realm">
+  <dl class="row m-2 pt-2">
+    <dt class="col-3 p-0">{{ 'user.name' | translate }}:</dt>
+    <dd class="col-9 p-0 my-0 text-right">{{ user.username }}</dd>
+    <ng-container *ngIf="realm">
+      <dt class="col-3 p-0" >{{ 'user.realm' | translate }}:</dt>
+      <dd class="col-9 p-0 my-0 text-right">{{ 'realm.' + realm.id + '.label' | translate }}</dd>
+    </ng-container>
+    <ng-container *ngIf="user.email">
+	    <dt class="col-3 p-0" >{{ 'user.email' | translate }}:</dt>
+	    <dd class="col-9 p-0 my-0 text-right">{{ user.email }}</dd>
+    </ng-container>
+  </dl>
+  <div *ngIf="realm?.passwordChangeUrl" class="actions mx-2">
+    <a [href]="realm?.passwordChangeUrl" target="_blank">{{ 'user.action.passwordChange' | translate }}</a>
+  </div>
+  <div class="dropdown-divider mb-0"></div>
+  <div class="controls clearfix p-2">
+    <button type="button" class="btn btn-primary float-right" (click)="$auth.logout()">{{ 'navigation.logout' | translate }}</button>
+  </div>
+</ng-template>
+
 <nav class="navbar navbar-expand-md navbar-light navbar-dbt fixed-top scrolling-navbar">
 	<div class="container">
 		<a class="navbar-brand" uiSref="home"><span class="img-placeholder"></span></a>
@@ -67,13 +89,21 @@
 				<li class="nav-item d-none d-md-inline"><a href="faq.html" class="nav-link"><i class="fa fa-question-circle" aria-hidden="true"></i> <span
 						class="d-none d-xl-inline ml-1"
 					>{{ 'navigation.faq' | translate }}</span> </a></li>
-				<li class="nav-item"><a *ngIf="$auth.isLoggedIn()" class="nav-link" href="#" (click)="$auth.logout()"> <i class="fa fa-power-off"
-						aria-hidden="true"
-					></i> <span class="d-inline d-xl-inline d-sm-inline d-md-none ml-1">{{ $auth.user.name || $auth.user.username }}</span>
-				</a> <a *ngIf="!$auth.isLoggedIn()" class="nav-link" uiSref="login"> <i class="fa fa-power-off" aria-hidden="true"></i> <span
-						class="d-inline d-xl-inline d-sm-inline d-md-none ml-1"
-					>{{ 'navigation.login' | translate }}</span>
-				</a></li>
+				<li class="nav-item" [ngClass]="$auth.isLoggedIn() && 'dropdown'">
+				  <ng-container *ngIf="$auth.isLoggedIn()">
+				  <a class="nav-link dropdown-toggle text-right" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				    <i class="fa fa-power-off" aria-hidden="true"></i>
+				    <span class="d-inline d-xl-inline d-sm-inline d-md-none ml-1">{{ $auth.user.name || $auth.user.username }}</span>
+				  </a>
+				  <div class="dropdown-menu dropdown-menu-right py-0" aria-labelledby="userMenu" id="user-info">
+            <ng-container *ngTemplateOutlet="userMenu;context:{user: $auth.user, realm: $auth.getRealmById($auth.user.realm)}"></ng-container>
+          </div>
+          </ng-container>
+				  <a *ngIf="!$auth.isLoggedIn()" class="nav-link" uiSref="login">
+				    <i class="fa fa-power-off" aria-hidden="true"></i>
+				    <span class="d-inline d-xl-inline d-sm-inline d-md-none ml-1">{{ 'navigation.login' | translate }}</span>
+				  </a>
+				</li>
 			</ul>
 		</div>
 	</div>

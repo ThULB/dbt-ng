@@ -190,7 +190,7 @@
 		"placeOfBirth": "Place of birth",
 		"placeOfDeath": "Place of death"
 	},
-	"realm":{
+	"realm": {
 		"local": {
 			"label": "DBT-Login",
 			"info": "Login with local user account",
@@ -200,7 +200,19 @@
 			"label": "Uni-Login",
 			"info": "Login with your user credentials of your university",
 			"description": "<strong class=\"text-danger\">Login for university users of FSU Jena, TU Ilmenau, Erfurt and Nordhausen.</strong>"
-		}
+		},
+    "tu-ilmenau.de": {
+      "label": "TU Ilmenau"
+    },
+    "uni-jena.de": {
+      "label": "FSU Jena"
+    },
+    "uni-erfurt.de": {
+      "label": "University Erfurt"
+    },
+    "hs-nordhausen.de": {
+      "label": "University Nordhausen"
+    }
 	},
 	"rc": {
 		"breadcrumb": "Reserve Collection List",
@@ -228,7 +240,12 @@
 		}
 	},
 	"user": {
+		"action": {
+			"passwordChange": "Change password"
+		},
+		"email": "E-Mail",
 		"name": "Username",
-		"password": "Password"
+		"password": "Password",
+		"realm": "Realm"
 	}
 }

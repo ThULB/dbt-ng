@@ -192,7 +192,7 @@
 		"placeOfBirth": "Geburtsort",
 		"placeOfDeath": "Todesort"
 	},
-	"realm":{
+	"realm": {
 		"local": {
 			"label": "DBT-Login",
 			"info": "Anmeldung mit lokaler Nutzerkennung",
@@ -202,7 +202,19 @@
 			"label": "Uni-Login",
 			"info": "Anmelden mit dem Login Ihrer Hochschule",
 			"description": "<strong class=\"text-danger\">Anmeldung für Benutzer der FSU Jena, TU Ilmenau, Uni Erfurt und Hochschule Nordhausen.</strong>"
-		}
+		},
+		"tu-ilmenau.de": {
+		  "label": "TU Ilmenau"
+		},
+		"uni-jena.de": {
+      "label": "FSU Jena"
+    },
+    "uni-erfurt.de": {
+      "label": "Universität Erfurt"
+    },
+    "hs-nordhausen.de": {
+      "label": "Hochschule Nordhausen"
+    }
 	},
 	"rc": {
 		"breadcrumb": "Semesterapparate Liste",
@@ -230,7 +242,12 @@
 		}
 	},
 	"user": {
+		"action": {
+			"passwordChange": "Passwort ändern"
+		},
+		"email": "E-Mail",
 		"name": "Benutzername",
-		"password": "Passwort"
+		"password": "Passwort",
+		"realm": "Herkunft"
 	}
 }

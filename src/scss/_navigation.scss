@@ -272,6 +272,21 @@ $navbar-nav-link-padding-y: 0.8rem !default;
       margin-right: -($navbar-margin);
     }
   }
+
+  #user-info {
+    width: 300px;
+    .controls {
+      background-color: $body-bg-color;
+    }
+    
+    @include media-breakpoint-only(xs) {
+      width: auto;
+      .controls {
+        background: none;
+      }
+    }
+  }
+
 }
 
 #container-overlay {

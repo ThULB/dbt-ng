@@ -7,21 +7,6 @@ import { throwError } from "rxjs";
 import { ApiService } from "./api.service";
 import { environment } from "../../environments/environment";
 
-export interface LoginResponse {
-    login_success: boolean;
-    access_token?: string;
-    token_type?: string;
-}
-
-export interface UserInformation {
-    token?: string;
-    audience?: string;
-    username?: string;
-    name?: string;
-    email?: string;
-    roles?: Array<string>;
-}
-
 export interface Realm {
     id: string;
     login?: boolean;
@@ -32,6 +17,22 @@ export interface Realm {
 export interface Settings {
     formAuth?: boolean;
     realm?: Array<Realm>;
+}
+
+export interface LoginResponse {
+    login_success: boolean;
+    access_token?: string;
+    token_type?: string;
+}
+
+export interface UserInformation {
+    token?: string;
+    audience?: string;
+    username?: string;
+    realm?: string;
+    name?: string;
+    email?: string;
+    roles?: Array<string>;
 }
 
 @Injectable()
@@ -109,10 +110,13 @@ export class AuthService {
             return window.localStorage.removeItem("token");
         }
 
+        const uparts = decoded.sub.match(new RegExp("([^@]+)@?(.*)?"));
+
         this.user = {
             token: token,
             audience: decoded.aud,
-            username: decoded.sub,
+            username: uparts[1] || decoded.sub,
+            realm: uparts[2],
             name: decoded.name,
             email: decoded.email,
             roles: decoded["mcr:roles"]
@@ -144,7 +148,7 @@ export class AuthService {
     }
 
     getRealmById(id: string): Realm {
-        return this.realms.find(r => r.id === id);
+        return this.realms && this.realms.find(r => r.id === id);
     }
 
     getAppSettings() {
