@@ -62,6 +62,8 @@ export class ScrollContainerDirective implements OnInit, AfterViewChecked {
             this.renderer.addClass(this.fadeLeft, "scrolling");
             if ((elm.scrollWidth - elm.scrollLeft) <= this.container.offsetWidth) {
                 this.renderer.removeClass(this.fadeRight, "scrolling");
+            } else {
+                this.renderer.addClass(this.fadeRight, "scrolling");
             }
         } else {
             this.renderer.removeClass(this.fadeLeft, "scrolling");
