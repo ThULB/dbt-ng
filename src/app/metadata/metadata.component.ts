@@ -139,7 +139,7 @@ export function resolveFnDerivates($api, $error, $spinner, trans) {
                         }, err => {
                             derivates[i] = { id: o.xlinkHref, objectId: id, status: err.status };
                             dl--;
-                            
+
                             if (dl === 0) {
                                 resolve(derivates);
                             }
