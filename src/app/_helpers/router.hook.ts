@@ -45,13 +45,24 @@ export function routerHook(transitionService: TransitionService) {
     };
 
     const scrollTo = (transition: Transition) => {
-        let sp = CacheService.get(CacheService.buildCacheKey("sp" + transition.to().name, transition.params("to")))
-            || { x: 0, y: 0 };
-        if ("sref|unknown".indexOf(transition.options().source) !== -1) {
-            sp = { x: 0, y: 0 };
-        }
+        const params = transition.params("to");
 
-        setTimeout(() => window.scroll(sp.x, sp.y));
+        if (params["#"]) {
+            setTimeout(() => {
+                const container = <HTMLElement>window.document.getElementById("container-main");
+                const elm = document.getElementById(params["#"]);
+                elm.scrollIntoView({ block: "start", behavior: "smooth" });
+                window.scrollBy(0, (container.offsetTop + 30) * -1);
+            });
+        } else {
+            let sp = CacheService.get(CacheService.buildCacheKey("sp" + transition.to().name, params))
+                || { x: 0, y: 0 };
+            if ("sref|unknown".indexOf(transition.options().source) !== -1) {
+                sp = { x: 0, y: 0 };
+            }
+
+            setTimeout(() => window.scroll(sp.x, sp.y));
+        }
     };
 
     transitionService.onCreate(injectReturnToCriteria, injectReturnTo, { priority: 10 });
