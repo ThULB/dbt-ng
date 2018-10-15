@@ -1,0 +1,18 @@
+<div id="faq" class="container">
+	<div class="faqHead" *ngFor="let cat of faq">
+		<h2>
+			<a uiSref="." [uiParams]="{ '#': cat.href }">{{ cat.title }}</a>
+		</h2>
+		<p *ngFor="let entry of cat.entry; let i = index" [ngClass]="(i < cat.entry.length -1) && 'mb-0'">
+			<a uiSref="." [uiParams]="{ '#': entry.href }">{{ entry.question }}</a>
+		</p>
+	</div>
+
+	<div class="faqBody" *ngFor="let cat of faq">
+		<h2 [id]="cat.href">{{ cat.title }}</h2>
+		<ng-container *ngFor="let entry of cat.entry; let i = index">
+		  <h3 [id]="entry.href">{{ entry.question }}</h3>
+		  <div [innerHTML]="entry.answer"></div>
+		</ng-container>
+	</div>
+</div>

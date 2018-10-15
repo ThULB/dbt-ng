@@ -57,7 +57,7 @@
 						<li class="dropdown-item" uiSrefActive="active" uiSref="browse" [uiParams]="{id: 'SDNB'}">{{ 'navigation.subjectGroups' | translate }}</li>
 						<li class="dropdown-item" uiSrefActive="active" uiSref="persons">{{ 'navigation.persons' | translate }}</li>
 					</ul></li>
-				<li class="nav-item d-xs-inline d-sm-inline d-md-none"><a href="faq.html" class="nav-link">{{ 'navigation.faq' | translate }}</a></li>
+				<li class="nav-item d-xs-inline d-sm-inline d-md-none"><a class="nav-link" uiSrefActive="active" uiSref="content.faq">{{ 'navigation.faq' | translate }}</a></li>
 				<li class="nav-item dropdown d-xs-inline d-sm-inline d-md-none"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false"
 				>{{ 'navigation.basket' | translate }} <sup class="ml-1">{{ basket.items.length || 0 }}</sup>
@@ -86,7 +86,7 @@
 						<li class="dropdown-item" uiSrefActive="active" uiSref="browse" [uiParams]="{id: 'SDNB'}">{{ 'navigation.subjectGroups' | translate }}</li>
 						<li class="dropdown-item" uiSrefActive="active" uiSref="persons">{{ 'navigation.persons' | translate }}</li>
 					</ul></li>
-				<li class="nav-item d-none d-md-inline"><a href="faq.html" class="nav-link"><i class="fa fa-question-circle" aria-hidden="true"></i> <span
+				<li class="nav-item d-none d-md-inline"><a class="nav-link" uiSrefActive="active" uiSref="content.faq"><i class="fa fa-question-circle" aria-hidden="true"></i> <span
 						class="d-none d-xl-inline ml-1"
 					>{{ 'navigation.faq' | translate }}</span> </a></li>
 				<li class="nav-item" [ngClass]="$auth.isLoggedIn() && 'dropdown'">

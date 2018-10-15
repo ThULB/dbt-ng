@@ -54,6 +54,12 @@ export const ClassificationBrowseFutureState = {
     loadChildren: "./classification/browse.module#ClassificationBrowseModule"
 };
 
+export const ContentFutureState = {
+    name: "content.**",
+    url: "/content",
+    loadChildren: "./content/content.module#ContentModule"
+};
+
 export const MetadataFutureState = {
     name: "metadata.**",
     url: "/metadata",
@@ -120,6 +126,7 @@ export const SearchFutureState = {
                 LoginStates,
                 BasketFutureState,
                 ClassificationBrowseFutureState,
+                ContentFutureState,
                 MetadataFutureState,
                 PersonFutureState,
                 RCFutureState,
