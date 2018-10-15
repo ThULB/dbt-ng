@@ -49,10 +49,12 @@ export function routerHook(transitionService: TransitionService) {
 
         if (params["#"]) {
             setTimeout(() => {
-                const container = <HTMLElement>window.document.getElementById("container-main");
                 const elm = document.getElementById(params["#"]);
-                elm.scrollIntoView({ block: "start", behavior: "smooth" });
-                window.scrollBy(0, (container.offsetTop + 30) * -1);
+                if (elm) {
+                    const container = <HTMLElement>window.document.getElementById("container-main");
+                    elm.scrollIntoView({ block: "start", behavior: "smooth" });
+                    window.scrollBy(0, (container.offsetTop + 30) * -1);
+                }
             });
         } else {
             let sp = CacheService.get(CacheService.buildCacheKey("sp" + transition.to().name, params))
