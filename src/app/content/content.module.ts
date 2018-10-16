@@ -6,6 +6,7 @@ import { UIRouterModule } from "@uirouter/angular";
 
 import { ContentComponent, ContentStates } from "./content.component";
 import { FAQComponent, FAQStates } from "./faq.component";
+import { StaticContentComponent, StaticContentStates } from "./staticContent.component";
 
 @NgModule({
     imports: [
@@ -16,17 +17,20 @@ import { FAQComponent, FAQStates } from "./faq.component";
         UIRouterModule.forChild({
             states: [
                 ContentStates,
-                FAQStates
+                FAQStates,
+                StaticContentStates
             ]
         })
     ],
     declarations: [
         ContentComponent,
-        FAQComponent
+        FAQComponent,
+        StaticContentComponent
     ],
     exports: [
         ContentComponent,
-        FAQComponent
+        FAQComponent,
+        StaticContentComponent
     ]
 })
 export class ContentModule { }

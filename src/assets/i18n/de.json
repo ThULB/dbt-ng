@@ -46,6 +46,13 @@
 		"send": "Abschicken",
 		"share": "Teilen"
 	},
+	"content": {
+		"static": {
+			"contact": "Kontakt",
+			"imprint": "Impressum",
+			"privacyPolicy": "Datenschutzerklärung"
+		}
+	},
 	"dataTable": {
 		"filter": "Filter",
 		"filterInfo": "{start} bis {limit} von {total} Einträgen",
@@ -204,17 +211,17 @@
 			"description": "<strong class=\"text-danger\">Anmeldung für Benutzer der FSU Jena, TU Ilmenau, Uni Erfurt und Hochschule Nordhausen.</strong>"
 		},
 		"tu-ilmenau.de": {
-		  "label": "TU Ilmenau"
+			"label": "TU Ilmenau"
 		},
 		"uni-jena.de": {
-      "label": "FSU Jena"
-    },
-    "uni-erfurt.de": {
-      "label": "Universität Erfurt"
-    },
-    "hs-nordhausen.de": {
-      "label": "Hochschule Nordhausen"
-    }
+			"label": "FSU Jena"
+		},
+		"uni-erfurt.de": {
+			"label": "Universität Erfurt"
+		},
+		"hs-nordhausen.de": {
+			"label": "Hochschule Nordhausen"
+		}
 	},
 	"rc": {
 		"breadcrumb": "Semesterapparate Liste",

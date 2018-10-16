@@ -135,8 +135,9 @@
 		<div class="d-flex justify-content-between align-items-center">
 			<div>
 				<ul class="nav-footer">
-					<li class=""><a href="https://www.db-thueringen.de/content/footer/impressum.xml">Impressum</a></li>
-					<li class=""><a href="https://www.db-thueringen.de/content/footer/contact.xml">Kontakt</a></li>
+					<li class=""><a uiSref="content.static" [uiParams]="{fileName: 'imprint'}">{{ 'content.static.imprint' | translate }}</a></li>
+					<li class=""><a uiSref="content.static" [uiParams]="{fileName: 'contact'}">{{ 'content.static.contact' | translate }}</a></li>
+					<li class=""><a uiSref="content.static" [uiParams]="{fileName: 'privacyPolicy'}">{{ 'content.static.privacyPolicy' | translate }}</a></li>
 				</ul>
 				<p class="info">{{ 'general.copyright' | translate }}</p>
 			</div>
