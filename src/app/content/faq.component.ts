@@ -41,12 +41,14 @@ export class FAQComponent implements OnInit {
 
         if (href) {
             this.activeCategory = this.faq.find(c => c.href === href);
-            for (let i in this.faq) {
-                const m = this.faq[i] && this.faq[i].entry.find(e => e.href === href);
-                if (m) {
-                    this.activeCategory = this.faq[i];
-                    this.activeEntry = m;
-                    break;
+            for (const i in this.faq) {
+                if (this.faq[i]) {
+                    const m = this.faq[i].entry.find(e => e.href === href);
+                    if (m) {
+                        this.activeCategory = this.faq[i];
+                        this.activeEntry = m;
+                        break;
+                    }
                 }
             }
         }
