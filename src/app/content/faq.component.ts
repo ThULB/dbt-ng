@@ -54,7 +54,7 @@ export class FAQComponent implements OnInit {
         if (!this.activeCategory) {
             this.activeCategory = this.faq[0];
         }
-        
+
         if (!this.activeEntry) {
             this.activeEntry = this.activeCategory.entry[0];
         }
@@ -82,7 +82,7 @@ export function filterFAQ(faq: Array<FAQCategory>, filter: string): Array<FAQCat
             f = fp.shift();
             filter = fp.join(" ");
         }
-        
+
         console.log(f, filter);
 
         const res = [];
@@ -95,7 +95,10 @@ export function filterFAQ(faq: Array<FAQCategory>, filter: string): Array<FAQCat
                 cat.entry = cat.entry.filter(e =>
                     e.answer.toLowerCase().indexOf(f) !== -1 || e.question.toLowerCase().indexOf(f) !== -1
                 );
-                res.push(cat);
+
+                if (cat.entry.length !== 0) {
+                    res.push(cat);
+                }
             }
         });
 
