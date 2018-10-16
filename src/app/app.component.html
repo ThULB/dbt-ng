@@ -45,8 +45,8 @@
 				>{{ 'navigation.publish' | translate }}</a>
 					<ul class="dropdown-menu">
 						<li class="dropdown-item"><a href="#">{{ 'navigation.submitDocument' | translate }}</a></li>
-						<li class="dropdown-item"><a href="#">{{ 'navigation.guidelines' | translate }}</a></li>
-						<li class="dropdown-item"><a href="#">{{ 'navigation.termsAndConditions' | translate }}</a></li>
+						<li class="dropdown-item" uiSrefActive="active" uiSref="content.static" [uiParams]="{fileName: 'guidelines'}">{{ 'content.static.guidelines' | translate }}</li>
+						<li class="dropdown-item" uiSrefActive="active" uiSref="content.static" [uiParams]="{fileName: 'termsAndConditions'}">{{ 'content.static.termsAndConditions' | translate }}</li>
 					</ul></li>
 				<li class="nav-item dropdown d-xs-inline d-sm-inline d-md-none"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false"
@@ -135,9 +135,9 @@
 		<div class="d-flex justify-content-between align-items-center">
 			<div>
 				<ul class="nav-footer">
-					<li class=""><a uiSref="content.static" [uiParams]="{fileName: 'imprint'}">{{ 'content.static.imprint' | translate }}</a></li>
-					<li class=""><a uiSref="content.static" [uiParams]="{fileName: 'contact'}">{{ 'content.static.contact' | translate }}</a></li>
-					<li class=""><a uiSref="content.static" [uiParams]="{fileName: 'privacyPolicy'}">{{ 'content.static.privacyPolicy' | translate }}</a></li>
+					<li class=""><a uiSrefActive="active" uiSref="content.static" [uiParams]="{fileName: 'imprint'}">{{ 'content.static.imprint' | translate }}</a></li>
+					<li class=""><a uiSrefActive="active" uiSref="content.static" [uiParams]="{fileName: 'contact'}">{{ 'content.static.contact' | translate }}</a></li>
+					<li class=""><a uiSrefActive="active" uiSref="content.static" [uiParams]="{fileName: 'privacyPolicy'}">{{ 'content.static.privacyPolicy' | translate }}</a></li>
 				</ul>
 				<p class="info">{{ 'general.copyright' | translate }}</p>
 			</div>

@@ -50,7 +50,9 @@
 		"static": {
 			"contact": "Contact",
 			"imprint": "Imprint",
-			"privacyPolicy": "Privacy Policy"
+			"guidelines": "Guidelines",
+			"privacyPolicy": "Privacy Policy",
+			"termsAndConditions": "Terms & Conditions"
 		}
 	},
 	"dataTable": {
@@ -161,7 +163,6 @@
 		"browse": "Browse",
 		"faq": "FAQ",
 		"genres": "Genres",
-		"guidelines": "Guidelines",
 		"home": "Home",
 		"institutions": "Institutions",
 		"login": "Login",
@@ -176,8 +177,7 @@
 		"basket": "Basket",
 		"basketOpen": "Open basket",
 		"subjectGroups": "Subject groups",
-		"submitDocument": "Publish document",
-		"termsAndConditions": "Terms & Conditions"
+		"submitDocument": "Publish document"
 	},
 	"persons": {
 		"breadcrumb": "Persons from A-Z"

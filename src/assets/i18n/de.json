@@ -49,8 +49,10 @@
 	"content": {
 		"static": {
 			"contact": "Kontakt",
+			"guidelines": "Leitlinien",
 			"imprint": "Impressum",
-			"privacyPolicy": "Datenschutzerklärung"
+			"privacyPolicy": "Datenschutzerklärung",
+			"termsAndConditions": "Vertragsbedingungen"
 		}
 	},
 	"dataTable": {
@@ -163,7 +165,6 @@
 		"browse": "Blättern",
 		"faq": "FAQ",
 		"genres": "Dokumenttypen",
-		"guidelines": "Leitlinien",
 		"home": "Startseite",
 		"institutions": "Einrichtungen",
 		"login": "Anmelden",
@@ -178,8 +179,7 @@
 		"basket": "Merkliste",
 		"basketOpen": "Merkliste öffnen",
 		"subjectGroups": "Sachgruppen",
-		"submitDocument": "Dokument einreichen",
-		"termsAndConditions": "Vertragsbedingungen"
+		"submitDocument": "Dokument einreichen"
 	},
 	"persons": {
 		"breadcrumb": "Personen von A-Z"
