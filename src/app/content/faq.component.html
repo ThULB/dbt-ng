@@ -4,7 +4,7 @@
   
     <div class="col-12 col-sm-4 pr-sm-1">
     
-		  <div class="card h-100">
+		  <div class="accordion card h-100" id="faqCategories">
 		    <div class="list-group list-group-flush">
 		      <div class="list-group-item p-2">
             <form>
@@ -21,12 +21,12 @@
           <div *ngIf="faq.length === 0" class="list-group-item">{{ 'general.noResult' | translate }}</div>
 
 		      <ng-container *ngFor="let cat of faq; let i = index">
-            <a class="list-group-item list-group-item-action px-2" data-toggle="collapse" 
+            <a class="list-group-item list-group-item-action px-2" data-toggle="collapse" [href]="'#' + cat.href"
               [attr.data-target]="'#' + cat.href" [attr.aria-expanded]="activeCategory.href === cat.href" [attr.aria-controls]="cat.href">
               <strong>{{ cat.title }}</strong>
             </a>
             <div class="list-group list-group-flush" 
-              [id]="cat.href" class="collapse" [ngClass]="(activeCategory.href === cat.href) && 'show'" data-parent="#faq">
+              [id]="cat.href" class="collapse" [ngClass]="(activeCategory.href === cat.href) && 'show'" data-parent="#faqCategories">
               <a class="list-group-item list-group-item-action" 
                 *ngFor="let entry of cat.entry" [ngClass]="(activeEntry.href === entry.href) && 'active'"
                 uiSref="." [uiParams]="{ '#': entry.href }" [uiOptions]="{reload: true}">{{ entry.question }}</a>
