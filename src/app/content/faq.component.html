@@ -1,18 +1,53 @@
 <div id="faq" class="container">
-	<div class="faqHead" *ngFor="let cat of faq">
-		<h2>
-			<a uiSref="." [uiParams]="{ '#': cat.href }">{{ cat.title }}</a>
-		</h2>
-		<p *ngFor="let entry of cat.entry; let i = index" [ngClass]="(i < cat.entry.length -1) && 'mb-0'">
-			<a uiSref="." [uiParams]="{ '#': entry.href }">{{ entry.question }}</a>
-		</p>
-	</div>
 
-	<div class="faqBody" *ngFor="let cat of faq">
-		<h2 [id]="cat.href">{{ cat.title }}</h2>
-		<ng-container *ngFor="let entry of cat.entry; let i = index">
-		  <h3 [id]="entry.href">{{ entry.question }}</h3>
-		  <div [innerHTML]="entry.answer"></div>
-		</ng-container>
-	</div>
+  <div class="row h-100">
+  
+    <div class="col-12 col-sm-4 pr-sm-1">
+    
+		  <div class="card h-100">
+		    <div class="list-group list-group-flush">
+		      <div class="list-group-item p-2">
+            <form>
+              <div class="form-group flex-fill m-0">
+                <label class="d-inline-flex justify-content-start flex-row w-100 align-items-center m-0">
+	                <span aria-hidden="true" class="fa fa-filter mr-1"></span> {{ 'dataTable.filter' | translate }}
+	                <input id="filter" type="search" class="form-control ml-1" name="filter" [(ngModel)]="filter"
+	                  (keydown)="changeFilter($event)">
+                </label>
+              </div>
+            </form>  
+          </div>
+
+          <div *ngIf="faq.length === 0" class="list-group-item">{{ 'general.noResult' | translate }}</div>
+
+		      <ng-container *ngFor="let cat of faq; let i = index">
+            <a class="list-group-item list-group-item-action px-2" data-toggle="collapse" 
+              [attr.data-target]="'#' + cat.href" [attr.aria-expanded]="activeCategory.href === cat.href" [attr.aria-controls]="cat.href">
+              <strong>{{ cat.title }}</strong>
+            </a>
+            <div class="list-group list-group-flush" 
+              [id]="cat.href" class="collapse" [ngClass]="(activeCategory.href === cat.href) && 'show'" data-parent="#faq">
+              <a class="list-group-item list-group-item-action" 
+                *ngFor="let entry of cat.entry" [ngClass]="(activeEntry.href === entry.href) && 'active'"
+                uiSref="." [uiParams]="{ '#': entry.href }" [uiOptions]="{reload: true}">{{ entry.question }}</a>
+            </div>
+		      </ng-container>
+		    </div>
+		  </div>
+		  
+    </div>
+    
+    <div class="col-sm-8 pl-sm-1 mt-2 mt-sm-0">
+    
+      <div class="card h-100">
+        <ng-container *ngIf="activeEntry">
+	        <h5 class="card-header" [id]="activeEntry.href">{{ activeEntry?.question }}</h5>
+	        <div class="card-body" [innerHTML]="activeEntry?.answer"></div>
+        </ng-container>
+      </div>
+      
+    </div>
+    
+  </div>
+
 </div>
