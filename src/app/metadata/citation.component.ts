@@ -89,6 +89,7 @@ export class CitationComponent implements OnInit {
                 }).catch((err) => {
                     this.loading = false;
                     this.$error.handleError(err);
+                    this.mods2isbd();
                 });
             }
         } else {
@@ -118,7 +119,7 @@ export class CitationComponent implements OnInit {
         if (this.mods) {
             let citation = "";
             const ti = this.mods.getElement("mods:titleInfo");
-            citation += ti.getElement("mods:nonSort") ? ti.getElement("mods:nonSort").text : "";
+            citation += ti.getElement("mods:nonSort") ? ti.getElement("mods:nonSort").text + " " : "";
             citation += ti.getElement("mods:title").text;
             citation += ti.getElement("mods:subTitle") ? " : " + ti.getElement("mods:subTitle").text : "";
             citation += "\n";
