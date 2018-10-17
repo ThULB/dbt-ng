@@ -78,6 +78,7 @@ export class CitationComponent implements OnInit {
 
             if (cache) {
                 this.citation = cache;
+                this.styleSelection = true;
                 this.loading = false;
             } else {
                 this.loading = true;
