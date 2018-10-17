@@ -93,7 +93,7 @@ export class CitationComponent implements OnInit {
                 }).catch((err) => {
                     this.loading = false;
                     this.styleSelection = false;
-                    this.$error.handleError(err);
+                    this.$error.handleError(err, true);
                     this.mods2isbd();
                 });
             }
