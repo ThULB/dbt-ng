@@ -42,6 +42,8 @@ export class CitationComponent implements OnInit {
 
     public style: string;
 
+    public styleSelection = false;
+
     public citation: any;
 
     public loading = true;
@@ -84,10 +86,12 @@ export class CitationComponent implements OnInit {
                     { responseType: "text" as "text" }
                 ).toPromise().then((res: any) => {
                     this.citation = this.formatCitation(res);
+                    this.styleSelection = true;
                     this.loading = false;
                     CacheService.set(cacheKey, this.citation, CacheService.DEFAULT_LIFETIME);
                 }).catch((err) => {
                     this.loading = false;
+                    this.styleSelection = false;
                     this.$error.handleError(err);
                     this.mods2isbd();
                 });

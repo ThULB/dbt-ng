@@ -27,7 +27,7 @@
     <ng-container *ngTemplateOutlet="altmericTemplate;context:altmericEnabledId()"></ng-container>
     
     <ng-container *ngIf="identifierByType('doi'); else defaultCitation">
-      <div *ngIf="altmericEnabledId()" class="form-group row">
+      <div *ngIf="styleSelection" class="form-group row">
         <label for="citation-style" class="col-sm-4 col-form-label">{{ 'metadata.citationStyle' | translate }}</label>
         <div class="col-sm-8">
           <select id="citation-style" class="form-control" [ngModel]="style" (change)="selectStyle($event)">
