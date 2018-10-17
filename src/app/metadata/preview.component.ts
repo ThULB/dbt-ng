@@ -208,7 +208,8 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     private buildInternalId(): string {
         return CryptoJS.SHA256(this.derivate.id + "_" +
-            ((this.path ? this.path + "/" + this.file : this.file) || this.mainFile)).toString(CryptoJS.enc.Hex).toUpperCase();
+            ((this.path ? this.path + "/" + this.file : this.file) || this.mainFile))
+            .toString(CryptoJS.enc.Hex).toUpperCase().replace(new RegExp("^0*"), "");
     }
 
     private initStreamPreview() {
