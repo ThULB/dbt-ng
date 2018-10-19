@@ -62,10 +62,11 @@ export class SlotComponent {
 }
 
 export function resolveFnSlot($api, $error, $spinner, trans) {
-    const cacheKey = CacheService.buildCacheKey(trans.to().name, trans.params());
+    const cacheKey = CacheService.buildCacheKey("rcSlot", trans.params());
     const cache = CacheService.get(cacheKey);
 
     if (cache) {
+        console.log(cacheKey, cache);
         return cache;
     } else {
         $spinner.setLoadingState(trans.options().source !== "url" && trans.from().name !== trans.to().name);
