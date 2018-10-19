@@ -1,7 +1,10 @@
 import { Injectable, Injector } from "@angular/core";
 import { StateDeclaration, StateService, Transition } from "@uirouter/core";
 
+import { TranslateService } from "@ngx-translate/core";
+
 import { Observable } from "rxjs";
+import { map, merge } from "rxjs/operators";
 
 export interface Breadcrumb {
     name: string;
@@ -13,6 +16,8 @@ export interface Breadcrumb {
 export class BreadcrumbService {
 
     private $state: StateService;
+
+    private $translate: TranslateService;
 
     public breadcrumbs: Array<Breadcrumb>;
 
@@ -29,14 +34,17 @@ export class BreadcrumbService {
             this.$state = transition.router.stateService;
         }
 
+        if (!this.$translate) {
+            this.$translate = this.$injector.get<TranslateService>(TranslateService);
+        }
+
         const f = transition.from();
         const t = transition.to();
 
         const toBC = {
             name: t.name,
             params: this.decodeParams(transition.params("to")),
-            labelResolver: t.data && t.data.breadcrumbLabelResolver ?
-                t.data.breadcrumbLabelResolver(this.$injector, this.decodeParams(transition.params("to"))) : null
+            labelResolver: this.buildLabelResolver(t, this.decodeParams(transition.params("to")))
         };
         const bIdx = this.findBreadcrumbIndex(toBC);
 
@@ -69,8 +77,7 @@ export class BreadcrumbService {
             const sBC = {
                 name: state.name,
                 params: params,
-                labelResolver: state.data && state.data.breadcrumbLabelResolver ?
-                    state.data.breadcrumbLabelResolver(this.$injector, params) : null
+                labelResolver: this.buildLabelResolver(state, params)
             };
             const sIdx = this.findBreadcrumbIndex(sBC);
 
@@ -118,5 +125,20 @@ export class BreadcrumbService {
         }
 
         return params;
+    }
+
+    private buildLabelResolver(state: StateDeclaration, params?: Object) {
+        if (state.data && state.data.breadcrumbLabelResolver) {
+            return Observable.create((observer) => {
+                const resolver = state.data.breadcrumbLabelResolver(this.$injector, params);
+                
+                resolver.subscribe(t => observer.next(t));
+                this.$translate.onLangChange.subscribe(event =>
+                    resolver.subscribe(t => observer.next(t))
+                );
+            });
+        }
+
+        return null;
     }
 }
