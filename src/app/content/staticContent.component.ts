@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { ErrorService } from "../_services/error.service";
 import { SpinnerService } from "../spinner/spinner.service";
-import { StateService, Transition } from "@uirouter/core";
+import { Transition } from "@uirouter/core";
 import { TranslateService } from "@ngx-translate/core";
 
 @Component({
@@ -20,7 +20,7 @@ export class StaticContentComponent {
 export function ContentTitleResolver($injector, params) {
     const translate = $injector.get(TranslateService);
     const fileName = params.fileName || "";
-    
+
     return translate.get(`content.static.${fileName}`).toPromise();
 }
 
