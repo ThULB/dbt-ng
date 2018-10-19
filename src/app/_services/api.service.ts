@@ -1,10 +1,9 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpEventType, HttpRequest, HttpResponse, HttpHeaders } from "@angular/common/http";
 
-import { Subject } from "rxjs/Subject";
+import { Subject, of } from "rxjs";
 
 import { map, last, catchError, distinctUntilChanged } from "rxjs/operators";
-import { of } from "rxjs/observable/of";
 
 import { environment } from "../../environments/environment";
 
