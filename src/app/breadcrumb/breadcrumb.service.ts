@@ -24,6 +24,8 @@ export class BreadcrumbService {
     public root: Breadcrumb;
 
     constructor(private $injector: Injector) {
+        this.$translate = this.$injector.get<TranslateService>(TranslateService);
+        
         this.breadcrumbs = new Array();
         this.root = { name: "home", params: { "#": null } };
         this.breadcrumbs.push(this.root);
@@ -32,10 +34,6 @@ export class BreadcrumbService {
     setBreadcrumb(transition: Transition) {
         if (!this.$state) {
             this.$state = transition.router.stateService;
-        }
-
-        if (!this.$translate) {
-            this.$translate = this.$injector.get<TranslateService>(TranslateService);
         }
 
         const f = transition.from();
@@ -131,7 +129,7 @@ export class BreadcrumbService {
         if (state.data && state.data.breadcrumbLabelResolver) {
             return Observable.create((observer) => {
                 const resolver = state.data.breadcrumbLabelResolver(this.$injector, params);
-                
+
                 resolver.subscribe(t => observer.next(t));
                 this.$translate.onLangChange.subscribe(event =>
                     resolver.subscribe(t => observer.next(t))
