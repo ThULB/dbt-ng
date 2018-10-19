@@ -56,7 +56,7 @@ export class CacheService {
     }
 
     public static buildCacheKey(prefix: string, obj: any) {
-        const reRE = new RegExp("([\\[\\]\\(\\)\/\\:\\|])", "g");
+        const reRE = new RegExp("([\\[\\]\\(\\)\/\\:\\|\\s])", "g");
         const key = [prefix];
 
         if (typeof obj === "string") {
