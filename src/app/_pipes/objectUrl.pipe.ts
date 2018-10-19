@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, EventEmitter, Pipe, PipeTransform } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 
-import { Subject } from "rxjs/Subject";
+import { Subject } from "rxjs";
 
 import { ApiService } from "../_services/api.service";
 import { Cache, CacheService } from "../_services/cache.service";

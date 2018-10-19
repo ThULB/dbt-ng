@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
 import { ErrorService } from "../_services/error.service";

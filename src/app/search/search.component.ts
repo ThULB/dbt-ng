@@ -1,6 +1,6 @@
 import { Component, Input, Renderer2 } from "@angular/core";
 
-import { Observable } from "rxjs/Observable";
+import { Observable } from "rxjs";
 import { debounceTime, filter, map } from "rxjs/operators";
 
 import { CacheService } from "../_services/cache.service";

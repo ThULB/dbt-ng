@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input, EventEmitter, ViewChildren, QueryList, ElementRef } from "@angular/core";
 
-import { Subject } from "rxjs/Subject";
+import { Subject } from "rxjs";
 
 import { ErrorService } from "../_services/error.service";
 import { ApiService } from "../_services/api.service";
