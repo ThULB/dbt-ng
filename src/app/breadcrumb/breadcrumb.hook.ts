@@ -28,7 +28,7 @@ export function breadcrumbHook(injector: Injector, transitionService: Transition
         const labelResolver = breadcrumb && breadcrumb.labelResolver;
 
         if (labelResolver) {
-            labelResolver.then(t => title.setTitle(t + TITLE_SUFFIX));
+            labelResolver.subscribe(t => title.setTitle(t + TITLE_SUFFIX));
         } else {
             title.setTitle(translate.instant(to.data.breadcrumb || breadcrumb.name || to.name, breadcrumb.params) + TITLE_SUFFIX);
         }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Renderer2, OnChanges, SimpleChanges, SimpleChange } from "@angular/core";
 
+import { of } from "rxjs";
 import { map } from "rxjs/operators";
 
 import { PersonApiService } from "./api.service";
@@ -168,12 +169,13 @@ export class PersonComponent extends MetadataHelpers implements OnInit, OnChange
 
 export function personTitleResolver($injector, params) {
     const api = $injector.get(PersonApiService);
-    return params.id ? api.lookupPerson(params.id).toPromise().then((p) => {
-        if (p.type === "person") {
-            return p.familyName + ", " + p.givenName;
-        }
-        return null;
-    }) : new Promise((resolve, reject) => resolve(params.name));
+    return params.id ? api.lookupPerson(params.id).pipe(
+        map((p: any) => {
+            if (p.type === "person") {
+                return p.familyName + ", " + p.givenName;
+            }
+            return null;
+        })) : of(params.name);
 }
 
 export function resolveFnPerson($api, $error, $spinner, trans) {

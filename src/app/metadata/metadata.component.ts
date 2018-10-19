@@ -79,7 +79,7 @@ export function MetadataTitleResolver($injector, params) {
                 + doc["mods.title.main"] +
                 (doc["mods.title.subtitle"] ? " : " + doc["mods.title.subtitle"] : "")
                 + (params.revision ? " (Rev. " + params.revision + ")" : "");
-        })).toPromise();
+        }));
 }
 
 export function resolveFnObject($api, $error, $spinner, trans) {

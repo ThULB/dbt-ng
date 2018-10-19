@@ -95,7 +95,7 @@ export function BrowseTitleResolver($injector, params) {
                     || res.labels.find((l) => !l.lang.startsWith("x-"))).text || params.id
             })
         )
-    ).toPromise();
+    );
 }
 
 export function resolveFnClassification($api, $error, $spinner, trans) {

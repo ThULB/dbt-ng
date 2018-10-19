@@ -1,10 +1,12 @@
 import { Injectable, Injector } from "@angular/core";
 import { StateDeclaration, StateService, Transition } from "@uirouter/core";
 
+import { Observable } from "rxjs";
+
 export interface Breadcrumb {
     name: string;
     params?: Object;
-    labelResolver?: Promise<string> |null;
+    labelResolver?: Observable<string> |null;
 }
 
 @Injectable()

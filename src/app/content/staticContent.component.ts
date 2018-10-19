@@ -21,7 +21,7 @@ export function ContentTitleResolver($injector, params) {
     const translate = $injector.get(TranslateService);
     const fileName = params.fileName || "";
 
-    return translate.get(`content.static.${fileName}`).toPromise();
+    return translate.get(`content.static.${fileName}`);
 }
 
 export function resolveFnContent($http, $error, $spinner, trans) {
