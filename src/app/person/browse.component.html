@@ -27,7 +27,7 @@
 	              </form>  
 	            </div>
 	            <div *ngIf="filteredPersons?.length === 0" class="list-group-item text-center">{{ 'general.noResult' | translate }}</div>
-							<a *ngFor="let p of filteredPersons | slice:start:end; let i = index" class="list-group-item list-group-item-action d-flex flex-row justify-content-between"
+							<a *ngFor="let p of filteredPersons | slice:start:end; let i = index" class="list-group-item list-group-item-action d-flex flex-row justify-content-between px-2"
 							 uiSrefActive="active"
 							 [uiSref]="target ? 'persons.person' : 'persons'" 
 							 [uiParams]="target ? {id: p.id ? [p.id.prefix, p.id.id].join(':') : null, name: p.name} : {selectedIndex: start + i}"

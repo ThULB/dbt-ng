@@ -1,8 +1,8 @@
 <ng-template #personDetailsTemplate>
   <div *ngIf="person.details" class="card mb-2">
     <h5 class="card-header">{{ 'person.details' | translate }}</h5>
-    <div class="card-body">
-      <dl *ngIf="person.details" class="row mb-0">
+    <div class="card-body p-1">
+      <dl *ngIf="person.details" class="row p-1 mb-0">
       <ng-container *ngFor="let key of ['alternateName', 'gender', 'dateOfBirth', 'placeOfBirth', 'dateOfDeath', 'placeOfDeath', 'placeOfActivity', 'mappedIds']">
 			  <ng-container *ngIf="person.details[key]" [ngSwitch]="key">
 			    <ng-container *ngSwitchCase="'alternateName'">
@@ -71,7 +71,7 @@
   
   <div *ngIf="person.documents && person.documents.length !== 0" class="card">
     <h5 class="card-header">{{ 'person.documents' | translate }}</h5>
-    <div class="card-body">
+    <div class="card-body p-1">
       <ng-container *ngFor="let item of person.documents">
 			  <div class="media p-1" *ngIf="item">
 			    <div *ngIf="!mds.isPhone()" class="media-thumb loading align-self-start my-1 ml-1 mr-2 d-none d-md-flex">
