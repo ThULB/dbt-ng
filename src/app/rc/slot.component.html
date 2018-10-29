@@ -10,70 +10,130 @@
   </ng-template>
   
 	<div id="slot-head">
-		<h1>{{ slot.title }}</h1>
-		<div class="info">
-			<span>
-			 <a *ngFor="let lecturer of slot.lecturers.lecturer" class="lecturer" [href]="'mailto:' + !slot.contact ? lecturer.email : slot.contact.email">{{
-					lecturer.name }}</a>
-		  </span>
-		  <ng-container> - {{ 'rc.slot.breadcrumb' | translate:slot }}</ng-container>
-		  <ng-container>
-			  (<ng-container 
-	        *ngTemplateOutlet="labelsWithParentsTemplate;context:{labels: (slot.id | slice:0:10 | classification:'RCLOC':true:true), separator: ' / '}">
-	      </ng-container>)
-		  </ng-container>
-		  <ng-container> - {{ slot.validTo | period:false }}</ng-container>
-		</div>
+	  <div class="d-flex flex-row justify-content-between align-items-start">
+      <h1>{{ slot.title }}</h1>
+      
+      <div *ngIf="$auth.isLoggedIn()" class="dropdown mt-2">
+	      <button class="btn btn-default dropdown-toggle" type="button" id="rcActionMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	        <i class="fas fa-cogs"></i>
+	      </button>
+	      <div class="dropdown-menu dropdown-menu-right" aria-labelledby="rcActionMenuButton">
+          <a class="dropdown-item" uiSref=".attendees" uiSrefActiveEq="d-none" [uiParams]="{id: slot.id}">{{ 'rc.attendees.breadcrumb' | translate }}</a>
+          <a class="dropdown-item" uiSref="." uiSrefActiveEq="d-none" [uiParams]="{id: slot.id}">{{ 'rc.slot.showEntries' | translate }}</a>
+        </div>
+	    </div>
+    </div>
+	     
+    <div class="info">
+      <span>
+        <a *ngFor="let lecturer of slot.lecturers.lecturer" class="lecturer" [href]="'mailto:' + !slot.contact ? lecturer.email : slot.contact.email">
+          {{ lecturer.name }}</a>
+      </span>
+      <ng-container> - {{ 'rc.slot.breadcrumb' | translate:slot }}</ng-container>
+      <ng-container>
+        (<ng-container 
+          *ngTemplateOutlet="labelsWithParentsTemplate;context:{labels: (slot.id | slice:0:10 | classification:'RCLOC':true:true), separator: ' / '}">
+        </ng-container>)
+      </ng-container>
+      <ng-container> - {{ slot.validTo | period:false }}</ng-container>
+    </div>
 	</div>
+	
 	<div class="slot-body mt-3">
-		<div *ngIf="!$auth.isLoggedIn()" role="alert" class="alert alert-warning">Der Zugang zu diesem Semesterapparat ist nur nach Login möglich.</div>
+	  <ui-view>
+		<div *ngIf="!$auth.isLoggedIn()" role="alert" class="alert alert-warning">
+		  {{ 'rc.slot.message.notLoggedIn' | translate }}
+    </div>
 		
-		<ng-container *ngIf="$auth.isLoggedIn()">
-			<ng-container *ngFor="let group of groupEntries(); let i = index">
+		<div *ngIf="$auth.isLoggedIn()" class="d-xl-flex flex-xl-row-reverse">
+		  <div *ngIf="toc && toc.length !== 0" class="flex-xl-column mb-2 ml-xl-2" style="min-width: 25%;">
+		    <div #slotToc class="card">
+		      <h5 class="card-header">{{ 'rc.slot.toc' | translate }}</h5>
+		      <div class="list-group list-group-flush" id="slot-toc">
+		        <a *ngFor="let entry of toc; let i = index" 
+		          [id]="'slot-toc-entry-' + i" uiSref="." [uiParams]="{id: slot.id, '#': entry.id}"
+		          class="list-group-item list-group-item-action">{{ entry.headline }}</a>
+		      </div>
+	      </div>
+      </div>
+		
+		  <div class="flex-xl-column flex-grow-1 mw-xl-75 minw-0">
+			  <div *ngIf="!groups || groups.length === 0" class="alert alert-info">
+			    {{ 'rc.slot.message.noEntries' | translate }}
+			  </div>
 			  
-			  <section [id]="'slot-group-' + i" class="my-2">
-				  <ng-container *ngFor="let entry of group">
-						<ng-container [ngSwitch]="entry.type">
-			        
-			       <div [attr.id]="entry.id" [class]="'entry-' + entry.type">			
-							 <ng-container *ngSwitchCase="'headline'">
-							   <h3>{{ entry.headline }}</h3>
-							 </ng-container>
-							 
-							 <ng-container *ngSwitchCase="'file'">
-				         <a [href]="entry.name">{{ entry.comment || entry.name }}</a>
-				         <span> - {{ entry.size | bytes }}</span>
-				       </ng-container>
-							 
-							 <ng-container *ngSwitchCase="'text'">
-				         <ng-container [ngSwitch]="entry.format">
-				          <ng-container *ngSwitchCase="'html'">
-				            <p [innerHtml]="entry.text"></p>
-				          </ng-container>
-				          <ng-container *ngSwitchCase="'plain'">
-				            <p class="text-justify">{{ entry.text }}</p>
-				          </ng-container>
-				          <ng-container *ngSwitchDefault>
-				            <pre><code>{{ entry.text }}</code></pre>
-				          </ng-container>
-				         </ng-container>
-				       </ng-container>
+				<div *ngFor="let group of groups; let i = index" class="card mb-2">
+
+          <ng-container *ngIf="group[0].type === 'headline'">
+            <h5 [id]="group[0].id" class="card-header">{{ group[0].headline }}</h5>
+          </ng-container>
+            				  
+				  <div [id]="'slot-group-' + i" class="card-body p-0">
+            
+					  <ng-container *ngFor="let entry of group">
+							<ng-container [ngSwitch]="entry.type">
+							  
+              <div [id]="entry.id" class="media entry-{{ entry.type }}">			
+								 
+								 <ng-container *ngSwitchCase="'file'">
+								   <div class="media-body mw-100 p-2">
+								     <div class="d-flex flex-row flex-fill justify-content-between">
+		                   <a class="text-truncate" [href]="entry.file.name">{{ entry.file.comment || entry.file.name }}</a>
+		                   <span class="text-nowrap text-muted">{{ entry.file.size | bytes }}</span>
+	                   </div>
+	                 </div>
+					       </ng-container>
+								 
+								 <ng-container *ngSwitchCase="'text'">
+								   <div class="media-body mw-100 p-2">
+						         <ng-container [ngSwitch]="entry.text.format">
+						          <ng-container *ngSwitchCase="'html'">
+						            <div [innerHtml]="sanitizer.bypassSecurityTrustHtml(entry.text.value)"></div>
+						          </ng-container>
+						          <ng-container *ngSwitchCase="'plain'">
+						            <p class="mb-0 text-justify">{{ entry.text.value }}</p>
+						          </ng-container>
+						          <ng-container *ngSwitchDefault>
+						            <pre class="mb-0"><code>{{ entry.text.value }}</code></pre>
+						          </ng-container>
+						         </ng-container>
+					         </div>
+					       </ng-container>
+					       
+					       <ng-container *ngSwitchCase="'mcrobject'">
+					         <div class="media-body mw-100 p-2">
+	                   <a uiSref="metadata" [uiParams]="{id: entry.mcrobject.id}">{{ entry.mcrobject.value || entry.mcrobject.id }}</a>
+	                 </div>
+	               </ng-container>
+					       
+					       <ng-container *ngSwitchCase="'opcrecord'">
+					         <div class="media-body mw-100 p-2">
+					           <ui-rc-opcrecord [record]="entry.opcrecord.record"></ui-rc-opcrecord>
+					           <p *ngIf="entry.opcrecord.comment" class="text-muted mb-0">
+					             <i>{{ entry.opcrecord.comment }}</i>
+					           </p>
+					         </div>
+					       </ng-container>
+					       
+					       <ng-container *ngSwitchCase="'webLink'">
+					         <div class="media-body mw-100 p-2">
+					           <div class="d-flex flex-row flex-fill">
+					             <a class="text-truncate" [href]="sanitizer.bypassSecurityTrustUrl(entry.webLink.url)">{{ entry.webLink.label || entry.webLink.url }}</a>
+					           </div>
+					         </div>
+					       </ng-container>
+					       
+				      </div>
 				       
-				       <ng-container *ngSwitchCase="'opcrecord'">
-				         <span>{{ entry.type }}</span>
-				       </ng-container>
-				       
-				       <ng-container *ngSwitchCase="'webLink'">
-				         <a [href]="entry.url">{{ entry.label || entry.url }}</a>
-				       </ng-container>
-			       </div>
-			       
-						</ng-container>
-				  </ng-container>
-				</section>
+							</ng-container>
+					  </ng-container>
+					</div>
+				</div>
 				
-			</ng-container>
-		</ng-container>
+			</div>
+			
+		</div>
+		</ui-view>
 	</div>
 <!-- 	<pre>{{ slot | json }}</pre> -->
 </div>

@@ -1,22 +1,25 @@
 {
 	"/rsc/*": {
+		"target1": "http://localhost:8291/mir",
 		"target": "https://dbttest.thulb.uni-jena.de/dbt-master",
 		"secure": true,
 		"changeOrigin": true
 	},
 	"/api/*": {
+		"target1": "http://localhost:8291/mir",
 		"target": "https://dbttest.thulb.uni-jena.de/dbt-master",
 		"secure": true,
 		"changeOrigin": true
 	},
 	"/lookup/*": {
-    "target": "https://dbtservices.thulb.uni-jena.de/",
-    "secure": true,
-    "changeOrigin": true
-  },
+		"target": "https://dbtservices.thulb.uni-jena.de/",
+		"secure": true,
+		"changeOrigin": true
+	},
 	"/solr/*": {
-		"target": "http://localhost:28081/solr/dbt-master",
-		"target2": "http://ulbdb2.thulb.uni-jena.de:28081/solr/dbt-master",
+		"target1": "http://localhost:8983/solr/mir",
+		"target2": "http://localhost:28081/solr/dbt-master",
+		"target": "http://ulbdb2.thulb.uni-jena.de:28080/solr/dbt-master",
 		"secure": false,
 		"changeOrigin": true,
 		"pathRewrite": {
@@ -24,7 +27,8 @@
 		}
 	},
 	"/servlets/*": {
-		"target": "https://dbttest.thulb.uni-jena.de/dbt-master",
+		"target1": "http://localhost:8291/mir",
+		"target2": "https://dbttest.thulb.uni-jena.de/dbt-master",
 		"secure": true,
 		"changeOrigin": true
 	}

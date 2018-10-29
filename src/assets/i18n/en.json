@@ -222,6 +222,17 @@
 		}
 	},
 	"rc": {
+		"attendees": {
+			"breadcrumb": "Attendee List",
+			"name": "Name",
+			"noAttendee": "No attendee entered.",
+			"type": "Type",
+			"types": {
+				"attendee": "Attendee",
+				"editor": "Editor",
+				"owner": "Owner"
+			}
+		},
 		"breadcrumb": "Reserve Collection List",
 		"id": "Number",
 		"lecturer": "Lecturer",
@@ -229,7 +240,13 @@
 		"period": "Period",
 		"title": "Title",
 		"slot": {
-			"breadcrumb": "Reserve Collection {id}"
+			"breadcrumb": "Reserve Collection {id}",
+			"message": {
+				"notLoggedIn": "Access to this reserve collection is only possible after login.",
+				"noEntries": "No entries available."
+			},
+			"showEntries": "Show entries",
+			"toc": "Table of content"
 		}
 	},
 	"search": {

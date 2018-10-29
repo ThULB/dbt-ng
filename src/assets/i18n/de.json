@@ -224,6 +224,17 @@
 		}
 	},
 	"rc": {
+		"attendees": {
+			"breadcrumb": "Teilnehmer Liste",
+			"name": "Name",
+			"noAttendee": "Kein Teilnehmer eingetragen.",
+			"type": "Typ",
+			"types": {
+				"attendee": "Teilnehmer",
+				"editor": "Bearbeiter",
+				"owner": "Besitzer"
+			}
+		},
 		"breadcrumb": "Semesterapparate Liste",
 		"id": "Nummer",
 		"lecturer": "DozentIn",
@@ -231,7 +242,13 @@
 		"period": "Semester",
 		"title": "Titel",
 		"slot": {
-			"breadcrumb": "Semesterapparat {id}"
+			"breadcrumb": "Semesterapparat {id}",
+			"message": {
+				"notLoggedIn": "Der Zugang zu diesem Semesterapparat ist nur nach Login möglich.",
+				"noEntries": "Keine Einträge vorhanden."
+			},
+			"showEntries": "Einträge anzeigen",
+			"toc": "Inhaltsverzeichnis"
 		}
 	},
 	"search": {

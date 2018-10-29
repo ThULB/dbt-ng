@@ -11,6 +11,8 @@ import { RCApiService } from "./api.service";
 
 import { PeriodPipe } from "./period.pipe";
 
+import { AttendeesComponent, AttendeesStates } from "./attendees.component";
+import { OPCRecordComponent } from "./opcrecord.component";
 import { SlotsComponent, SlotsStates } from "./slots.component";
 import { SlotComponent, SlotStates } from "./slot.component";
 
@@ -25,17 +27,22 @@ import { SlotComponent, SlotStates } from "./slot.component";
         PipesModule,
         UIRouterModule.forChild({
             states: [
+                AttendeesStates,
                 SlotsStates,
                 SlotStates
             ]
         })
     ],
     declarations: [
+        AttendeesComponent,
+        OPCRecordComponent,
         SlotsComponent,
         SlotComponent,
         PeriodPipe
     ],
     exports: [
+        AttendeesComponent,
+        OPCRecordComponent,
         SlotsComponent,
         SlotComponent,
         PeriodPipe

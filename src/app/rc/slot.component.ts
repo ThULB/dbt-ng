@@ -1,4 +1,5 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, AfterViewInit, OnInit, Renderer2, ViewChild } from "@angular/core";
+import { DomSanitizer, SafeHtml, SafeUrl } from "@angular/platform-browser";
 
 import { AuthService } from "../_services/auth.service";
 import { CacheService } from "../_services/cache.service";
@@ -8,28 +9,64 @@ import { SpinnerService } from "../spinner/spinner.service";
 import { StateService, Transition } from "@uirouter/core";
 
 import { MCRObject, SolrSelectResponse } from "../_datamodels/datamodel.def";
-import { Slot } from "./datamodel.def";
+import { Slot, Entry, EntryTypes } from "./datamodel.def";
 
 @Component({
     selector: "ui-rc-slot",
     templateUrl: "./slot.component.html"
 })
-export class SlotComponent {
+export class SlotComponent implements OnInit, AfterViewInit {
 
     public id: string;
 
-    @Input() public slot: Slot;
+    @Input()
+    public slot: Slot;
 
-    constructor(public $auth: AuthService, private $state: StateService) {
+    public toc;
+
+    public groups;
+
+    @ViewChild("slotToc")
+    private slotToc;
+
+    constructor(public $auth: AuthService, private $state: StateService, private renderer: Renderer2,
+        public sanitizer: DomSanitizer) {
         this.id = this.$state.params.id;
     }
 
-    groupEntries() {
-        if (this.slot.entries) {
+    ngOnInit() {
+        this.groups = this.groupEntries();
+        this.toc = this.tocEntries();
+    }
+
+    ngAfterViewInit() {
+        this.makeTocSticky();
+        this.renderer.listen("window", "orientationchange", () => this.makeTocSticky());
+        this.renderer.listen("window", "resize", () => this.makeTocSticky());
+    }
+
+    private makeTocSticky() {
+        const elm: HTMLElement = this.slotToc && this.slotToc.nativeElement;
+        if (elm) {
+            const container = document.getElementById("container-main");
+            const tocOffset = container.offsetTop + 10;
+
+            if (elm.offsetHeight < (window.innerHeight - tocOffset)) {
+                this.renderer.addClass(elm, "sticky-top");
+                this.renderer.setStyle(elm, "top", tocOffset + "px");
+            } else {
+                this.renderer.removeClass(elm, "sticky-top");
+                this.renderer.removeStyle(elm, "top");
+            }
+        }
+    }
+
+    private groupEntries() {
+        if (this.slot.entries && this.slot.entries.entry) {
             const groups = new Array();
 
             let group;
-            this.slot.entries.forEach((e) => {
+            this.slot.entries.entry.forEach((e) => {
                 if (e.type === "headline") {
                     if (group) {
                         groups.push(group);
@@ -55,50 +92,44 @@ export class SlotComponent {
         return null;
     }
 
+    private tocEntries() {
+        if (this.slot.entries && this.slot.entries.entry) {
+            const toc = new Array();
+
+            this.slot.entries.entry.forEach((e) => {
+                if (e.type === "headline") {
+                    toc.push(e);
+                }
+            });
+
+            return toc;
+        }
+
+        return null;
+    }
+
     quote(str: string): string {
         return str ? "\"" + str + "\"" : str;
     }
 
 }
 
-export function resolveFnSlot($api, $error, $spinner, trans) {
-    const cacheKey = CacheService.buildCacheKey("rcSlot", trans.params());
-    const cache = CacheService.get(cacheKey);
+export function resolveFnSlot($api, $auth, $error, $spinner, trans) {
+    $spinner.setLoadingState(trans.options().source !== "url" && trans.from().name !== trans.to().name);
 
-    if (cache) {
-        console.log(cacheKey, cache);
-        return cache;
-    } else {
-        $spinner.setLoadingState(trans.options().source !== "url" && trans.from().name !== trans.to().name);
-
-        const params = new Map();
-        params.set("fq", "objectType:slot");
-        params.set("fl", "id");
-
-        return $api.solrSelect("slotId:" + trans.params().id, params).toPromise().then((ssr: SolrSelectResponse) => {
-            const objectId = ssr.response.docs[0]["id"];
-
-            return $api.object(objectId).toPromise().then((obj: MCRObject) => {
-                const slot = Slot.parse(new MCRObject(obj));
-                CacheService.set(cacheKey, slot, CacheService.DEFAULT_LIFETIME);
-                $spinner.setLoadingState(false);
-                return slot;
-            }, (err) => {
-                if (err.status !== 401) {
-                    $error.handleError(err);
-                } else {
-                    return $api.slots(trans.params().id).toPromise().then((res: any) => {
-                        const slot = res.slots.slot[0];
-                        $spinner.setLoadingState(false);
-                        return slot;
-                    });
-                }
+    return $api.slot(trans.params().id).toPromise().then(res => {
+        if (res.slot.entries && (res.slot.entries.entry)) {
+            res.slot.entries.entry.forEach(e => {
+                e.type = EntryTypes.find(et => (<Object>e).hasOwnProperty(et));
             });
-        }).catch((err) => {
-            $spinner.setLoadingState(true);
-            $error.handleError(err);
-        });
-    }
+        }
+
+        $spinner.setLoadingState(false);
+        return res.slot;
+    }).catch((err) => {
+        $spinner.setLoadingState(false);
+        $error.handleError(err);
+    });
 }
 
 export const SlotStates = {
@@ -115,7 +146,7 @@ export const SlotStates = {
     resolve: [
         {
             token: "slot",
-            deps: [RCApiService, ErrorService, SpinnerService, Transition],
+            deps: [RCApiService, AuthService, ErrorService, SpinnerService, Transition],
             resolveFn: resolveFnSlot
         },
     ]

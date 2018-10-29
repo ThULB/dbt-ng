@@ -16,10 +16,8 @@
 }
 
 .slot-body {
-  .entry-headline {
-    h3 {
-      border-bottom: 1px solid #f0f0f0;
-    }
+  .media:nth-child(even) {
+    background: transparent;
   }
 
   .entry-text {

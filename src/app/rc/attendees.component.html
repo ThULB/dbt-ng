@@ -1,0 +1,35 @@
+<div>
+	<div id="rc-attendee-list" class="datatable card">
+    <h5 class="card-header">{{ 'rc.attendees.breadcrumb' | translate }}</h5>
+		<div class="table-responsive">
+			<table id="slots" class="table table-striped my-0">
+			  <thead>
+			   <tr>
+			     <th>{{ 'rc.attendees.name' | translate }}</th>
+			     <th>{{ 'rc.attendees.type' | translate }}</th>
+			   </tr>
+			  </thead>
+			  <tbody>
+			    <tr *ngIf="!attendees || attendees.attendee.length === 0">
+            <td colspan="2" class="text-center">{{ 'rc.attendees.noAttendee' | translate }}</td>
+			    </tr>
+					<tr *ngFor="let attendee of attendees?.attendee">
+					  <td>{{ attendee.name }} <ng-container *ngIf="attendee.email">(<a [href]="'mailto:' + attendee.email">{{ attendee.email }}</a>)</ng-container></td>
+					  <td>
+					    <ng-container *ngIf="attendee.owner">
+					      <strong>{{ 'rc.attendees.types.owner' | translate }}</strong>
+					    </ng-container>
+					    <ng-container *ngIf="attendee.writeKey">
+	              <strong>{{ 'rc.attendees.types.editor' | translate }}</strong>
+	            </ng-container>
+	            <ng-container *ngIf="attendee.readKey">
+	              <strong>{{ 'rc.attendees.types.attendee' | translate }}</strong>
+	            </ng-container>
+					  </td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+<!-- 	<pre>{{ attendees | json }}</pre> -->
+</div>

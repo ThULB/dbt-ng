@@ -110,53 +110,28 @@ const buildSearchQuery = (term: string) => {
 };
 
 export function resolveFnSlots($api, $auth, $error, $spinner, trans) {
-    const cacheKey = CacheService.buildCacheKey(trans.to().name, trans.params());
-    const cache = CacheService.get(cacheKey);
+    $spinner.setLoadingState(trans.options().source !== "url" && trans.from().name !== trans.to().name);
 
-    if (cache) {
-        return cache;
-    } else {
-        $spinner.setLoadingState(trans.options().source !== "url" && trans.from().name !== trans.to().name);
+    const isAdmin = AdminRoles.find((r) => $auth.hasRole(r)) !== undefined;
+    const isEditor = EditorRoles.find((r) => $auth.hasRole(r)) !== undefined;
+    const userFilter = $auth.isLoggedIn() ? " or createdby:" + $auth.user.username : "";
+    const userSort = $auth.isLoggedIn() ?
+        "if(exists(query({!v='createdby:" + $auth.user.username + "'})),100,0) DESC" : null;
 
-        const isAdmin = AdminRoles.find((r) => $auth.hasRole(r)) !== undefined;
-        const isEditor = EditorRoles.find((r) => $auth.hasRole(r)) !== undefined;
+    const term = decodeURIComponent(trans.params().term);
+    const filter = !isAdmin && !isEditor ? "slot.status:active OR slot.status:pending" + userFilter : null;
+    const page = trans.params().page || 1;
+    const numPerPage = trans.params().numPerPage || 50;
+    const start = (page - 1) * numPerPage;
+    const sort = decodeURIComponent(trans.params().sort) || "slotId ASC";
 
-        const term = decodeURIComponent(trans.params().term);
-        const page = trans.params().page || 1;
-        const numPerPage = trans.params().numPerPage || 50;
-        const sort = decodeURIComponent(trans.params().sort) || "slotId ASC";
-
-        const params = new Map();
-        const fq = ["objectType:slot"];
-
-        if (!isAdmin && !isEditor) {
-            fq.push("slot.status:active OR slot.status:pending");
-        }
-
-        params.set("fq", fq);
-        params.set("fl", "id, slot*");
-        params.set("facet", "off");
-        params.set("facet.field", ["slot.onlineOnly", "slot.status"]);
-        params.set("sort", sort);
-        params.set("start", (page - 1) * numPerPage);
-        params.set("rows", numPerPage);
-
-        return $api.solrSelect(buildSearchQuery(term), params).toPromise().then((res: any) => {
-            const slots = { total: res.response.numFound, slot: [] };
-
-            res.response.docs.forEach((doc) => {
-                slots.slot.push(Slot.parse(doc));
-            });
-
-            CacheService.set(cacheKey, slots, CacheService.DEFAULT_LIFETIME);
-            $spinner.setLoadingState(false);
-
-            return slots;
-        }).catch((err) => {
-            $spinner.setLoadingState(false);
-            $error.handleError(err);
-        });
-    }
+    return $api.slots(term, filter, start, numPerPage, [userSort, sort]).toPromise().then((res: any) => {
+        $spinner.setLoadingState(false);
+        return res.slots;
+    }).catch((err) => {
+        $spinner.setLoadingState(false);
+        $error.handleError(err);
+    });
 }
 
 export const SlotsStates = {
@@ -187,6 +162,7 @@ export const SlotsStates = {
         },
         numPerPage: {
             type: "int",
+            value: 50,
             squash: true
         }
     },

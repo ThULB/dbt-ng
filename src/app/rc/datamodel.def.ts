@@ -77,6 +77,24 @@ export function matchingPeriod(validTo: string): Period {
     return null;
 }
 
+export interface PicaRecord {
+    ppn: string;
+    field: Array<PicaField>;
+}
+
+export interface PicaField {
+    tag: string;
+    occurrence?: string;
+    subfield: Array<PicaSubfield>;
+}
+
+export interface PicaSubfield {
+    code: string;
+    value: string;
+}
+
+export const EntryTypes = ["headline", "text", "file", "mcrobject", "opcrecord", "webLink"];
+
 export interface Person {
     name: string;
     email?: string;
@@ -86,22 +104,36 @@ export interface Lecturers {
     lecturer: Array<Person>;
 }
 
+export interface Attendee extends Person {
+    uid?: string;
+    owner?: boolean;
+    readKey?: boolean;
+    writeKey?: boolean;
+}
+
+export interface Attendees {
+    slotId: string;
+    attendee: Array<Attendee>;
+}
+
+export interface Entries {
+    entry: Array<Entry>;
+}
+
 export interface Entry {
     id: string;
     modified: string | Date;
     type: string;
+
+    headline?: string;
+    file?: FileEntry;
+    text?: TextEntry;
+    mcrobject?: MCRObject;
+    opcrecord?: OPCRecordEntry;
+    webLink?: WebLinkEntry;
 }
 
-export interface HeadlineEntry extends Entry {
-    headline: string;
-}
-
-export interface TextEntry extends Entry {
-    format: string;
-    text: string;
-}
-
-export interface FileEntry extends Entry {
+export interface FileEntry {
     name: string;
     size: number;
     hash: string;
@@ -109,7 +141,24 @@ export interface FileEntry extends Entry {
     comment?: string;
 }
 
-export interface WebLinkEntry extends Entry {
+export interface MCRObject {
+    id: string;
+    value?: string;
+}
+
+export interface OPCRecordEntry {
+    epn?: string;
+    record: PicaRecord;
+    comment?: string;
+    deleted?: boolean;
+}
+
+export interface TextEntry {
+    format: string;
+    value: string;
+}
+
+export interface WebLinkEntry {
     url: string;
     label?: string;
 }
@@ -123,103 +172,7 @@ export class Slot {
     lecturers: Lecturers;
     contact: Person;
     validTo: string | Date;
-    entries: Array<Entry>;
-
-    static parse(obj: MCRObject | SolrDocument): Slot {
-        const slot = new Slot();
-
-        if (obj instanceof MCRObject) {
-            const elm = obj.getElement("slot", true);
-
-            slot.id = elm.getAttributeValue("id");
-            slot.objectId = obj.id;
-            slot.status = elm.getAttributeValue("status");
-            slot.onlineOnly = Boolean(elm.getAttributeValue("onlineOnly"));
-            slot.title = elm.getElement("title").text;
-            slot.contact = this.toPersons(elm.getElements("contact"))[0];
-            slot.lecturers = {
-                lecturer: this.toPersons(elm.getElement("lecturers").getElements("lecturer"))
-            };
-            slot.validTo = elm.getElement("validTo").text;
-            slot.entries = this.toEntries(elm.getElement("entries").getElements("entry"));
-        } else {
-            slot.id = obj["slotId"];
-            slot.objectId = obj["id"];
-            slot.status = obj["slot.status"];
-            slot.onlineOnly = obj["slot.onlineOnly"];
-            slot.title = obj["slot.title"];
-            slot.lecturers = {
-                lecturer: this.toPersons(obj["slot.lecturer"])
-            };
-            slot.validTo = obj["slot.validTo"];
-        }
-
-        return slot;
-    }
-
-    private static toPersons(pelms: Array<XmlMappedElement | string>) {
-        const persons: Array<Person> = new Array();
-
-        pelms.forEach((l) => {
-            if (typeof l === "string") {
-                persons.push({ name: l });
-            } else {
-                persons.push({
-                    name: l.getAttributeValue("name"),
-                    email: l.getAttributeValue("email")
-                });
-            }
-        });
-
-        return persons;
-    }
-
-    private static toEntries(xmes: Array<XmlMappedElement>) {
-        const entries: Array<any> = new Array();
-
-        xmes.forEach((e) => {
-            const entry: Entry = {
-                id: e.getAttributeValue("id"),
-                modified: e.getElementWithAttribute("date", { type: "modified" }).text,
-                type: null
-            };
-
-            const xe = e.getElement("headline") || e.getElement("text") || e.getElement("file")
-                || e.getElement("opcrecord") || e.getElement("webLink");
-
-            if (xe) {
-                entry.type = xe.name;
-
-                switch (xe.name) {
-                    case "file":
-                        const fe: FileEntry = (<FileEntry>entry);
-                        fe.name = xe.getAttributeValue("name");
-                        fe.size = parseInt(xe.getAttributeValue("size"), 10);
-                        fe.copyrighted = Boolean(xe.getAttributeValue("copyrighted"));
-                        fe.hash = xe.getAttributeValue("hash");
-                        fe.comment = xe.text;
-                        break;
-                    case "headline":
-                        (<HeadlineEntry>entry).headline = xe.text;
-                        break;
-                    case "text":
-                        (<TextEntry>entry).format = xe.getAttributeValue("format");
-                        (<TextEntry>entry).text = xe.text;
-                        break;
-                    case "webLink":
-                        (<WebLinkEntry>entry).url = xe.getAttributeValue("url");
-                        (<WebLinkEntry>entry).label = xe.text;
-                        break;
-                    default:
-                        console.log(xe.name, xe);
-                }
-            }
-
-            entries.push(entry);
-        });
-
-        return entries;
-    }
+    entries: Entries;
 }
 
 export interface Slots {

@@ -1,0 +1,142 @@
+<ng-template #title036C let-field="field">
+  <ng-container *ngIf="field">
+    {{ getSubfield(field, 'a') }}
+    <ng-container *ngIf="!getField('021A')"> ; </ng-container>
+    <ng-container *ngIf="getField('021A')"> / </ng-container>
+    {{ getSubfield(field, 'l') }}
+  </ng-container>
+</ng-template>
+
+<ng-template #title021A let-field="field">
+  <ng-container *ngIf="field && !getSubfield(field, '8')">
+    {{ getSubfield(field, 'a') }}
+    <ng-container *ngIf="getSubfield(field, 'd')">{{ ' : ' + getSubfield(field, 'd') }}</ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #title021B let-field="field">
+  <ng-container *ngIf="field && getSubfield(getField('021A'), '8')">
+    {{ getSubfield(field, 'l') }}
+    <ng-container *ngIf="getSubfield(field, 'a')">{{ ' : ' + getSubfield(field, 'a') }}</ng-container>
+    <ng-container *ngIf="getSubfield(field, 'd')">{{ ' : ' + getSubfield(field, 'd') }}</ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #title021G let-field="field">
+  <ng-container *ngIf="field && getSubfield(field, 'a')">
+    {{ getSubfield(field, 'a') }}
+  </ng-container>
+</ng-template>
+
+<ng-template #author028 let-field="field">
+  <ng-container *ngIf="field && getSubfield(field, 'd')">
+    {{ '/ ' + [getSubfield(field, 'd'), getSubfield(field, 'a')].join(' ') }}
+  </ng-container>
+</ng-template>
+
+<ng-template #author029 let-field="field">
+  <ng-container *ngIf="field && getSubfield(field, '8')">
+    {{ '/ ' + getSubfield(field, '8') }}
+  </ng-container>
+</ng-template>
+
+<ng-template #author021A let-field="field">
+  <ng-container *ngIf="field && getSubfield(field, 'h')">
+    {{ '/ ' + getSubfield(field, 'h') }}
+  </ng-container>
+</ng-template>
+
+<ng-template #in let-field="field">
+  <ng-template #in031A let-field="field">
+    <ng-container *ngIf="getSubfield(field, 'd')">
+      {{ ', Bd. ' + getSubfield(field, 'd') }}
+      <ng-container *ngIf="getSubfield(field, 'j')">
+        {{ ' (' + getSubfield(field, 'j') + ')' }}
+      </ng-container>
+      <ng-container *ngIf="getSubfield(field, 'e')">
+        {{ ', ' + getSubfield(field, 'e') }}
+      </ng-container>
+      <ng-container *ngIf="getSubfield(field, 'h')">
+        {{ ', S. ' + getSubfield(field, 'h') }}
+      </ng-container>
+    </ng-container>
+  </ng-template>
+    
+  <ng-container *ngIf="field && getSubfield(field, 'a')">
+    <ng-container *ngIf="getField('028A') || getField('028C') || getSubfield(getField('021A'), 'h')"> . - </ng-container>
+    {{ 'In: ' + getSubfield(field, 'a') }}
+    <ng-container *ngTemplateOutlet="title036C;context:{field: getField('036C')}"></ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #volume let-field="field">
+  <ng-container *ngIf="getField('028A') || getField('028C') || getSubfield(getField('021A'), 'h')"> . - </ng-container>
+  {{ getSubfield(field, 'a') }}
+</ng-template>
+
+<ng-template #publisher let-field="field">
+  <ng-container *ngIf="field && !getField('036C')">
+    <ng-container *ngIf="getField('028A') || getField('028C') || getSubfield(getField('021A'), 'h') || getSubfield(getField('032@'), 'a')">
+      <!-- dot at page numbers (missing) -->
+      <ng-container *ngIf="getSubfield(getField('032@'), 'a') && getSubfield(getField('032@'), 'a').slice(-1, -2) !== '.'">
+        {{ '. ' }}      
+      </ng-container>
+      {{ ' - ' + getSubfield(field, 'p') }}
+      {{ ' : ' + getSubfield(field, 'n') }}
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #year let-field="field">
+  <ng-container *ngIf="getSubfield(field, 'a')">
+    <ng-container *ngIf="getSubfield(getField('032@'), 'a') && !getField('033A') || getField('036C') ; else comma">{{ ' - ' }}</ng-container>
+    <ng-template #comma>
+      <ng-container *ngIf="getSubfield(getField('032@'), 'a') || getField('033A')">{{ ', ' }}</ng-container>
+    </ng-template>
+    {{ getSubfield(field, 'a') }}
+  </ng-container>
+</ng-template>
+
+<!-- ***************************************** -->
+<h6 class="mb-0">
+  <a [href]="'/opc/' + record.ppn">
+	<ng-container *ngTemplateOutlet="title036C;context:{field: getField('036C')}"></ng-container>
+	<ng-container *ngTemplateOutlet="title021A;context:{field: getField('021A')}"></ng-container>
+	<ng-container *ngTemplateOutlet="title021B;context:{field: getField('021B')}"></ng-container>
+	<ng-container *ngTemplateOutlet="title021B;context:{field: getField('021G')}"></ng-container>
+	</a>
+</h6>
+<p class="mb-0">
+  <ng-container *ngIf="getField('028A'); else a028C">
+    <ng-container *ngTemplateOutlet="author028;context:{field: getField('028A')}"></ng-container>
+  </ng-container>
+  
+  <ng-template #a028C>
+    <ng-container *ngIf="getField('028C'); else a029A">
+      <ng-container *ngTemplateOutlet="author028;context:{field: getField('028C')}"></ng-container>
+    </ng-container>
+    
+    <ng-template #a029A>
+	    <ng-container *ngIf="getField('028C'); else a029F">
+	      <ng-container *ngTemplateOutlet="author029;context:{field: getField('029A')}"></ng-container>
+	    </ng-container>
+	    
+	    <ng-template #a029F>
+	      <ng-container *ngIf="getField('028C'); else a021A">
+          <ng-container *ngTemplateOutlet="author029;context:{field: getField('029F')}"></ng-container>
+        </ng-container>
+        
+        <ng-template #a021A>
+          <ng-container *ngTemplateOutlet="author021A;context:{field: getField('021A')}"></ng-container>
+	      </ng-template>
+	    </ng-template>    
+	  </ng-template>
+  </ng-template>
+  
+  <ng-container *ngTemplateOutlet="in;context:{field: getField('027D')}"></ng-container>
+  <ng-container *ngIf="!getSubfield(getField('027D'), 'a')">
+    <ng-container *ngTemplateOutlet="volumn;context:{field: getField('032@')}"></ng-container>
+    <ng-container *ngTemplateOutlet="publisher;context:{field: getField('033A')}"></ng-container>
+    <ng-container *ngTemplateOutlet="year;context:{field: getField('011@')}"></ng-container>
+  </ng-container>
+</p>
