@@ -1,5 +1,8 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpResponse } from "@angular/common/http";
+
+import { of } from "rxjs";
+import { map, catchError } from "rxjs/operators";
 
 import { ApiService } from "../_services/api.service";
 
@@ -10,6 +13,16 @@ export class RCApiService extends ApiService {
 
     constructor(public $http: HttpClient, public $transform: TransformProvider) {
         super($http, $transform);
+    }
+
+    permission(type: string, id?: string) {
+        return this.$http.get(
+            `${this.base}/api/v2/rc/permission/${type}${id ? "/" + id : ""}`,
+            { observe: "response" }
+        ).pipe(
+            map((res: HttpResponse<any>) => res.status === 200),
+            catchError((err, caught) => of(false))
+            );
     }
 
     slots(search?: string, filter?: string, start: number = 0, rows: number = 50, sortBy?: Array<string>) {
@@ -27,7 +40,7 @@ export class RCApiService extends ApiService {
     slot(id: string) {
         return this.$http.get(`${this.base}/api/v2/rc/${id}`, this.httpOptions);
     }
-    
+
     attendees(id: string) {
         return this.$http.get(`${this.base}/api/v2/rc/${id}/attendees`, this.httpOptions);
     }

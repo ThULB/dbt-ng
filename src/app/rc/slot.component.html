@@ -13,7 +13,7 @@
 	  <div class="d-flex flex-row justify-content-between align-items-start">
       <h1>{{ slot.title }}</h1>
       
-      <div *ngIf="$auth.isLoggedIn()" class="dropdown mt-2">
+      <div *ngIf="isAdmin || isEditor || isEditAllow" class="dropdown mt-2">
 	      <button class="btn btn-default dropdown-toggle" type="button" id="rcActionMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 	        <i class="fas fa-cogs"></i>
 	      </button>
@@ -26,7 +26,7 @@
 	     
     <div class="info">
       <span>
-        <a *ngFor="let lecturer of slot.lecturers.lecturer" class="lecturer" [href]="'mailto:' + !slot.contact ? lecturer.email : slot.contact.email">
+        <a *ngFor="let lecturer of slot.lecturers.lecturer" class="lecturer" [href]="!slot.contact ? 'mailto:' + lecturer.email : null">
           {{ lecturer.name }}</a>
       </span>
       <ng-container> - {{ 'rc.slot.breadcrumb' | translate:slot }}</ng-container>
@@ -36,9 +36,12 @@
         </ng-container>)
       </ng-container>
       <ng-container> - {{ slot.validTo | period:false }}</ng-container>
+      <p *ngIf="slot.contact">
+        <span>{{ 'rc.contact' | translate }}: </span><a [href]="slot.contact.email ? 'mailto:' + slot.contact.email : null">{{ slot.contact.name }}</a>
+      </p>
     </div>
 	</div>
-	
+
 	<div class="slot-body mt-3">
 	  <ui-view>
 		<div *ngIf="!$auth.isLoggedIn()" role="alert" class="alert alert-warning">
@@ -46,7 +49,7 @@
     </div>
 		
 		<div *ngIf="$auth.isLoggedIn()" class="d-xl-flex flex-xl-row-reverse">
-		  <div *ngIf="toc && toc.length !== 0" class="flex-xl-column mb-2 ml-xl-2" style="min-width: 25%;">
+		  <div *ngIf="toc && toc.length !== 0" class="flex-xl-column mb-2 ml-xl-2 minw-25">
 		    <div #slotToc class="card">
 		      <h5 class="card-header">{{ 'rc.slot.toc' | translate }}</h5>
 		      <div class="list-group list-group-flush" id="slot-toc">
@@ -73,7 +76,7 @@
 					  <ng-container *ngFor="let entry of group">
 							<ng-container [ngSwitch]="entry.type">
 							  
-              <div [id]="entry.id" class="media entry-{{ entry.type }}">			
+              <div *ngIf="shouldDisplayed(entry)" [id]="entry.id" class="media entry-{{ entry.type }}">			
 								 
 								 <ng-container *ngSwitchCase="'file'">
 								   <div class="media-body mw-100 p-2">
@@ -107,7 +110,8 @@
 	               </ng-container>
 					       
 					       <ng-container *ngSwitchCase="'opcrecord'">
-					         <div class="media-body mw-100 p-2">
+					         <div class="media-body mw-100 p-2" 
+					           [ngClass]="{'border-left border-warning':!slot.onlineOnly && !entry.opcrecord.epn && (isAdmin || isEditor || isEditAllow)}">
 					           <ui-rc-opcrecord [record]="entry.opcrecord.record"></ui-rc-opcrecord>
 					           <p *ngIf="entry.opcrecord.comment" class="text-muted mb-0">
 					             <i>{{ entry.opcrecord.comment }}</i>

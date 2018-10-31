@@ -9,7 +9,7 @@ import { SpinnerService } from "../spinner/spinner.service";
 import { StateService, Transition } from "@uirouter/core";
 
 import { MCRObject, SolrSelectResponse } from "../_datamodels/datamodel.def";
-import { Slot, Entry, EntryTypes } from "./datamodel.def";
+import { Slot, Entry, EntryTypes, AdminRoles, EditorRoles, Permission } from "./datamodel.def";
 
 @Component({
     selector: "ui-rc-slot",
@@ -18,6 +18,15 @@ import { Slot, Entry, EntryTypes } from "./datamodel.def";
 export class SlotComponent implements OnInit, AfterViewInit {
 
     public id: string;
+
+    @Input()
+    public isAdmin: boolean;
+
+    @Input()
+    public isEditor: boolean;
+
+    @Input()
+    public isEditAllow: boolean;
 
     @Input()
     public slot: Slot;
@@ -108,13 +117,35 @@ export class SlotComponent implements OnInit, AfterViewInit {
         return null;
     }
 
+    shouldDisplayed(entry: Entry): boolean {
+        if (entry.type === "headline" ||
+            entry.type === "opcrecord" &&
+            !this.slot.onlineOnly && !entry.opcrecord.epn && !(this.isAdmin || this.isEditor || this.isEditAllow)) {
+            return false;
+        }
+
+        return true;
+    }
+
     quote(str: string): string {
         return str ? "\"" + str + "\"" : str;
     }
 
 }
 
-export function resolveFnSlot($api, $auth, $error, $spinner, trans) {
+export function resolveFnIsAdmin($api, $auth) {
+    return AdminRoles.find((r) => $auth.hasRole(r)) !== undefined;
+}
+
+export function resolveFnIsEditor($api, $auth) {
+    return EditorRoles.find((r) => $auth.hasRole(r)) !== undefined;
+}
+
+export function resolveFnIsEditAllow($api, $auth, trans) {
+    return $auth.isLoggedIn() ? $api.permission("writedb", trans.params().id).toPromise().then(allowed => allowed) : false;
+}
+
+export function resolveFnSlot($api, $error, $spinner, trans) {
     $spinner.setLoadingState(trans.options().source !== "url" && trans.from().name !== trans.to().name);
 
     return $api.slot(trans.params().id).toPromise().then(res => {
@@ -145,8 +176,23 @@ export const SlotStates = {
     params: { id: null },
     resolve: [
         {
+            token: "isAdmin",
+            deps: [RCApiService, AuthService],
+            resolveFn: resolveFnIsAdmin
+        },
+        {
+            token: "isEditor",
+            deps: [RCApiService, AuthService],
+            resolveFn: resolveFnIsEditor
+        },
+        {
+            token: "isEditAllow",
+            deps: [RCApiService, AuthService, Transition],
+            resolveFn: resolveFnIsEditAllow
+        },
+        {
             token: "slot",
-            deps: [RCApiService, AuthService, ErrorService, SpinnerService, Transition],
+            deps: [RCApiService, ErrorService, SpinnerService, Transition],
             resolveFn: resolveFnSlot
         },
     ]

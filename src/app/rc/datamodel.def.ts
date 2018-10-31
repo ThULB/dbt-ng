@@ -1,6 +1,16 @@
 import { MCRObject, SolrDocument } from "../_datamodels/datamodel.def";
 import { XmlMappedElement } from "../_providers/transform.provider";
 
+export enum Permission {
+    Admin = "administrate-slot",
+    Edit = "edit-slot",
+    Create = "create-slot",
+
+    // generic Object permissions
+    Write = "writedb",
+    Read = "read"
+}
+
 export const AdminRoles = ["admin", "rcadmin"];
 
 export const EditorRoles = ["rceditor"];

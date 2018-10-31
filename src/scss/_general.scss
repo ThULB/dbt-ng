@@ -33,8 +33,23 @@ h1 , h2 , h3 , h4 , h5 , h6 , .h1 , .h2 , .h3 , .h4 , .h5 , .h6 {
   }
 }
 
+/**
+ * Min Width Helper
+ */
 .minw-0 {
   min-width: 0;
+}
+
+.minw-25 {
+  min-width: 25%;
+}
+
+.minw-50 {
+  min-width: 50%;
+}
+
+.minw-75 {
+  min-width: 75%;
 }
 
 #container-main {
