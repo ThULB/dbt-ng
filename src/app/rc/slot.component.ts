@@ -1,7 +1,7 @@
 import { Component, Input, AfterViewInit, OnInit, Renderer2, ViewChild } from "@angular/core";
 import { DomSanitizer, SafeHtml, SafeUrl } from "@angular/platform-browser";
 
-import { Subject } from "rxjs";
+import { Observable } from "rxjs";
 
 import { AuthService } from "../_services/auth.service";
 import { CacheService } from "../_services/cache.service";
@@ -40,7 +40,7 @@ export class SlotComponent implements OnInit, AfterViewInit {
     @ViewChild("slotToc")
     private slotToc;
 
-    private progress: Subject<number> = new Subject();
+    private downloads: Map<string, Observable<any>> = new Map();
 
     constructor(public $api: RCApiService, public $auth: AuthService, private $state: StateService,
         private renderer: Renderer2, public sanitizer: DomSanitizer) {
@@ -48,12 +48,12 @@ export class SlotComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.progress.subscribe((percent) => {
-            console.log(percent);
-        });
-
         this.groups = this.groupEntries();
         this.toc = this.tocEntries();
+    }
+    
+    ngOnDestroy() {
+        this.downloads.forEach((o, k) => console.log(o));
     }
 
     ngAfterViewInit() {
@@ -137,6 +137,16 @@ export class SlotComponent implements OnInit, AfterViewInit {
 
     quote(str: string): string {
         return str ? "\"" + str + "\"" : str;
+    }
+
+    download(entryId: string): Observable<any> {
+        if (this.downloads.has(entryId)) {
+            return this.downloads.get(entryId);
+        } else {
+            const o = this.$api.createObjectUrl(this.$api.fileEntryUrl(this.id, entryId));
+            this.downloads.set(entryId, o);
+            return o;
+        }
     }
 
 }
