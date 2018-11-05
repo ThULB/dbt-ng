@@ -41,7 +41,12 @@ export class RCApiService extends ApiService {
         return this.$http.get(`${this.base}/api/v2/rc/${id}`, this.httpOptions);
     }
 
+    fileEntryUrl(id: string, entryId: string) {
+        return `${this.base}/api/v2/rc/${id}/file/${entryId}`;
+    }
+
     attendees(id: string) {
         return this.$http.get(`${this.base}/api/v2/rc/${id}/attendees`, this.httpOptions);
     }
+
 }
