@@ -1,6 +1,8 @@
 import { Component, Input, AfterViewInit, OnInit, Renderer2, ViewChild } from "@angular/core";
 import { DomSanitizer, SafeHtml, SafeUrl } from "@angular/platform-browser";
 
+import { Subject } from "rxjs";
+
 import { AuthService } from "../_services/auth.service";
 import { CacheService } from "../_services/cache.service";
 import { ErrorService } from "../_services/error.service";
@@ -38,12 +40,18 @@ export class SlotComponent implements OnInit, AfterViewInit {
     @ViewChild("slotToc")
     private slotToc;
 
-    constructor(public $auth: AuthService, private $state: StateService, private renderer: Renderer2,
-        public sanitizer: DomSanitizer) {
+    private progress: Subject<number> = new Subject();
+
+    constructor(public $api: RCApiService, public $auth: AuthService, private $state: StateService,
+        private renderer: Renderer2, public sanitizer: DomSanitizer) {
         this.id = this.$state.params.id;
     }
 
     ngOnInit() {
+        this.progress.subscribe((percent) => {
+            console.log(percent);
+        });
+
         this.groups = this.groupEntries();
         this.toc = this.tocEntries();
     }

@@ -81,7 +81,7 @@
 								 <ng-container *ngSwitchCase="'file'">
 								   <div class="media-body mw-100 p-2">
 								     <div class="d-flex flex-row flex-fill justify-content-between">
-		                   <a class="text-truncate" [href]="entry.file.name">{{ entry.file.comment || entry.file.name }}</a>
+		                   <a class="text-truncate" [download]="entry.file.name" [href]="($api.fileUrl(slot.id, entry.id) | objectUrl:progress:true)?.url">{{ entry.file.comment || entry.file.name }}</a>
 		                   <span class="text-nowrap text-muted">{{ entry.file.size | bytes }}</span>
 	                   </div>
 	                 </div>
