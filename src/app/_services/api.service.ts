@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpEventType, HttpRequest, HttpResponse, HttpHeaders } from "@angular/common/http";
 
-import { Subject, of } from "rxjs";
+import { Observable, Subject, of } from "rxjs";
 
 import { map, last, catchError, distinctUntilChanged } from "rxjs/operators";
 
@@ -45,7 +45,7 @@ export class ApiService {
 
     static getFileNameFromResponseContentDisposition(res: HttpResponse<any>) {
         const contentDisposition = res.headers.get("content-disposition") || "";
-        const re = new RegExp("filename=\"?([^;\"]+)", "i");
+        const re = new RegExp("filename\\s*=\\s*\"?([^;\"]+)", "i");
         if (re.test(contentDisposition)) {
             const matches = re.exec(contentDisposition);
             const fileName = (matches[1] || "untitled").trim();
@@ -261,7 +261,7 @@ export class ApiService {
         return this.createObjectUrl(this.fileUrl(objectId, derivateId, file, path));
     }
 
-    createObjectUrl(url: string, progress?: Subject<number>) {
+    createObjectUrl(url: string, progress?: Subject<number>): Observable<ObjectUrl> {
         return this.$http.get(url, {
             headers: { accept: "*/*" },
             observe: "events",
