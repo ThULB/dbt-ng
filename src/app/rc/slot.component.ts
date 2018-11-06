@@ -40,7 +40,7 @@ export class SlotComponent implements OnInit, AfterViewInit {
     @ViewChild("slotToc")
     private slotToc;
 
-    private downloads: Map<string, Observable<any>> = new Map();
+    private downloads: Map<string, any> = new Map();
 
     constructor(public $api: RCApiService, public $auth: AuthService, private $state: StateService,
         private renderer: Renderer2, public sanitizer: DomSanitizer) {
@@ -51,7 +51,7 @@ export class SlotComponent implements OnInit, AfterViewInit {
         this.groups = this.groupEntries();
         this.toc = this.tocEntries();
     }
-    
+
     ngOnDestroy() {
         this.downloads.forEach((o, k) => console.log(o));
     }
@@ -139,13 +139,15 @@ export class SlotComponent implements OnInit, AfterViewInit {
         return str ? "\"" + str + "\"" : str;
     }
 
-    download(entryId: string): Observable<any> {
-        if (this.downloads.has(entryId)) {
-            return this.downloads.get(entryId);
-        } else {
-            const o = this.$api.createObjectUrl(this.$api.fileEntryUrl(this.id, entryId));
-            this.downloads.set(entryId, o);
-            return o;
+    download(event, entryId: string) {
+        if (!this.downloads.has(entryId)) {
+            this.downloads.set(entryId, this.$api.createObjectUrl(this.$api.fileEntryUrl(this.id, entryId)));
+            
+            this.downloads.get(entryId).subscribe(ou => {
+                this.renderer.setAttribute(event.target, "download", ou.filename);
+                this.renderer.setAttribute(event.target, "href", ou.url);
+                event.target.click();
+            });
         }
     }
 

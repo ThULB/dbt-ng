@@ -82,8 +82,8 @@
 								   <div class="media-body mw-100 p-2">
 								     <div class="d-flex flex-row flex-fill justify-content-between">
 		                   <a class="text-truncate" 
-		                    [download]="entry.file.name"
-		                    [href]="sanitizer.bypassSecurityTrustUrl((download(entry.id) | async)?.url)">
+		                    href="javascript:void(0)"
+		                    (click)="download($event, entry.id)">
 		                      {{ entry.file.comment || entry.file.name }}
                        </a>
 		                   <span class="text-nowrap text-muted">{{ entry.file.size | bytes }}</span>
