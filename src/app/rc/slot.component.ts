@@ -139,12 +139,12 @@ export class SlotComponent implements OnInit, AfterViewInit {
         return str ? "\"" + str + "\"" : str;
     }
 
-    download(event, entryId: string) {
-        if (!this.downloads.has(entryId)) {
-            this.downloads.set(entryId, this.$api.createObjectUrl(this.$api.fileEntryUrl(this.id, entryId)));
-            
-            this.downloads.get(entryId).subscribe(ou => {
-                this.renderer.setAttribute(event.target, "download", ou.filename);
+    download(event, entry: Entry) {
+        if (!this.downloads.has(entry.id)) {
+            this.downloads.set(entry.id, this.$api.createObjectUrl(this.$api.fileEntryUrl(this.id, entry.id)));
+
+            this.downloads.get(entry.id).subscribe(ou => {
+                this.renderer.setAttribute(event.target, "download", entry.file.name || ou.filename);
                 this.renderer.setAttribute(event.target, "href", ou.url);
                 event.target.click();
             });

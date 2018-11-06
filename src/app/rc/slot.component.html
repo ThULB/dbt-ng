@@ -83,7 +83,7 @@
 								     <div class="d-flex flex-row flex-fill justify-content-between">
 		                   <a class="text-truncate" 
 		                    href="javascript:void(0)"
-		                    (click)="download($event, entry.id)">
+		                    (click)="download($event, entry)">
 		                      {{ entry.file.comment || entry.file.name }}
                        </a>
 		                   <span class="text-nowrap text-muted">{{ entry.file.size | bytes }}</span>
