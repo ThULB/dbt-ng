@@ -1,0 +1,31 @@
+{
+	"name": "Digitale Bibliothek Thüringen",
+	"short_name": "DBT",
+	"theme_color": "#008855",
+	"background_color": "#fff",
+	"display": "standalone",
+	"scope": "/",
+	"start_url": "/",
+	"icons": [
+		{
+			"src": "assets/images/favicon-apple-touch-57.png",
+			"sizes": "57x57",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/images/favicon-apple-touch-72.png",
+			"sizes": "72x72",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/images/favicon-apple-touch-128.png",
+			"sizes": "128x128",
+			"type": "image/png"
+		},
+		{
+			"src": "assets/images/favicon-apple-touch-144.png",
+			"sizes": "144x144",
+			"type": "image/png"
+		}
+	]
+}

@@ -3,6 +3,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule, NgModuleFactoryLoader, SystemJsNgModuleLoader } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ServiceWorkerModule } from "@angular/service-worker";
 import { TranslateCompiler, TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { MESSAGE_FORMAT_CONFIG, TranslateMessageFormatCompiler } from "ngx-translate-messageformat-compiler";
@@ -33,6 +34,8 @@ import { SpinnerModule } from "./spinner/spinner.module";
 import { PipesModule } from "./_pipes/pipes.module";
 
 import { AppComponent } from "./app.component";
+
+import { environment } from "../environments/environment";
 
 import { HomeComponent, HomeStates } from "./home/home.component";
 import { LoginComponent, LoginStates } from "./login/login.component";
@@ -102,6 +105,7 @@ export const SearchFutureState = {
         NgPipesModule,
         PipesModule,
         NgbModule,
+        ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production }),
         ToastrModule.forRoot({
             autoDismiss: true,
             timeOut: 10000,
