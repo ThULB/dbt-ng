@@ -22,7 +22,7 @@
           </label>
         </div>
         <div class="form-group m-0">
-          <select size="1" name="numPerPage" [(ngModel)]="numPerPage" (ngModelChange)="numPerPageChange($event)" class="form-control d-none d-sm-inline">
+          <select size="1" name="numPerPage" [(ngModel)]="numPerPage" (ngModelChange)="numPerPageChange($event)" class="form-control custom-select d-none d-sm-inline">
             <option *ngFor="let np of [10, 25, 50, 100]" [ngValue]="np">{{ np }}</option>
           </select> <label class="d-none d-sm-inline ml-1">{{ 'dataTable.lengthMenu' | translate }} </label>
         </div>
