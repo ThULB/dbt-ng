@@ -60,8 +60,8 @@ walk(distDir, (err, files) => {
 		const fsize = fs.statSync(f).size;
 		imagemin([f], path.resolve(f, ".."), {
 			plugins: [
-				imageminMozjpeg(),
-				imageminPngquant({quality: "65-80", speed: 1}),
+				imageminMozjpeg({quality: 70, dct: "float"}),
+				imageminPngquant({quality: [0.65, 0.8], speed: 1, strip: true}),
 				imageminGiflossy({lossy: 80, optimizationLevel: 3}),
 				imageminSvgo()
 			]
