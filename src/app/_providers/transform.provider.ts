@@ -119,7 +119,7 @@ export class TransformProvider {
 
         xml2js.parseString(data, { explicitArray: false }, (error, result) => {
             if (error) {
-                throw new Error(error);
+                throw error;
             } else {
                 res = result;
             }
