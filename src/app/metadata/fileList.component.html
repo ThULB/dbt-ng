@@ -32,7 +32,7 @@
 				</a></td>
 				<td class="text-right" (click)="selectFile(entry.name)">{{ entry.modified | date:'dd.MM.yyyy' }}</td>
 				<td class="text-right text-nowrap" (click)="selectFile(entry.name)">{{ entry.size | bytes }}</td>
-				<td *ngIf="deleteAllowed"><ui-confirm-button class="d-flex justify-content-end" [text]="'button.delete' | translate"
+				<td *ngIf="deleteAllowed" class="text-nowrap"><ui-confirm-button class="d-flex justify-content-end" [text]="'button.delete' | translate"
 						[textConfirm]="'button.confirm.delete' | translate" [textDone]="'button.confirmed.delete' | translate" (confirmed)="deleteFile(entry.name)" size="sm"
 						[outline]="true"
 					> </ui-confirm-button></td>
