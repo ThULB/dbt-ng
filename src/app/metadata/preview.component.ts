@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy, Input, EventEmitter, ViewChildren, QueryList, ElementRef } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input, EventEmitter, ViewChild,
+    ViewChildren, QueryList, ElementRef, Renderer2 } from "@angular/core";
 
 import { Subject } from "rxjs";
 
@@ -83,6 +84,9 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     public totalPages: number;
 
+    @ViewChild("pdfViewer")
+    public pdfViewer;
+
     @ViewChildren("playerElement")
     public playerElm: QueryList<ElementRef>;
 
@@ -97,7 +101,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
         return PreviewComponent.supportedExtensions.indexOf(ext) !== -1;
     }
 
-    constructor(private $api: ApiService, private $error: ErrorService, public mds: MobileDetectService) {
+    constructor(private $api: ApiService, private $error: ErrorService, private renderer: Renderer2, public mds: MobileDetectService) {
         this.previewConfirmed = !this.mds.isPhone();
     }
 
@@ -317,6 +321,10 @@ export class PreviewComponent implements OnInit, OnDestroy {
     }
 
     onPDFLoaded(pdf: PDFDocumentProxy) {
+        const parent = this.pdfViewer.nativeElement;
+        const maxWidth = parent.querySelector(".card-body").clientWidth + "px" || "800px";
+        this.renderer.setStyle(parent.querySelector("pdf-viewer"), "maxWidth", maxWidth);
+
         this.totalPages = pdf.numPages;
     }
 

@@ -70,12 +70,12 @@
 
 <ng-container *ngIf="'pdf|ps'.indexOf(fileExtension(file)) !== -1">
 	<ng-template #pdfViewerTemplate let-url="url">
-	<div class="card">
+	<div #pdfViewer class="card">
 		<div class="card-body p-1">
 		  <div class="text-center m-2" [hidden]="done">
         <i class="fas fa-spinner fa-spin"></i> <span class="ml-1">{{ loadingPercent || 0 }}%</span>
       </div>
-			<pdf-viewer class="d-block" *ngIf="url" [src]="{url: url}" [(page)]="page" [fit-to-page]="true" [autoresize]="false"
+			<pdf-viewer class="d-block mx-auto" *ngIf="url" [src]="{url: url}" [(page)]="page" [fit-to-page]="true" [autoresize]="true"
 				[original-size]="false" [stick-to-page]="true" [show-all]="false" [render-text]="true" (after-load-complete)="onPDFLoaded($event)"
 			></pdf-viewer>
 		</div>
