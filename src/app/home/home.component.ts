@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, Renderer2 } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, Renderer2, ElementRef } from "@angular/core";
 
 import { AuthService } from "../_services/auth.service";
 
@@ -13,8 +13,8 @@ interface ElementDimensions {
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-    @ViewChild("teaser")
-    public teaser;
+    @ViewChild("teaser", { static: true })
+    public teaser: ElementRef;
 
     constructor(public $auth: AuthService, private renderer: Renderer2) { }
 
@@ -80,7 +80,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
             const img = new Image();
             img.addEventListener("load", (e) => {
-                const elm: any = e.srcElement;
+                const elm: any = e.target;
                 const dim = this.scale({
                     width: w.width,
                     height: speed === 0 ? w.height : Math.ceil(w.height * (w.height + (w.height / speed * 2)) / w.height)

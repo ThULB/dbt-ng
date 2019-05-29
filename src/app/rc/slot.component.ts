@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewInit, OnInit, Renderer2, ViewChild } from "@angular/core";
+import { Component, Input, AfterViewInit, OnInit, Renderer2, ViewChild, OnDestroy, ElementRef } from "@angular/core";
 import { DomSanitizer, SafeHtml, SafeUrl } from "@angular/platform-browser";
 
 import { Observable } from "rxjs";
@@ -17,7 +17,7 @@ import { Slot, Entry, EntryTypes, AdminRoles, EditorRoles, Permission } from "./
     selector: "ui-rc-slot",
     templateUrl: "./slot.component.html"
 })
-export class SlotComponent implements OnInit, AfterViewInit {
+export class SlotComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public id: string;
 
@@ -37,8 +37,8 @@ export class SlotComponent implements OnInit, AfterViewInit {
 
     public groups;
 
-    @ViewChild("slotToc")
-    private slotToc;
+    @ViewChild("slotToc", { static: false })
+    private slotToc: ElementRef;
 
     private downloads: Map<string, any> = new Map();
 
@@ -53,7 +53,7 @@ export class SlotComponent implements OnInit, AfterViewInit {
     }
 
     ngOnDestroy() {
-        this.downloads.forEach((o, k) => console.log(o));
+        this.downloads.forEach((o) => console.log(o));
     }
 
     ngAfterViewInit() {

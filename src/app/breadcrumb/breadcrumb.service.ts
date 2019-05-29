@@ -4,12 +4,11 @@ import { StateDeclaration, StateService, Transition } from "@uirouter/core";
 import { TranslateService } from "@ngx-translate/core";
 
 import { Observable } from "rxjs";
-import { map, merge } from "rxjs/operators";
 
 export interface Breadcrumb {
     name: string;
     params?: Object;
-    labelResolver?: Observable<string> |null;
+    labelResolver?: Observable<string | Object> | null;
 }
 
 @Injectable()
@@ -39,7 +38,7 @@ export class BreadcrumbService {
         const f = transition.from();
         const t = transition.to();
 
-        const toBC = {
+        const toBC: Breadcrumb = {
             name: t.name,
             params: this.decodeParams(transition.params("to")),
             labelResolver: this.buildLabelResolver(t, this.decodeParams(transition.params("to")))
@@ -60,7 +59,7 @@ export class BreadcrumbService {
                 (withParams && this.paramsMatch(b.params, breadcrumb.params) || !withParams));
     }
 
-    private setBreadcrumbAtIndex(breadcrumb: Breadcrumb |null, index: number = 0) {
+    private setBreadcrumbAtIndex(breadcrumb: Breadcrumb | null, index: number = 0) {
         this.breadcrumbs.splice(index, this.breadcrumbs.length);
         if (breadcrumb) {
             this.breadcrumbs.push(breadcrumb);
@@ -101,7 +100,7 @@ export class BreadcrumbService {
         }
     }
 
-    private paramsMatch(p1, p2) {
+    private paramsMatch(p1: any, p2: any) {
         if (!p1 && !p2) {
             return true;
         }
@@ -115,7 +114,7 @@ export class BreadcrumbService {
             .length === Object.keys(p1).filter((k) => k !== "#").length;
     }
 
-    private decodeParams(params) {
+    private decodeParams(params: any) {
         if (params) {
             const p = {};
             Object.keys(params).forEach((k) => p[k] = params[k] && params[k] !== null ? decodeURIComponent(params[k]) : null);
@@ -127,9 +126,9 @@ export class BreadcrumbService {
 
     private buildLabelResolver(state: StateDeclaration, params?: Object) {
         if (state.data && state.data.breadcrumbLabelResolver) {
-            return Observable.create((observer) => {
+            return new Observable((observer) => {
                 const resolver = state.data.breadcrumbLabelResolver;
-                
+
                 resolver(this.$injector, params).subscribe(t => observer.next(t));
                 this.$translate.onLangChange.subscribe(event =>
                     resolver(this.$injector, params).subscribe(t => observer.next(t))

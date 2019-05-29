@@ -84,7 +84,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     public totalPages: number;
 
-    @ViewChild("pdfViewer")
+    @ViewChild("pdfViewer", { static: false })
     public pdfViewer;
 
     @ViewChildren("playerElement")

@@ -1,7 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { NgModule, NgModuleFactoryLoader, SystemJsNgModuleLoader } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { TranslateCompiler, TranslateModule, TranslateLoader } from "@ngx-translate/core";
@@ -54,37 +54,37 @@ export const BasketFutureState = {
 export const ClassificationBrowseFutureState = {
     name: "browse.**",
     url: "/browse",
-    loadChildren: "./classification/browse.module#ClassificationBrowseModule"
+    loadChildren: () => import("./classification/browse.module").then(m => m.ClassificationBrowseModule)
 };
 
 export const ContentFutureState = {
     name: "content.**",
     url: "/content",
-    loadChildren: "./content/content.module#ContentModule"
+    loadChildren: () => import("./content/content.module").then(m => m.ContentModule)
 };
 
 export const MetadataFutureState = {
     name: "metadata.**",
     url: "/metadata",
-    loadChildren: "./metadata/metadata.module#MetadataModule"
+    loadChildren: () => import("./metadata/metadata.module").then(m => m.MetadataModule)
 };
 
 export const PersonFutureState = {
     name: "persons.**",
     url: "/persons",
-    loadChildren: "./person/person.module#PersonModule"
+    loadChildren: () => import("./person/person.module").then(m => m.PersonModule)
 };
 
 export const RCFutureState = {
     name: "rc.**",
     url: "/rc",
-    loadChildren: "./rc/rc.module#RCModule"
+    loadChildren: () => import("./rc/rc.module").then(m => m.RCModule)
 };
 
 export const SearchFutureState = {
     name: "search.**",
     url: "/search",
-    loadChildren: "./search/search.module#SearchModule"
+    loadChildren: () => import("./search/search.module").then(m => m.SearchModule)
 };
 
 @NgModule({
@@ -150,7 +150,6 @@ export const SearchFutureState = {
                 strictNumberSign: false
             }
         },
-        { provide: NgModuleFactoryLoader, useClass: SystemJsNgModuleLoader },
         AuthService,
         ApiService,
         BasketService,

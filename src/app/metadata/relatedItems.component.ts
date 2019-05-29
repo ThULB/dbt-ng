@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 
-import { Observable } from "rxjs";
+import { Observable, Subscriber } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
 import { ErrorService } from "../_services/error.service";
@@ -11,10 +11,10 @@ import { SolrSelectResponse, MCRObject } from "../_datamodels/datamodel.def";
 interface RelatedItem {
     id: string;
     title: string;
-    subTitle: string |null;
+    subTitle: string | null;
     dateIssued: string;
-    part: string |null;
-    partOrder: number |null;
+    part: string | null;
+    partOrder: number | null;
 }
 
 @Component({
@@ -37,7 +37,7 @@ export class RelatedItemsComponent implements OnInit {
 
     public allowFilter = false;
 
-    private queryObserver;
+    private queryObserver: Subscriber<string>;
 
     @Input() public object: MCRObject;
 
@@ -93,7 +93,7 @@ export class RelatedItemsComponent implements OnInit {
                                     }
                                 }).catch((err) => e(err));
                             });
-                        }).then((r) => {
+                        }).then(() => {
                             this.loading = false;
                             resolve();
                         }).catch((err) => {
@@ -172,11 +172,11 @@ export class RelatedItemsComponent implements OnInit {
 
     filter(query: string) {
         if (!this.queryObserver) {
-            Observable.create(observer => {
+            new Observable(observer => {
                 this.queryObserver = observer;
             }).pipe(
                 debounceTime(500),
-            ).subscribe((q) => {
+            ).subscribe(() => {
                 this.page = 1;
                 this.start = 0;
                 this.items = new Array();

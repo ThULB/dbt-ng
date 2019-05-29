@@ -6,3 +6,4 @@
 /dist/
 /.settings/
 /package-lock.json
+/bin/

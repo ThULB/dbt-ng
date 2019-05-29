@@ -1,6 +1,6 @@
 import { Component, Input, Renderer2 } from "@angular/core";
 
-import { Observable } from "rxjs";
+import { Observable, Subscriber } from "rxjs";
 import { debounceTime, filter, map } from "rxjs/operators";
 
 import { CacheService } from "../_services/cache.service";
@@ -29,7 +29,7 @@ export class SearchComponent extends MetadataHelpers {
 
     private minYear: number;
     private maxYear: number;
-    private yearObserver;
+    private yearObserver: Subscriber<number>;
 
     @Input() public result: SolrSelectResponse;
 
@@ -152,7 +152,7 @@ export class SearchComponent extends MetadataHelpers {
 
     changeYear(year: number) {
         if (!this.yearObserver) {
-            Observable.create(observer => {
+            new Observable(observer => {
                 this.yearObserver = observer;
             }).pipe(
                 filter(y => !y || y >= this.minYear && y <= this.maxYear),

@@ -11,7 +11,7 @@ export class ConfirmButtonComponent implements OnInit {
 
     private static CLICK_DELAY = 250;
 
-    @ViewChild("btnElm")
+    @ViewChild("btnElm", { static: true })
     private btnElm: ElementRef;
 
     private timer: any;
