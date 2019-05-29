@@ -112,7 +112,7 @@
     
     // Animations
     &.flipOutX {
-        webkit-backface-visibility:visible!important;
+        -webkit-backface-visibility:visible!important;
         -webkit-animation-name: flipOutX;
         -ms-backface-visibility:visible!important;
         backface-visibility: visible !important;
