@@ -7,7 +7,6 @@
 		"ng": "ng",
 		"start": "ng serve --host 0.0.0.0 --disable-host-check --proxy-config ./src/proxy.conf.json",
 		"build": "ng build --prod --output-path=./dist --extract-css --build-optimizer --aot=true --stats-json",
-		"postinstall": "ivy-ngcc",
 		"analyzer": "webpack-bundle-analyzer dist/stats.json",
 		"optimize": "node optimize.js ./dist"
 	},
