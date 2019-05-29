@@ -93,7 +93,7 @@
 		</div>
 		<div class="panel-footer d-flex justify-content-between p-2" *ngIf="slots && slots.total !== 0">
 		  <div class="align-self-center">
-			 <span class="d-none d-sm-inline" [ngClass]="{'d-inline': slots.total <= numPerPage}">{{ 'dataTable.filterInfo' | translate:{start: (page - 1) * numPerPage + 1, limit: (page * numPerPage > slots.total ? slots.total : page * numPerPage), total: slots.total} }}</span>
+			 <span class="d-none d-sm-inline" [ngClass]="{'d-inline': slots.total <= numPerPage}">{{ 'dataTable.filterInfo' | translate:{start: (page - 1) * numPerPage + 1, limit: (page * numPerPage &gt; slots.total ? slots.total : page * numPerPage), total: slots.total} }}</span>
 			</div>
 			<ng-container *ngIf="page && slots.total > numPerPage">
         <ngb-pagination (pageChange)="pageChange($event)" [collectionSize]="slots.total" [(page)]="page" [maxSize]="mds.isPhone() ? 4 : 5" [pageSize]="numPerPage" [rotate]="true" [ellipses]="false" [boundaryLinks]="!mds.isPhone()"></ngb-pagination>
