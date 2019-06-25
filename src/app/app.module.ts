@@ -41,125 +41,125 @@ import { HomeComponent, HomeStates } from "./home/home.component";
 import { LoginComponent, LoginStates } from "./login/login.component";
 
 export function createTranslateLoader(http: HttpClient) {
-    return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
+  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
 
 // Lazy Loading States
 export const BasketFutureState = {
-    name: "basket.**",
-    url: "/basket",
-    loadChildren: "./basket/basket.module#BasketModule"
+  name: "basket.**",
+  url: "/basket",
+  loadChildren: () => import("./basket/basket.module").then(m => m.BasketModule)
 };
 
 export const ClassificationBrowseFutureState = {
-    name: "browse.**",
-    url: "/browse",
-    loadChildren: () => import("./classification/browse.module").then(m => m.ClassificationBrowseModule)
+  name: "browse.**",
+  url: "/browse",
+  loadChildren: () => import("./classification/browse.module").then(m => m.ClassificationBrowseModule)
 };
 
 export const ContentFutureState = {
-    name: "content.**",
-    url: "/content",
-    loadChildren: () => import("./content/content.module").then(m => m.ContentModule)
+  name: "content.**",
+  url: "/content",
+  loadChildren: () => import("./content/content.module").then(m => m.ContentModule)
 };
 
 export const MetadataFutureState = {
-    name: "metadata.**",
-    url: "/metadata",
-    loadChildren: () => import("./metadata/metadata.module").then(m => m.MetadataModule)
+  name: "metadata.**",
+  url: "/metadata",
+  loadChildren: () => import("./metadata/metadata.module").then(m => m.MetadataModule)
 };
 
 export const PersonFutureState = {
-    name: "persons.**",
-    url: "/persons",
-    loadChildren: () => import("./person/person.module").then(m => m.PersonModule)
+  name: "persons.**",
+  url: "/persons",
+  loadChildren: () => import("./person/person.module").then(m => m.PersonModule)
 };
 
 export const RCFutureState = {
-    name: "rc.**",
-    url: "/rc",
-    loadChildren: () => import("./rc/rc.module").then(m => m.RCModule)
+  name: "rc.**",
+  url: "/rc",
+  loadChildren: () => import("./rc/rc.module").then(m => m.RCModule)
 };
 
 export const SearchFutureState = {
-    name: "search.**",
-    url: "/search",
-    loadChildren: () => import("./search/search.module").then(m => m.SearchModule)
+  name: "search.**",
+  url: "/search",
+  loadChildren: () => import("./search/search.module").then(m => m.SearchModule)
 };
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        HomeComponent,
-        LoginComponent
-    ],
-    imports: [
-        BreadcrumbModule,
-        BrowserModule,
-        BrowserAnimationsModule,
-        DirectivesModule,
-        HttpClientModule,
-        FormsModule,
-        ReactiveFormsModule,
-        SpinnerModule,
-        NgPipesModule,
-        PipesModule,
-        NgbModule,
-        ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production }),
-        ToastrModule.forRoot({
-            autoDismiss: true,
-            timeOut: 10000,
-            positionClass: "toast-bottom-right",
-            preventDuplicates: true,
-            maxOpened: 3
-        }),
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient]
-            },
-            compiler: {
-                provide: TranslateCompiler,
-                useClass: TranslateMessageFormatCompiler
-            }
-        }),
-        UIRouterModule.forRoot({
-            states: [
-                HomeStates,
-                LoginStates,
-                BasketFutureState,
-                ClassificationBrowseFutureState,
-                ContentFutureState,
-                MetadataFutureState,
-                PersonFutureState,
-                RCFutureState,
-                SearchFutureState
-            ],
-            useHash: false,
-            config: routerConfigFn,
-            otherwise: "/"
-        })
-    ],
-    providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
-        {
-            provide: MESSAGE_FORMAT_CONFIG, useValue: {
-                biDiSupport: false,
-                intlSupport: false,
-                strictNumberSign: false
-            }
-        },
-        AuthService,
-        ApiService,
-        BasketService,
-        CacheService,
-        ErrorService,
-        MobileDetectService,
-        PersonApiService,
-        ScriptService,
-        TransformProvider
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    LoginComponent
+  ],
+  imports: [
+    BreadcrumbModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    DirectivesModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SpinnerModule,
+    NgPipesModule,
+    PipesModule,
+    NgbModule,
+    ServiceWorkerModule.register("ngsw-worker.js", { enabled: environment.production }),
+    ToastrModule.forRoot({
+      autoDismiss: true,
+      timeOut: 10000,
+      positionClass: "toast-bottom-right",
+      preventDuplicates: true,
+      maxOpened: 3
+    }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      },
+      compiler: {
+        provide: TranslateCompiler,
+        useClass: TranslateMessageFormatCompiler
+      }
+    }),
+    UIRouterModule.forRoot({
+      states: [
+        HomeStates,
+        LoginStates,
+        BasketFutureState,
+        ClassificationBrowseFutureState,
+        ContentFutureState,
+        MetadataFutureState,
+        PersonFutureState,
+        RCFutureState,
+        SearchFutureState
+      ],
+      useHash: false,
+      config: routerConfigFn,
+      otherwise: "/"
+    })
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
+    {
+      provide: MESSAGE_FORMAT_CONFIG, useValue: {
+        biDiSupport: false,
+        intlSupport: false,
+        strictNumberSign: false
+      }
+    },
+    AuthService,
+    ApiService,
+    BasketService,
+    CacheService,
+    ErrorService,
+    MobileDetectService,
+    PersonApiService,
+    ScriptService,
+    TransformProvider
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
