@@ -49,7 +49,7 @@
     "wavesurfer.js": "^3.0.0",
     "web-animations-js": "^2.3.2",
     "xml2js": "^0.4.19",
-    "zone.js": "^0.10.1"
+    "zone.js": "^0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.802.0",
