@@ -24,7 +24,7 @@
     "@angular/service-worker": "8.2.4",
     "@auth0/angular-jwt": "^3.0.0",
     "@fortawesome/fontawesome-free": "^5.10.2",
-    "@ng-bootstrap/ng-bootstrap": "^5.1.0",
+    "@ng-bootstrap/ng-bootstrap": "^5.1.1",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
     "@uirouter/angular": "^4.0.0",
@@ -48,7 +48,7 @@
     "videojs-contrib-hls": "^5.15.0",
     "wavesurfer.js": "^3.0.0",
     "web-animations-js": "^2.3.2",
-    "xml2js": "^0.4.20",
+    "xml2js": "^0.4.21",
     "zone.js": "^0.9.1"
   },
   "devDependencies": {
