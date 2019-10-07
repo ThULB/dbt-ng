@@ -6,6 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --disable-host-check --proxy-config ./src/proxy.conf.json",
+    "start-prod": "ng serve --prod --source-map --optimization=false",
     "build": "ng build --prod --output-path=./dist --extract-css --build-optimizer --aot=true --stats-json",
     "analyzer": "webpack-bundle-analyzer dist/stats.json",
     "optimize": "node optimize.js ./dist"
@@ -61,7 +62,7 @@
     "@types/node": "^12.7.11",
     "@types/video.js": "7.2.15",
     "@types/xml2js": "^0.4.5",
-    "codelyzer": "^5.1.1",
+    "codelyzer": "^5.1.2",
     "imagemin": "^7.0.0",
     "imagemin-giflossy": "^5.1.10",
     "imagemin-gifsicle": "^6.0.1",
