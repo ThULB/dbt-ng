@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateModule } from "@ngx-translate/core";
 import { UIRouterModule } from "@uirouter/angular";
-import { NgPipesModule } from "angular-pipes";
+import { NgBytesPipeModule } from "angular-pipes";
 import { PipesModule } from "../_pipes/pipes.module";
 import { PdfViewerModule } from "ng2-pdf-viewer";
 
@@ -27,7 +27,7 @@ import { SysInfoComponent } from "./sysInfo.component";
         ReactiveFormsModule,
         TranslateModule,
         NgbModule,
-        NgPipesModule,
+        NgBytesPipeModule,
         PipesModule,
         PdfViewerModule,
         UIRouterModule.forChild({

@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { TranslateModule } from "@ngx-translate/core";
 import { UIRouterModule } from "@uirouter/angular";
-import { NgPipesModule } from "angular-pipes";
+import { NgBytesPipeModule } from "angular-pipes";
 import { PipesModule } from "../_pipes/pipes.module";
 
 import { RCApiService } from "./api.service";
@@ -23,7 +23,7 @@ import { SlotComponent, SlotStates } from "./slot.component";
         ReactiveFormsModule,
         NgbModule,
         TranslateModule,
-        NgPipesModule,
+        NgBytesPipeModule,
         PipesModule,
         UIRouterModule.forChild({
             states: [
