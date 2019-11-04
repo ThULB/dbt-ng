@@ -1,9 +1,9 @@
 export const environment = {
     production: true,
     appName: "dbt-ng",
-    apiBaseUrl: "",
-    solrBaseUrl: "",
+    apiBaseUrl: "https://www.db-thueringen.de",
+    solrBaseUrl: "https://www.db-thueringen.de/dbt-solr",
     lookupBaseUrl: "",
-    webAppBaseUrl: "https://dbttest.thulb.uni-jena.de/dbt-master",
+    webAppBaseUrl: "https://www.db-thueringen.de",
     apiHttpOptions: {}
 };
