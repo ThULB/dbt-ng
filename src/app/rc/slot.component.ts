@@ -37,7 +37,7 @@ export class SlotComponent implements OnInit, OnDestroy, AfterViewInit {
 
     public groups;
 
-    @ViewChild("slotToc", { static: false })
+    @ViewChild("slotToc")
     private slotToc: ElementRef;
 
     private downloads: Map<string, any> = new Map();

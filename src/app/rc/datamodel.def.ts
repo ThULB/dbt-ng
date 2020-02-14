@@ -1,6 +1,3 @@
-import { MCRObject, SolrDocument } from "../_datamodels/datamodel.def";
-import { XmlMappedElement } from "../_providers/transform.provider";
-
 export enum Permission {
     Admin = "administrate-slot",
     Edit = "edit-slot",

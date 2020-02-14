@@ -1,7 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { NgModule } from "@angular/core";
+import { NgModule, Injectable } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ServiceWorkerModule } from "@angular/service-worker";
 import { TranslateCompiler, TranslateModule, TranslateLoader } from "@ngx-translate/core";
@@ -87,6 +87,10 @@ export const SearchFutureState = {
   loadChildren: () => import("./search/search.module").then(m => m.SearchModule)
 };
 
+// @FIXME workaround for ivy build
+@Injectable({ providedIn: "root" })
+export class InjectableTranslateMessageFormatCompiler extends TranslateMessageFormatCompiler { }
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -121,7 +125,9 @@ export const SearchFutureState = {
       },
       compiler: {
         provide: TranslateCompiler,
-        useClass: TranslateMessageFormatCompiler
+        // @FIXME workaround for ivy build
+        // useClass: TranslateMessageFormatCompiler
+        useClass: InjectableTranslateMessageFormatCompiler
       }
     }),
     UIRouterModule.forRoot({
