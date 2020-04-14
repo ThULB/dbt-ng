@@ -13,7 +13,6 @@ import { ObjectUrlPipe } from "../_pipes/objectUrl.pipe";
 
 import * as CryptoJS from "crypto-js";
 import videojs from "video.js";
-import * as VideojsHLS from "videojs-contrib-hls";
 import * as WaveSurfer from "wavesurfer.js";
 
 import { MCRDerivate, MCRDerivateContent, MCRDerivateContentFile, MediaSources } from "../_datamodels/datamodel.def";
@@ -263,7 +262,6 @@ export class PreviewComponent implements OnInit, OnDestroy {
                 this.player.on("ready", () => this.done = true);
                 this.updateStreamSources();
             } else {
-                this.playerPlugins.push(VideojsHLS);
                 this.player = videojs(elm.nativeElement.id, {}, () => this.updateStreamSources());
             }
         }
