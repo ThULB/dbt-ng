@@ -1,13 +1,11 @@
 {
 	"/rsc/*": {
-		"target1": "http://localhost:8291/mir",
-		"target": "https://dbttest.thulb.uni-jena.de/dbt-master",
+		"target": "https://www.db-thueringen.de",
 		"secure": true,
 		"changeOrigin": true
 	},
 	"/api/*": {
-		"target1": "http://localhost:8291/mir",
-		"target": "https://dbttest.thulb.uni-jena.de/dbt-master",
+		"target": "https://www.db-thueringen.de",
 		"secure": true,
 		"changeOrigin": true
 	},
@@ -17,9 +15,7 @@
 		"changeOrigin": true
 	},
 	"/solr/*": {
-		"target": "https://dbttest.thulb.uni-jena.de/dbt-master-solr/",
-		"target1": "http://localhost:28080/solr/dbt-master",
-		"target3": "http://ulbdb2.thulb.uni-jena.de:28080/solr/dbt-master",
+		"target": "https://www.db-thueringen.de/dbt-solr",
 		"secure": false,
 		"changeOrigin": true,
 		"pathRewrite": {
@@ -27,8 +23,7 @@
 		}
 	},
 	"/servlets/*": {
-		"target": "http://localhost:8291/mir",
-		"target1": "https://dbttest.thulb.uni-jena.de/dbt-master",
+		"target": "https://www.db-thueringen.de",
 		"secure": true,
 		"changeOrigin": true
 	}
