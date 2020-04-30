@@ -36,7 +36,7 @@
     "bootstrap": "4.4.1",
     "core-js": "^3.6.5",
     "crypto-js": "^4.0.0",
-    "jquery": "3.4.1",
+    "jquery": "3.5.0",
     "messageformat": "^2.3.0",
     "mobile-detect": "^1.4.4",
     "ng2-pdf-viewer": "^6.2.0",
