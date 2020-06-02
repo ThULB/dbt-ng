@@ -128,7 +128,7 @@ export function resolveFnDerivates($api, $error, $spinner, trans) {
                     resolve(derivates);
                 } else {
                     res.forEach((o, i) => {
-                        const derId = o.xlinkHref;
+                        const derId = o.href;
                         $api.derivate(id, derId).subscribe((der: Object) => {
                             derivates[i] = new MCRDerivate(der, id);
                             dl--;
@@ -137,7 +137,7 @@ export function resolveFnDerivates($api, $error, $spinner, trans) {
                                 resolve(derivates);
                             }
                         }, err => {
-                            derivates[i] = { id: o.xlinkHref, objectId: id, status: err.status };
+                            derivates[i] = { id: o.href, objectId: id, status: err.status };
                             dl--;
 
                             if (dl === 0) {
