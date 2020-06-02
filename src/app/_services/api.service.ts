@@ -121,23 +121,23 @@ export class ApiService {
     object(id: string) {
         return this.$http.get(`${this.base}/api/v2/objects/${id}`,
             { headers: { accept: "application/xml" }, responseType: "text" as "text" }).pipe(
-            map((res) => this.$transform.convertToJson(res))
+                map((res) => this.$transform.convertToJson(res))
             );
     }
 
     objectWriteAllow(objectId: string) {
         return this.$http.put(`${this.base}/api/v2/objects/${objectId}/try`,
             null, { observe: "response" }).pipe(
-            map((res: HttpResponse<any>) => res.status === 202),
-            catchError((err, caught) => of(false))
+                map((res: HttpResponse<any>) => res.status === 202),
+                catchError((err, caught) => of(false))
             );
     }
 
     objectDeleteAllow(objectId: string) {
         return this.$http.delete(`${this.base}/api/v2/objects/${objectId}/try`,
             { observe: "response" }).pipe(
-            map((res: HttpResponse<any>) => res.status === 202),
-            catchError((err, caught) => of(false))
+                map((res: HttpResponse<any>) => res.status === 202),
+                catchError((err, caught) => of(false))
             );
     }
 
@@ -145,7 +145,7 @@ export class ApiService {
         if (revision) {
             return this.$http.get(`${this.base}/api/v2/objects/${id}/versions/${revision}`,
                 { headers: { accept: "application/xml" }, responseType: "text" as "text" }).pipe(
-                map((res) => this.$transform.convertToJson(res))
+                    map((res) => this.$transform.convertToJson(res))
                 );
         }
 
@@ -159,23 +159,23 @@ export class ApiService {
     derivate(objectId: string, derivateId: string) {
         return this.$http.get(`${this.base}/api/v2/objects/${objectId}/derivates/${derivateId}`,
             { headers: { accept: "application/xml" }, responseType: "text" as "text" }).pipe(
-            map((res) => this.$transform.convertToJson(res))
+                map((res) => this.$transform.convertToJson(res))
             );
     }
 
     derivateWriteAllow(objectId: string, derivateId: string) {
         return this.$http.put(`${this.base}/api/v2/objects/${objectId}/derivates/${derivateId}/try`,
             null, { observe: "response" }).pipe(
-            map((res: HttpResponse<any>) => res.status === 202),
-            catchError((err, caught) => of(false))
+                map((res: HttpResponse<any>) => res.status === 202),
+                catchError((err, caught) => of(false))
             );
     }
 
     derivateDeleteAllow(objectId: string, derivateId: string) {
         return this.$http.delete(`${this.base}/api/v2/objects/${objectId}/derivates/${derivateId}/try`,
             { observe: "response" }).pipe(
-            map((res: HttpResponse<any>) => res.status === 202),
-            catchError((err, caught) => of(false))
+                map((res: HttpResponse<any>) => res.status === 202),
+                catchError((err, caught) => of(false))
             );
     }
 
@@ -199,7 +199,7 @@ export class ApiService {
             }, this.httpOptions) :
             this.httpOptions;
 
-        return this.$http.get(`${this.base}/api/v2/objects/${objectId}/derivates/${derivateId}/contents/${path}`, options);
+        return this.$http.get(`${this.base}/api/v2/objects/${objectId}/derivates/${derivateId}/contents${path && path.length > 0 ? "/" + path : ""}`, options);
     }
 
     derivateMKDir(objectId: string, derivateId: string, path: string = "") {
@@ -287,7 +287,7 @@ export class ApiService {
                 }
             }),
             last()
-            );
+        );
     }
 
     thumbUrl(id: string, size: number = 150, ext: string = "jpg") {
