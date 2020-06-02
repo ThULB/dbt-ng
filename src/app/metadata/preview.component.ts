@@ -1,5 +1,7 @@
-import { Component, OnInit, OnDestroy, Input, EventEmitter, ViewChild,
-    ViewChildren, QueryList, ElementRef, Renderer2 } from "@angular/core";
+import {
+    Component, OnInit, OnDestroy, Input, EventEmitter, ViewChild,
+    ViewChildren, QueryList, ElementRef, Renderer2
+} from "@angular/core";
 
 import { Subject } from "rxjs";
 
@@ -50,6 +52,13 @@ export class PreviewComponent implements OnInit, OnDestroy {
     public supportedVideo = PreviewComponent.supportedVideo;
 
     public supportedText = PreviewComponent.supportedText;
+
+    private videoPlayerOptions: any = {
+        playbackRates: [0.75, 1, 1.25, 1.5],
+        controlBar: {
+            subsCapsButton: false
+        }
+    };
 
     public loading = false;
 
@@ -262,7 +271,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
                 this.player.on("ready", () => this.done = true);
                 this.updateStreamSources();
             } else {
-                this.player = videojs(elm.nativeElement.id, {}, () => this.updateStreamSources());
+                this.player = videojs(elm.nativeElement.id, this.videoPlayerOptions, () => this.updateStreamSources());
             }
         }
     }
