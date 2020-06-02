@@ -271,7 +271,10 @@ export class PreviewComponent implements OnInit, OnDestroy {
                 this.player.on("ready", () => this.done = true);
                 this.updateStreamSources();
             } else {
-                this.player = videojs(elm.nativeElement.id, this.videoPlayerOptions, () => this.updateStreamSources());
+                this.player = videojs(elm.nativeElement.id, this.videoPlayerOptions, () => {
+                    this.initPosterPreview();
+                    this.updateStreamSources();
+                });
             }
         }
     }
@@ -290,6 +293,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
         if (this.player) {
             if (this.mediaThumbs && this.mediaThumbs.source.length !== 0) {
                 this.player.poster(this.$api.mediaThumbUrl(this.buildInternalId(), this.mediaThumbs.source[0].src));
+                this.updatePosterPreview(this.mediaThumbs);
             }
 
             if (this.isAudioStream()) {
@@ -298,6 +302,93 @@ export class PreviewComponent implements OnInit, OnDestroy {
                 this.player.src(sources);
             }
         }
+    }
+
+    private initPosterPreview() {
+        let intPoster: number;
+        const cmpPoster = this.getComponent("PosterImage");
+        const elmPoster = cmpPoster.el();
+
+        if (elmPoster) {
+            elmPoster.addEventListener("mouseover", () => {
+                intPoster = window.setInterval(function () {
+                    const posters = elmPoster.children.length;
+                    const i = parseInt(elmPoster.getAttribute("data-thumb-index"), 10) || 0;
+                    const prevI = i === 0 ? posters - 1 : i - 1;
+
+                    if (elmPoster.style.backgroundImage) {
+                        elmPoster.style.backgroundImage = "";
+                    }
+                    elmPoster.children[prevI].style.display = "none";
+                    elmPoster.children[i].style.display = "inline-block";
+
+                    elmPoster.setAttribute("data-thumb-index", i < posters - 1 ? i + 1 : 0);
+                }, 1000);
+            });
+            elmPoster.addEventListener("mouseout", () => {
+                if (intPoster) {
+                    window.clearInterval(intPoster);
+                }
+            });
+        }
+    }
+
+    private preloadImage(url: string, anImageLoadedCallback: () => void): HTMLImageElement {
+        const img = new Image();
+
+        img.onload = anImageLoadedCallback;
+        img.src = url;
+
+        return img;
+    }
+
+    private preloadImages(urls: Array<string>, allImagesLoadedCallback: (images: Array<HTMLImageElement>) => void) {
+        const images: Array<HTMLImageElement> = [];
+        let loadedCounter = 0;
+        const toBeLoadedNumber = urls.length;
+
+        urls.forEach((url) => {
+            images.push(this.preloadImage(url, () => {
+                loadedCounter++;
+                if (loadedCounter === toBeLoadedNumber) {
+                    allImagesLoadedCallback(images);
+                }
+            }));
+        });
+    }
+
+    private updatePosterPreview(sources: MediaSources) {
+        const cmpPoster = this.getComponent("PosterImage");
+        const elmPoster = cmpPoster.el();
+
+        if (elmPoster) {
+            const thumbs = sources.source.map(s => this.$api.mediaThumbUrl(this.buildInternalId(), s.src));
+            this.preloadImages(thumbs, (images) => {
+                const thumbImg: Array<HTMLImageElement> = images;
+
+                let child = elmPoster.lastElementChild;
+                while (child) {
+                    elmPoster.removeChild(child);
+                    child = elmPoster.lastElementChild;
+                }
+
+                thumbImg.forEach((img) => {
+                    img.style.display = "none";
+                    elmPoster.appendChild(img);
+                });
+            });
+        }
+    }
+
+    private getComponent(name: string): any | null {
+        const childs = this.player.children();
+        for (let i = 0; i < childs.length; i++) {
+            const child = childs[i];
+            if (child && child.name_ && child.name_ === name) {
+                return child;
+            }
+        }
+        return null;
     }
 
     isAudioStream() {
