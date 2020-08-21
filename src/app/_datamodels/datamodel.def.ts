@@ -142,7 +142,7 @@ export class MCRDerivate extends XmlMappedElement {
 
 export interface MCRDerivateContentDirectory {
     name: string |null;
-    directories: Array<MCRDerivateContentDirectory> |null;
+    directory: Array<MCRDerivateContentDirectory> |null;
 }
 
 export interface MCRDerivateContentFile {
@@ -154,8 +154,8 @@ export interface MCRDerivateContentFile {
 
 export interface MCRDerivateContent {
     name?: string |null;
-    directories: Array<MCRDerivateContentDirectory> |null;
-    files: Array<MCRDerivateContentFile> |null;
+    directory: Array<MCRDerivateContentDirectory> |null;
+    file: Array<MCRDerivateContentFile> |null;
 }
 
 /**

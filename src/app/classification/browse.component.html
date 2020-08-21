@@ -1,6 +1,6 @@
 <div class="container" *ngIf="classif">
 
-	<h2>{{ categoryLabel(classif.labels) }}</h2>
+	<h2>{{ categoryLabel(classif.label) }}</h2>
 
   <ng-template #catgeoriesTemplate let-categories="categories" let-parent="parent">
 	<ul *ngIf="categories" class="list-group" [ngClass]="{'my-3 collapse': parent}" [id]="parent ? 'categ_' + parent.ID.replace('.', '_') : null">
@@ -10,7 +10,7 @@
 		    <div>
           <i class="text-secondary mr-2" 
             [ngClass]="{'far': categ.categories, 'fa-plus-square': categ.categories && !isCategoryOpen(categ), 'fa-minus-square': categ.categories && isCategoryOpen(categ), 'fas': !categ.categories, 'fa-minus': !categ.categories}"></i>
-				  <span class="text-primary hyphens">{{ categoryLabel(categ.labels) }}</span>
+				  <span class="text-primary hyphens">{{ categoryLabel(categ.label) }}</span>
 			  </div>
 			  <div class="d-inline-flex flex-nowrap">
           <span *ngIf="counts" class="badge badge-primary d-inline my-auto">{{ counts.get(id + ':' + categ.ID) || 0 }}</span>

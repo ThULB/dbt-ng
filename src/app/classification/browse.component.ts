@@ -91,8 +91,8 @@ export function BrowseTitleResolver($injector, params) {
     return api.classification(params.id).pipe(
         map((res: any) =>
             translate.instant("browse.in", {
-                label: (res.labels.find((l) => l.lang === translate.currentLang)
-                    || res.labels.find((l) => !l.lang.startsWith("x-"))).text || params.id
+                label: (res.label.find((l) => l.lang === translate.currentLang)
+                    || res.label.find((l) => !l.lang.startsWith("x-"))).text || params.id
             })
         )
     );
