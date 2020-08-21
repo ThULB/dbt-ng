@@ -8,7 +8,7 @@ import { ErrorService } from "../_services/error.service";
 import { ApiService } from "../_services/api.service";
 import { MobileDetectService } from "../_services/mobileDetect.service";
 import { SpinnerService } from "../spinner/spinner.service";
-import { StateService, Transition } from "@uirouter/core";
+import { StateService, Transition, UIRouterGlobals } from "@uirouter/core";
 
 import { MetadataHelpers } from "../_helpers/metadataHelpers.class";
 import { SolrSelectResponse, SolrDocument } from "../_datamodels/datamodel.def";
@@ -34,13 +34,13 @@ export class SearchComponent extends MetadataHelpers {
     @Input() public result: SolrSelectResponse;
 
     constructor(public $api: ApiService, private $state: StateService, private renderer: Renderer2,
-        public mds: MobileDetectService) {
+        public mds: MobileDetectService, private globals: UIRouterGlobals) {
         super();
 
-        this.query = decodeURIComponent(this.$state.params.query);
-        this.facets = this.$state.params.facets;
-        this.page = this.$state.params.page;
-        this.rows = this.$state.params.rows || 20;
+        this.query = decodeURIComponent(this.globals.params.query);
+        this.facets = this.globals.params.facets;
+        this.page = this.globals.params.page;
+        this.rows = this.globals.params.rows || 20;
 
         this.minYear = 1800;
         this.maxYear = new Date().getFullYear();
@@ -48,7 +48,7 @@ export class SearchComponent extends MetadataHelpers {
     }
 
     private transitionTo() {
-        this.$state.transitionTo(this.$state.$current.name, {
+        this.$state.transitionTo(this.globals.$current.name, {
             query: this.query,
             facets: this.facets,
             page: this.page,

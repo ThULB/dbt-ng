@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { TargetState, StateService } from "@uirouter/core";
+import { TargetState, StateService, UIRouterGlobals } from "@uirouter/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { AuthService } from "../_services/auth.service";
@@ -18,10 +18,10 @@ class LoginComponent implements OnInit {
     invalidCredentials = false;
 
     constructor(public $fb: FormBuilder, private $state: StateService, private $spinner: SpinnerService,
-        public $auth: AuthService, private $error: ErrorService) {
-        this.token = this.$state.params.token || this.$state.current.params.token;
+        public $auth: AuthService, private $error: ErrorService, private globals: UIRouterGlobals) {
+        this.token = this.globals.params.token || this.globals.current.params.token;
         this.returnTo = this.decodeTargetState(window.sessionStorage.getItem("returnTo"))
-            || this.$state.params.returnTo || this.$state.current.params.returnTo;
+            || this.globals.params.returnTo || this.globals.current.params.returnTo;
 
         if (this.token) {
             this.$auth.setToken(this.token);

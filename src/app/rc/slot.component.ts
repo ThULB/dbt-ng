@@ -8,7 +8,7 @@ import { CacheService } from "../_services/cache.service";
 import { ErrorService } from "../_services/error.service";
 import { RCApiService } from "./api.service";
 import { SpinnerService } from "../spinner/spinner.service";
-import { StateService, Transition } from "@uirouter/core";
+import { StateService, Transition, UIRouterGlobals } from "@uirouter/core";
 
 import { MCRObject, SolrSelectResponse } from "../_datamodels/datamodel.def";
 import { Slot, Entry, EntryTypes, AdminRoles, EditorRoles, Permission } from "./datamodel.def";
@@ -43,8 +43,8 @@ export class SlotComponent implements OnInit, OnDestroy, AfterViewInit {
     private downloads: Map<string, any> = new Map();
 
     constructor(public $api: RCApiService, public $auth: AuthService, private $state: StateService,
-        private renderer: Renderer2, public sanitizer: DomSanitizer) {
-        this.id = this.$state.params.id;
+        private renderer: Renderer2, public sanitizer: DomSanitizer, private globals: UIRouterGlobals) {
+        this.id = this.globals.params.id;
     }
 
     ngOnInit() {

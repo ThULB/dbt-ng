@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 import { ErrorService } from "../_services/error.service";
 import { SpinnerService } from "../spinner/spinner.service";
-import { StateService, Transition } from "@uirouter/core";
+import { StateService, Transition, UIRouterGlobals } from "@uirouter/core";
 
 export interface FAQEntry {
     href: string;
@@ -32,12 +32,12 @@ export class FAQComponent implements OnInit {
 
     activeEntry: FAQEntry;
 
-    constructor(private $state: StateService) {
-        this.filter = decodeURIComponent(this.$state.params.filter);
+    constructor(private $state: StateService, private globals: UIRouterGlobals) {
+        this.filter = decodeURIComponent(this.globals.params.filter);
     }
 
     ngOnInit() {
-        const href = this.$state.params["#"];
+        const href = this.globals.params["#"];
 
         if (href) {
             this.activeCategory = this.faq.find(c => c.href === href);
@@ -63,7 +63,7 @@ export class FAQComponent implements OnInit {
     }
 
     private transitionTo() {
-        return this.$state.transitionTo(this.$state.$current.name, {
+        return this.$state.transitionTo(this.globals.$current.name, {
             filter: this.filter,
         }, { reload: true });
     }

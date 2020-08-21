@@ -7,7 +7,7 @@ import { BasketService } from "../basket/basket.service";
 import { CacheService } from "../_services/cache.service";
 import { ErrorService } from "../_services/error.service";
 import { ApiService } from "../_services/api.service";
-import { StateService, Transition } from "@uirouter/core";
+import { StateService, Transition, UIRouterGlobals } from "@uirouter/core";
 import { SpinnerService } from "../spinner/spinner.service";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -36,10 +36,10 @@ export class MetadataComponent extends MetadataHelpers implements OnInit {
     public isEditor = false;
 
     constructor(private $auth: AuthService, private $state: StateService, private basket: BasketService,
-        public translate: TranslateService) {
+        public translate: TranslateService, private globals: UIRouterGlobals) {
         super();
 
-        this.id = this.$state.params.id;
+        this.id = this.globals.params.id;
 
         this.isAdmin = AdminRoles.find((r) => this.$auth.hasRole(r)) !== undefined;
         this.isEditor = EditorRoles.find((r) => this.$auth.hasRole(r)) !== undefined;

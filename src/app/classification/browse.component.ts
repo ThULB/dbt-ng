@@ -6,7 +6,7 @@ import { ApiService } from "../_services/api.service";
 import { CacheService } from "../_services/cache.service";
 import { ErrorService } from "../_services/error.service";
 import { SpinnerService } from "../spinner/spinner.service";
-import { StateService, Transition } from "@uirouter/core";
+import { StateService, Transition, UIRouterGlobals } from "@uirouter/core";
 import { TranslateService } from "@ngx-translate/core";
 
 import { SolrSelectResponse } from "../_datamodels/datamodel.def";
@@ -27,8 +27,8 @@ export class ClassificationBrowseComponent implements OnInit {
     private openCategs: Array<string> = new Array();
 
     constructor(public $api: ApiService, private $state: StateService, private $error: ErrorService,
-        private translate: TranslateService) {
-        this.id = this.$state.params.id;
+        private translate: TranslateService, private globals: UIRouterGlobals) {
+        this.id = this.globals.params.id;
     }
 
     ngOnInit() {

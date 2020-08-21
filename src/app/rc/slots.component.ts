@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { StateService, Transition } from "@uirouter/core";
+import { StateService, Transition, UIRouterGlobals } from "@uirouter/core";
 
 import { AuthService } from "../_services/auth.service";
 import { CacheService } from "../_services/cache.service";
@@ -26,18 +26,19 @@ export class SlotsComponent {
 
     @Input() public slots: Slots;
 
-    constructor(private $auth: AuthService, private $state: StateService, public mds: MobileDetectService) {
-        this.term = decodeURIComponent(this.$state.params.term);
-        this.page = this.$state.params.page || 1;
-        this.numPerPage = this.$state.params.numPerPage || (mds.isPhone() ? 25 : 50);
-        this.sort = decodeURIComponent(this.$state.params.sort) || "slotId ASC";
+    constructor(private $auth: AuthService, private $state: StateService, public mds: MobileDetectService,
+        private globals: UIRouterGlobals) {
+        this.term = decodeURIComponent(this.globals.params.term);
+        this.page = this.globals.params.page || 1;
+        this.numPerPage = this.globals.params.numPerPage || (mds.isPhone() ? 25 : 50);
+        this.sort = decodeURIComponent(this.globals.params.sort) || "slotId ASC";
 
         this.isAdmin = AdminRoles.find((r) => this.$auth.hasRole(r)) !== undefined;
         this.isEditor = EditorRoles.find((r) => this.$auth.hasRole(r)) !== undefined;
     }
 
     private transitionTo() {
-        return this.$state.transitionTo(this.$state.$current.name, {
+        return this.$state.transitionTo(this.globals.$current.name, {
             term: this.term,
             page: this.page,
             numPerPage: this.numPerPage,

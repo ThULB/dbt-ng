@@ -5,7 +5,7 @@ import { CacheService } from "../_services/cache.service";
 import { ErrorService } from "../_services/error.service";
 import { MobileDetectService } from "../_services/mobileDetect.service";
 import { SpinnerService } from "../spinner/spinner.service";
-import { StateService, Transition } from "@uirouter/core";
+import { StateService, Transition, UIRouterGlobals } from "@uirouter/core";
 
 import { MetadataHelpers } from "../_helpers/metadataHelpers.class";
 import { PersonDetails, personDetails, SolrDocument, SolrTermsResponse } from "../_datamodels/datamodel.def";
@@ -75,17 +75,17 @@ export class PersonBrowseComponent extends MetadataHelpers implements OnInit {
     public target: string;
 
     constructor(public $api: PersonApiService, private $state: StateService, public mds: MobileDetectService,
-        private renderer: Renderer2) {
+        private renderer: Renderer2, private globals: UIRouterGlobals) {
         super();
-        this.term = this.$state.params.term;
-        this.filter = this.$state.params.filter ? decodeURIComponent(this.$state.params.filter) : this.$state.params.filter;
-        this.page = this.$state.params.page || 1;
-        this.rows = this.$state.params.rows || 20;
+        this.term = this.globals.params.term;
+        this.filter = this.globals.params.filter ? decodeURIComponent(this.globals.params.filter) : this.globals.params.filter;
+        this.page = this.globals.params.page || 1;
+        this.rows = this.globals.params.rows || 20;
 
         this.start = ((this.page - 1) * this.rows) || 0;
         this.end = this.page * this.rows;
 
-        this.selectedIndex = this.$state.params.selectedIndex || this.start;
+        this.selectedIndex = this.globals.params.selectedIndex || this.start;
 
         this.renderer.listen("window", "resize", () => { this.target = window.innerWidth <= 800 ? "new" : this.target; });
     }
@@ -98,7 +98,7 @@ export class PersonBrowseComponent extends MetadataHelpers implements OnInit {
     }
 
     private transitionTo() {
-        return this.$state.transitionTo(this.$state.$current.name, {
+        return this.$state.transitionTo(this.globals.$current.name, {
             term: this.term,
             filter: this.filter,
             selectedIndex: this.selectedIndex,
