@@ -81,15 +81,15 @@ export class ClassificationPipe implements PipeTransform {
         } else {
             const cacheKey = [this.cachePrefix, name].join("_");
             const classification = CacheService.get(cacheKey);
-            const categ = id ? this.category(classification.categories || classification.category, id, withParents) : classification;
+            const categ = id ? this.category(classification.categories, id, withParents) : classification;
 
             if (categ) {
                 if (onlyLabel) {
                     if (withParents) {
-                        const cl = categ.filter((p) => p.label.filter((l) => curLang.indexOf(l.lang) !== -1) != null);
+                        const cl = categ.filter((p) => p.labels.filter((l) => curLang.indexOf(l.lang) !== -1) != null);
                         const labels = [];
                         cl.forEach((e) => {
-                            const el = e.label.filter((l) => curLang.indexOf(l.lang) !== -1);
+                            const el = e.labels.filter((l) => curLang.indexOf(l.lang) !== -1);
                             labels.push(
                                 el.length !== 0 ?
                                     el[0].text :
@@ -100,7 +100,7 @@ export class ClassificationPipe implements PipeTransform {
                         );
                         this.lastValue = labels;
                     } else {
-                        const labels = categ.label.filter((l) => curLang.indexOf(l.lang) !== -1);
+                        const labels = categ.labels.filter((l) => curLang.indexOf(l.lang) !== -1);
                         this.lastValue = labels.length !== 0 ? labels[0].text :
                             categ.labels.filter((l) => ClassificationPipe.DEFAULT_LANG.indexOf(l.lang) !== -1)[0].text
                             || this.lastValue;
@@ -124,8 +124,8 @@ export class ClassificationPipe implements PipeTransform {
                 res = categ;
             }
 
-            if (!res && (categ.categories || categ.category)) {
-                res = this.category((categ.categories || categ.category), id, withParents);
+            if (!res && categ.categories) {
+                res = this.category(categ.categories, id, withParents);
                 if (res) {
                     parents.push(categ);
                 }
