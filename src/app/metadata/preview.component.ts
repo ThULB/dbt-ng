@@ -410,7 +410,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     fileInfo(name?: string): MCRDerivateContentFile {
         name = name || this.file;
-        return this.content ? this.content.files.find((f) => f.name === name) : null;
+        return this.content ? this.content.file.find((f) => f.name === name) : null;
     }
 
     fileSize(name?: string): number {

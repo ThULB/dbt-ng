@@ -137,11 +137,11 @@ export class FileListComponent implements OnInit {
                 entries: []
             };
 
-            content.directories.forEach((d) => de.entries.push({
+            content.directory.forEach((d) => de.entries.push({
                 type: "dir",
                 name: d.name
             }));
-            content.files.forEach((f) => de.entries.push({
+            content.file.forEach((f) => de.entries.push({
                 type: "file",
                 name: f.name,
                 md5: f.md5,
