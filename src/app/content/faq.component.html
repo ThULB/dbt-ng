@@ -1,53 +1,54 @@
 <div id="faq" class="container">
 
   <div class="row h-100">
-  
+
     <div class="col-12 col-sm-4 pr-sm-1">
-    
-		  <div class="accordion card h-100" id="faqCategories">
-		    <div class="list-group list-group-flush">
-		      <div class="list-group-item p-2">
+
+      <div class="accordion card h-100" id="faqCategories">
+        <div class="list-group list-group-flush">
+          <div class="list-group-item p-2">
             <form>
               <div class="form-group flex-fill m-0">
                 <label class="d-inline-flex justify-content-start flex-row w-100 align-items-center m-0">
-	                <span aria-hidden="true" class="fa fa-filter mr-1"></span> {{ 'dataTable.filter' | translate }}
-	                <input id="filter" type="search" class="form-control ml-1" name="filter" [(ngModel)]="filter"
-	                  (keydown)="changeFilter($event)">
+                  <span aria-hidden="true" class="fa fa-filter mr-1"></span> {{ 'dataTable.filter' | translate }}
+                  <input id="filter" type="search" class="form-control ml-1" name="filter" [(ngModel)]="filter"
+                    (keydown)="changeFilter($event)">
                 </label>
               </div>
-            </form>  
+            </form>
           </div>
 
           <div *ngIf="faq.length === 0" class="list-group-item">{{ 'general.noResult' | translate }}</div>
 
-		      <ng-container *ngFor="let cat of faq; let i = index">
+          <ng-container *ngFor="let cat of faq; let i = index">
             <a class="list-group-item list-group-item-action px-2" data-toggle="collapse" [href]="'#' + cat.href"
-              [attr.data-target]="'#' + cat.href" [attr.aria-expanded]="activeCategory.href === cat.href" [attr.aria-controls]="cat.href">
+              [attr.data-target]="'#' + cat.href" [attr.aria-expanded]="activeCategory.href === cat.href"
+              [attr.aria-controls]="cat.href">
               <strong>{{ cat.title }}</strong>
             </a>
-            <div class="list-group list-group-flush" 
-              [id]="cat.href" class="collapse" [ngClass]="(activeCategory.href === cat.href) && 'show'" data-parent="#faqCategories">
-              <a class="list-group-item list-group-item-action" 
-                *ngFor="let entry of cat.entry" [ngClass]="(activeEntry.href === entry.href) && 'active'"
-                uiSref="." [uiParams]="{ '#': entry.href }" [uiOptions]="{reload: true}">{{ entry.question }}</a>
+            <div class="list-group list-group-flush collapse" [id]="cat.href"
+              [ngClass]="(activeCategory.href === cat.href) && 'show'" data-parent="#faqCategories">
+              <a class="list-group-item list-group-item-action" *ngFor="let entry of cat.entry"
+                [ngClass]="(activeEntry.href === entry.href) && 'active'" uiSref="." [uiParams]="{ '#': entry.href }"
+                [uiOptions]="{reload: true}">{{ entry.question }}</a>
             </div>
-		      </ng-container>
-		    </div>
-		  </div>
-		  
+          </ng-container>
+        </div>
+      </div>
+
     </div>
-    
+
     <div class="col-sm-8 pl-sm-1 mt-2 mt-sm-0">
-    
+
       <div class="card h-100">
         <ng-container *ngIf="activeEntry">
-	        <h5 class="card-header" [id]="activeEntry.href">{{ activeEntry?.question }}</h5>
-	        <div class="card-body" [innerHTML]="activeEntry?.answer"></div>
+          <h5 class="card-header" [id]="activeEntry.href">{{ activeEntry?.question }}</h5>
+          <div class="card-body" [innerHTML]="activeEntry?.answer"></div>
         </ng-container>
       </div>
-      
+
     </div>
-    
+
   </div>
 
 </div>

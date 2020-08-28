@@ -37,7 +37,7 @@ export class FAQComponent implements OnInit {
     }
 
     ngOnInit() {
-        const href = this.globals.params["#"];
+        const href = this.globals.params["#"] && this.globals.params["#"].split("?#")[0];
 
         if (href) {
             this.activeCategory = this.faq.find(c => c.href === href);
@@ -68,7 +68,7 @@ export class FAQComponent implements OnInit {
         }, { reload: true });
     }
 
-    changeFilter(evt) {
+    changeFilter(evt: KeyboardEvent) {
         if (evt.key.toLowerCase() === "enter") {
             this.transitionTo();
         }
@@ -110,7 +110,7 @@ export function filterFAQ(faq: Array<FAQCategory>, filter: string): Array<FAQCat
     return faq;
 }
 
-export function resolveFnFAQ($http, $error, $spinner, trans) {
+export function resolveFnFAQ($http: HttpClient, $error: ErrorService, $spinner: SpinnerService, trans: Transition) {
     $spinner.setLoadingState(trans.options().source !== "url" && trans.from().name !== trans.to().name);
 
     const filter = trans.params().filter;
