@@ -154,8 +154,8 @@ export interface MCRDerivateContentFile {
 
 export interface MCRDerivateContent {
     name?: string |null;
-    directory: Array<MCRDerivateContentDirectory> |null;
-    file: Array<MCRDerivateContentFile> |null;
+    directories: Array<MCRDerivateContentDirectory> |null;
+    files: Array<MCRDerivateContentFile> |null;
 }
 
 /**

@@ -64,7 +64,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     public loadingPercent: number;
 
-    private progress: Subject<number> = new Subject();
+    public progress: Subject<number> = new Subject();
 
     public done = false;
 
@@ -100,7 +100,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     private changesPlayerElm: any;
 
-    private player: videojs.Player | WaveSurfer;
+    public player: videojs.Player | WaveSurfer;
 
     private playerPlugins: Array<any> = [];
 
@@ -109,7 +109,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
         return PreviewComponent.supportedExtensions.indexOf(ext) !== -1;
     }
 
-    constructor(private $api: ApiService, private $error: ErrorService, private renderer: Renderer2, public mds: MobileDetectService) {
+    constructor(public $api: ApiService, private $error: ErrorService, private renderer: Renderer2, public mds: MobileDetectService) {
         this.previewConfirmed = !this.mds.isPhone();
     }
 
@@ -410,7 +410,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     fileInfo(name?: string): MCRDerivateContentFile {
         name = name || this.file;
-        return this.content ? this.content.file.find((f) => f.name === name) : null;
+        return this.content ? this.content.files.find((f) => f.name === name) : null;
     }
 
     fileSize(name?: string): number {
