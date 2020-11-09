@@ -75,7 +75,7 @@ export class FileListComponent implements OnInit {
         },
         "Video": {
             icon: "fa-file-video",
-            extensions: "mp4|f4v|flv|rm|avi|wmv|mov"
+            extensions: "mp4|m4v|f4v|flv|rm|avi|wmv|mov"
         },
         "Code": {
             icon: "fa-file-code",

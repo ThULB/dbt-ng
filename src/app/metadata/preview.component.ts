@@ -36,7 +36,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     public static supportedImage = ["jpg", "jpeg", "png", "gif", "tif", "tiff"];
 
-    public static supportedVideo = ["3gp", "avi", "f4v", "flv", "mp4", "mov", "mkv", "mpeg", "rm", "webm", "wmv"];
+    public static supportedVideo = ["3gp", "avi", "f4v", "flv", "mp4", "m4v", "mov", "mkv", "mpeg", "rm", "webm", "wmv"];
 
     public static supportedText = ["pdf", "ps"];
 
