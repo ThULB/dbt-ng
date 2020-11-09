@@ -14,6 +14,8 @@ export class ClassificationPipe implements PipeTransform {
 
     private static DEFAULT_LANG = "de";
 
+    private static FALLBACK_LANG = "en";
+
     private static promises: Map<string, Promise<any>> = new Map();
 
     private urlPattern: RegExp = new RegExp("https?:\/\/.*\/classifications.*\/([^#]+)(?:#(.*))?");
@@ -93,7 +95,7 @@ export class ClassificationPipe implements PipeTransform {
                             labels.push(
                                 el.length !== 0 ?
                                     el[0].text :
-                                    e.labels.filter((l) => ClassificationPipe.DEFAULT_LANG.indexOf(l.lang) !== -1)[0].text
+                                    this.getLabelByLang(e.labels, ClassificationPipe.DEFAULT_LANG, ClassificationPipe.FALLBACK_LANG)
                                     || this.lastValue
                             );
                         }
@@ -102,7 +104,7 @@ export class ClassificationPipe implements PipeTransform {
                     } else {
                         const labels = categ.labels.filter((l) => curLang.indexOf(l.lang) !== -1);
                         this.lastValue = labels.length !== 0 ? labels[0].text :
-                            categ.labels.filter((l) => ClassificationPipe.DEFAULT_LANG.indexOf(l.lang) !== -1)[0].text
+                            this.getLabelByLang(categ.labels, ClassificationPipe.DEFAULT_LANG, ClassificationPipe.FALLBACK_LANG)
                             || this.lastValue;
                     }
                 } else {
@@ -145,5 +147,10 @@ export class ClassificationPipe implements PipeTransform {
         }
 
         return withParents ? parents.length > 0 ? parents : null : res;
+    }
+
+    private getLabelByLang(labels: Array<any>, lang: string, fallbackLang: string = null) {
+        const f = labels.filter((l) => lang.indexOf(l.lang) !== -1);
+        return f.length !== 0 ? f[0].text : fallbackLang !== null ? this.getLabelByLang(labels, fallbackLang) : null;
     }
 }
