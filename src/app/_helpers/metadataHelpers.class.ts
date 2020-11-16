@@ -1,5 +1,7 @@
-import { PersonDetails, personDetails, IdentifierDetails, identifierDetails,
-    SolrFacetObject, SolrFacet } from "../_datamodels/datamodel.def";
+import {
+    PersonDetails, personDetails, IdentifierDetails, identifierDetails,
+    SolrFacetObject, SolrFacet
+} from "../_datamodels/datamodel.def";
 import { fileExtension, FilePath, filePath } from "../_helpers/file.utils";
 
 export class MetadataHelpers {
@@ -60,7 +62,7 @@ export class MetadataHelpers {
         }
 
         let name;
-        const urlPattern: RegExp = new RegExp("https?:\/\/.*\/classifications.*\/([^#]+)(?:#(.*))?");
+        const urlPattern = new RegExp("https?:\/\/.*\/classifications.*\/([^#]+)(?:#(.*))?");
 
         if (urlPattern.test(value)) {
             const m = value.match(urlPattern);
@@ -110,11 +112,11 @@ export class MetadataHelpers {
         return Array.from(map.keys());
     }
 
-    getMapValues(map: Map<String, any>): Array<any> {
+    getMapValues(map: Map<string, any>): Array<any> {
         return Array.from(map.values());
     }
 
-    getObjectKeys(obj: Object): Array<string> {
+    getObjectKeys(obj: any): Array<string> {
         return Object.keys(obj);
     }
 }

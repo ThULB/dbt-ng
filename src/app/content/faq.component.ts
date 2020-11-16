@@ -62,21 +62,21 @@ export class FAQComponent implements OnInit {
         }
     }
 
-    private transitionTo() {
-        return this.$state.transitionTo(this.globals.$current.name, {
-            filter: this.filter,
-        }, { reload: true });
-    }
-
     changeFilter(evt: KeyboardEvent) {
         if (evt.key.toLowerCase() === "enter") {
             this.transitionTo();
         }
     }
 
+    private transitionTo() {
+        return this.$state.transitionTo(this.globals.$current.name, {
+            filter: this.filter,
+        }, { reload: true });
+    }
+
 }
 
-export function filterFAQ(faq: Array<FAQCategory>, filter: string): Array<FAQCategory> {
+export const filterFAQ = (faq: Array<FAQCategory>, filter: string): Array<FAQCategory> => {
     if (filter && filter.length !== 0) {
         let f = decodeURIComponent(filter).toLowerCase();
         if (f.indexOf(" ") !== -1) {
@@ -106,9 +106,9 @@ export function filterFAQ(faq: Array<FAQCategory>, filter: string): Array<FAQCat
     }
 
     return faq;
-}
+};
 
-export function resolveFnFAQ($http: HttpClient, $error: ErrorService, $spinner: SpinnerService, trans: Transition) {
+export const resolveFnFAQ = ($http: HttpClient, $error: ErrorService, $spinner: SpinnerService, trans: Transition) => {
     $spinner.setLoadingState(trans.options().source !== "url" && trans.from().name !== trans.to().name);
 
     const filter = trans.params().filter;
@@ -120,7 +120,7 @@ export function resolveFnFAQ($http: HttpClient, $error: ErrorService, $spinner: 
         $spinner.setLoadingState(false);
         $error.handleError(err);
     });
-}
+};
 
 export const FAQStates = {
     name: "content.faq",

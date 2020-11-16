@@ -23,23 +23,6 @@ export class BasketService {
         this.loadItems();
     }
 
-    private loadItems() {
-        for (let i = 0; i < window.localStorage.length; i++) {
-            const key = window.localStorage.key(i);
-            if (key.startsWith(BasketService.STORAGE_PREFIX)) {
-                const item = JSON.parse(window.localStorage.getItem(key));
-                this.items.push(item);
-            }
-        }
-        this.sort();
-    }
-
-    private sort() {
-        this.items = this.items.sort((a, b) =>
-            a.order && b.order ? a.order - b.order : 0
-        );
-    }
-
     isInBasket(item: string | BasketItem) {
         return this.items.findIndex((i) => i.documentId === (typeof item === "string" ? item : item.documentId)) !== -1;
     }
@@ -62,4 +45,20 @@ export class BasketService {
         }
     }
 
+    private loadItems() {
+        for (let i = 0; i < window.localStorage.length; i++) {
+            const key = window.localStorage.key(i);
+            if (key.startsWith(BasketService.STORAGE_PREFIX)) {
+                const item = JSON.parse(window.localStorage.getItem(key));
+                this.items.push(item);
+            }
+        }
+        this.sort();
+    }
+
+    private sort() {
+        this.items = this.items.sort((a, b) =>
+            a.order && b.order ? a.order - b.order : 0
+        );
+    }
 }

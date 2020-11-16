@@ -56,7 +56,7 @@ export class RelatedItemsComponent implements OnInit {
         return new Promise((resolve, reject) => {
             const structure = this.object.getElement("structure");
             if (structure) {
-                const children = structure.getElementWithAttribute("children", { "class": "MCRMetaLinkID" });
+                const children = structure.getElementWithAttribute("children", { class: "MCRMetaLinkID" });
                 if (children) {
                     try {
                         this.loading = true;

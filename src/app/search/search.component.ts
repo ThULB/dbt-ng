@@ -78,13 +78,13 @@ export class SearchComponent extends MetadataHelpers {
     }
 
     thumbLoaded(event: Event) {
-        const elm = event.target as Element;
+        const elm = <Element>event.target;
         this.renderer.removeClass(elm.parentElement, "loading");
     }
 
     defaultThumb(event: Event, item: SolrDocument) {
         const derId = item["link"] ? item["link"].find((l) => l.indexOf("derivate") !== -1) : null;
-        const elm = event.target as Element;
+        const elm = <Element>event.target;
         const parent = this.renderer.parentNode(elm);
         const ph = this.renderer.createElement("div");
 
@@ -184,7 +184,7 @@ export class SearchComponent extends MetadataHelpers {
 
 }
 
-export function resolveFnSearch($api, $error, $spinner, trans) {
+export const resolveFnSearch = ($api, $error, $spinner, trans) => {
     const cacheKey = CacheService.buildCacheKey(trans.to().name, trans.params());
     const cache = CacheService.get(cacheKey);
 
@@ -212,7 +212,7 @@ export function resolveFnSearch($api, $error, $spinner, trans) {
             $error.handleError(err);
         });
     }
-}
+};
 
 export const SearchStates = {
     name: "search",

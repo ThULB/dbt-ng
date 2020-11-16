@@ -110,7 +110,7 @@ const buildSearchQuery = (term: string) => {
     return "*:*";
 };
 
-export function resolveFnSlots($api, $auth, $error, $spinner, trans) {
+export const resolveFnSlots = ($api, $auth, $error, $spinner, trans) => {
     $spinner.setLoadingState(trans.options().source !== "url" && trans.from().name !== trans.to().name);
 
     const isAdmin = AdminRoles.find((r) => $auth.hasRole(r)) !== undefined;
@@ -133,7 +133,7 @@ export function resolveFnSlots($api, $auth, $error, $spinner, trans) {
         $spinner.setLoadingState(false);
         $error.handleError(err);
     });
-}
+};
 
 export const SlotsStates = {
     name: "rc",

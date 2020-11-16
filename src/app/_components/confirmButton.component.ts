@@ -11,27 +11,8 @@ export class ConfirmButtonComponent implements OnInit {
 
     private static CLICK_DELAY = 250;
 
-    @ViewChild("btnElm", { static: true })
-    private btnElm: ElementRef;
-
-    private timer: any;
-
-    private lastClick = -1;
-
     @Input()
     public size: string;
-
-    @Input()
-    public type = "danger";
-
-    @Input()
-    public typeConfirm = "info";
-
-    @Input()
-    public typeDone = "success";
-
-    @Input()
-    public outline = false;
 
     public value: string;
 
@@ -46,6 +27,25 @@ export class ConfirmButtonComponent implements OnInit {
 
     @Output()
     public confirmed = new EventEmitter();
+
+    @Input()
+    public type = "danger";
+
+    @Input()
+    public typeConfirm = "info";
+
+    @Input()
+    public typeDone = "success";
+
+    @Input()
+    public outline = false;
+
+    @ViewChild("btnElm", { static: true })
+    private btnElm: ElementRef;
+
+    private timer: any;
+
+    private lastClick = -1;
 
     constructor(private renderer: Renderer2) { }
 
@@ -85,11 +85,6 @@ export class ConfirmButtonComponent implements OnInit {
         });
     }
 
-    private classForType(type: string = null) {
-        type = type || this.type;
-        return (this.outline ? ["btn", "outline", type] : ["btn", type]).join("-");
-    }
-
     @HostListener("click", ["$event"])
     onClick(event: Event) {
         event.preventDefault();
@@ -110,6 +105,11 @@ export class ConfirmButtonComponent implements OnInit {
             this.renderer.addClass(elm, this.classForType(this.typeDone));
             this.confirmed.next();
         }
+    }
+
+    private classForType(type: string = null) {
+        type = type || this.type;
+        return (this.outline ? ["btn", "outline", type] : ["btn", type]).join("-");
     }
 
 }

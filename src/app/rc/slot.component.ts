@@ -153,19 +153,14 @@ export class SlotComponent implements OnInit, OnDestroy, AfterViewInit {
 
 }
 
-export function resolveFnIsAdmin($api, $auth) {
-    return AdminRoles.find((r) => $auth.hasRole(r)) !== undefined;
-}
+export const resolveFnIsAdmin = ($api, $auth) => AdminRoles.find((r) => $auth.hasRole(r)) !== undefined;
 
-export function resolveFnIsEditor($api, $auth) {
-    return EditorRoles.find((r) => $auth.hasRole(r)) !== undefined;
-}
+export const resolveFnIsEditor = ($api, $auth) => EditorRoles.find((r) => $auth.hasRole(r)) !== undefined;
 
-export function resolveFnIsEditAllow($api, $auth, trans) {
-    return $auth.isLoggedIn() ? $api.permission("writedb", trans.params().id).toPromise().then(allowed => allowed) : false;
-}
+export const resolveFnIsEditAllow = ($api, $auth, trans) => $auth.isLoggedIn() ?
+    $api.permission("writedb", trans.params().id).toPromise().then(allowed => allowed) : false;
 
-export function resolveFnSlot($api, $error, $spinner, trans) {
+export const resolveFnSlot = ($api, $error, $spinner, trans) => {
     $spinner.setLoadingState(trans.options().source !== "url" && trans.from().name !== trans.to().name);
 
     return $api.slot(trans.params().id).toPromise().then(res => {
@@ -181,7 +176,7 @@ export function resolveFnSlot($api, $error, $spinner, trans) {
         $spinner.setLoadingState(false);
         $error.handleError(err);
     });
-}
+};
 
 export const SlotStates = {
     name: "rc.slot",

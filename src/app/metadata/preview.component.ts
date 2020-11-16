@@ -311,7 +311,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
         if (elmPoster) {
             elmPoster.addEventListener("mouseover", () => {
-                intPoster = window.setInterval(function () {
+                intPoster = window.setInterval(() => {
                     const posters = elmPoster.children.length;
                     const i = parseInt(elmPoster.getAttribute("data-thumb-index"), 10) || 0;
                     const prevI = i === 0 ? posters - 1 : i - 1;
@@ -343,15 +343,15 @@ export class PreviewComponent implements OnInit, OnDestroy {
     }
 
     private preloadImages(urls: Array<string>, allImagesLoadedCallback: (images: Array<HTMLImageElement>) => void) {
-        const images: Array<HTMLImageElement> = [];
+        const imgs: Array<HTMLImageElement> = [];
         let loadedCounter = 0;
         const toBeLoadedNumber = urls.length;
 
         urls.forEach((url) => {
-            images.push(this.preloadImage(url, () => {
+            imgs.push(this.preloadImage(url, () => {
                 loadedCounter++;
                 if (loadedCounter === toBeLoadedNumber) {
-                    allImagesLoadedCallback(images);
+                    allImagesLoadedCallback(imgs);
                 }
             }));
         });
@@ -382,8 +382,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
     private getComponent(name: string): any | null {
         const childs = this.player.children();
-        for (let i = 0; i < childs.length; i++) {
-            const child = childs[i];
+        for (const child of childs) {
             if (child && child.name_ && child.name_ === name) {
                 return child;
             }

@@ -7,12 +7,12 @@ import { breadcrumbHook } from "./breadcrumb.hook";
 import { BreadcrumbService } from "./breadcrumb.service";
 import { BreadcrumbComponent } from "./breadcrumb.component";
 
-export function breadcrumbConfigFn(router: UIRouter, injector: Injector) {
+export const breadcrumbConfigFn = (router: UIRouter, injector: Injector) => {
     const transitionService = router.transitionService;
     const breadcrumbService = injector.get(BreadcrumbService);
 
     breadcrumbHook(injector, transitionService, breadcrumbService);
-}
+};
 
 @NgModule({
     imports: [

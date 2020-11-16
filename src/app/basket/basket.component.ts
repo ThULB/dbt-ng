@@ -24,6 +24,31 @@ export class BasketComponent extends MetadataHelpers implements OnInit {
         this.basket.items.filter(item => !item.document).forEach(item => this.loadItemDetails(item));
     }
 
+    removeFromBasket(documentId: string) {
+        this.basket.removeItem(documentId);
+    }
+
+    thumbLoaded(event: Event) {
+        const elm = <Element>event.target;
+        this.renderer.removeClass(elm.parentElement, "loading");
+    }
+
+    defaultThumb(event: Event, item: BasketItem) {
+        const elm = <Element>event.target;
+        const parent = this.renderer.parentNode(elm);
+        const ph = this.renderer.createElement("div");
+
+        const cls = item.mainFile ? `img-${fileExtension(item.mainFile)}` : "img-placeholder";
+        ph.classList.add(cls);
+
+        this.copyClassList(elm, ph);
+        this.renderer.removeClass(elm.parentElement, "loading");
+        this.renderer.insertBefore(parent, ph, elm);
+        this.renderer.removeChild(parent, elm);
+
+        return null;
+    }
+
     private loadItemDetails(item) {
         this.$api.solrCondQuery("id:" + item.documentId).toPromise()
             .then((res: SolrSelectResponse) => {
@@ -47,10 +72,6 @@ export class BasketComponent extends MetadataHelpers implements OnInit {
             });
     }
 
-    removeFromBasket(documentId: string) {
-        this.basket.removeItem(documentId);
-    }
-
     private copyClassList(from: Element, to: Element, expect: Array<string> = []) {
         for (let ci = 0; ci < from.classList.length; ci++) {
             const cls = from.classList.item(ci);
@@ -58,27 +79,6 @@ export class BasketComponent extends MetadataHelpers implements OnInit {
                 to.classList.add(cls);
             }
         }
-    }
-
-    thumbLoaded(event: Event) {
-        const elm = event.target as Element;
-        this.renderer.removeClass(elm.parentElement, "loading");
-    }
-
-    defaultThumb(event: Event, item: BasketItem) {
-        const elm = event.target as Element;
-        const parent = this.renderer.parentNode(elm);
-        const ph = this.renderer.createElement("div");
-
-        const cls = item.mainFile ? `img-${fileExtension(item.mainFile)}` : "img-placeholder";
-        ph.classList.add(cls);
-
-        this.copyClassList(elm, ph);
-        this.renderer.removeClass(elm.parentElement, "loading");
-        this.renderer.insertBefore(parent, ph, elm);
-        this.renderer.removeChild(parent, elm);
-
-        return null;
     }
 }
 

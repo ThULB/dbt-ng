@@ -13,9 +13,11 @@ import { BasketService } from "./basket/basket.service";
 })
 export class AppComponent implements AfterViewInit {
 
+    @Input()
+    public query: string;
+
     private langs = ["de", "en"];
 
-    @Input() public query: string;
 
     constructor(public $auth: AuthService, public basket: BasketService, public translate: TranslateService,
         private $state: StateService) {

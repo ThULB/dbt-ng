@@ -14,13 +14,13 @@ export interface Breadcrumb {
 @Injectable()
 export class BreadcrumbService {
 
-    private $state: StateService;
-
-    private $translate: TranslateService;
-
     public breadcrumbs: Array<Breadcrumb>;
 
     public root: Breadcrumb;
+
+    private $state: StateService;
+
+    private $translate: TranslateService;
 
     constructor(private $injector: Injector) {
         this.$translate = this.$injector.get<TranslateService>(TranslateService);

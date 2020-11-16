@@ -18,8 +18,8 @@ export interface PersonDetails {
     id?: IdentifierDetails;
 }
 
-export function personDetails(str: string): PersonDetails {
-    const re: RegExp = new RegExp("([^:]+)(?::(.*))?");
+export const personDetails = (str: string): PersonDetails => {
+    const re = new RegExp("([^:]+)(?::(.*))?");
     if (str) {
         if (re.test(str)) {
             const m = str.match(re);
@@ -28,10 +28,10 @@ export function personDetails(str: string): PersonDetails {
     }
 
     return null;
-}
+};
 
-export function identifierDetails(str: string): IdentifierDetails {
-    const re: RegExp = new RegExp("([^:]+):(.*)");
+export const identifierDetails = (str: string): IdentifierDetails => {
+    const re = new RegExp("([^:]+):(.*)");
     if (str) {
         if (re.test(str)) {
             const m = str.match(re);
@@ -40,7 +40,7 @@ export function identifierDetails(str: string): IdentifierDetails {
     }
 
     return null;
-}
+};
 
 /**
  * SOLR
@@ -193,7 +193,9 @@ export class Mods extends XmlMappedElement {
     }
 
     getElementsByType(name: string, type: string): Array<XmlMappedElement> {
-        return this.getElementsWithAttribute(name, { "type": type });
+        return this.getElementsWithAttribute(name, {
+            type: type
+        });
     }
 
     getElementsByLang(name: string, lang: string): Array<XmlMappedElement> {
@@ -204,10 +206,9 @@ export class Mods extends XmlMappedElement {
 
     getPersonsByTerm(term: string) {
         const persons = this.getElementsByType("mods:name", "personal");
-        return persons ? persons.filter((p) => {
-            return p.getElements("mods:roleTerm", true)
-                .find((rt) => "marcrelator" === rt.getAttributeValue("authority") && term === rt.text) != null;
-        }) : null;
+        return persons ? persons.filter((p) => p.getElements("mods:roleTerm", true)
+            .find((rt) => "marcrelator" === rt.getAttributeValue("authority") && term === rt.text) != null
+        ) : null;
     }
 
     personDetails(elm: XmlMappedElement): PersonDetails {

@@ -9,10 +9,18 @@ export class OrderByPipe implements PipeTransform {
             array.sort((a: any, b: any) => {
                 const ae = a[orderField];
                 const be = b[orderField];
-                if (ae === undefined && be === undefined) { return 0; }
-                if (ae === undefined && be !== undefined) { return orderType ? 1 : -1; }
-                if (ae !== undefined && be === undefined) { return orderType ? -1 : 1; }
-                if (ae === be) { return 0; }
+                if (ae === undefined && be === undefined) {
+                    return 0;
+                }
+                if (ae === undefined && be !== undefined) {
+                    return orderType ? 1 : -1;
+                }
+                if (ae !== undefined && be === undefined) {
+                    return orderType ? -1 : 1;
+                }
+                if (ae === be) {
+                    return 0;
+                }
 
                 if (typeof ae === "number" && typeof ae === typeof be) {
                     return orderType ? ae > be ? -1 : 1 : be > ae ? -1 : 1;

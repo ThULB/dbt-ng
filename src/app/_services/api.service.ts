@@ -27,8 +27,6 @@ export class ApiService {
 
     public httpOptions = environment.apiHttpOptions;
 
-    constructor(public $http: HttpClient, public $transform: TransformProvider) { }
-
     static toQueryString(params: Map<string, any>): string {
         let p = "";
         if (params) {
@@ -55,11 +53,13 @@ export class ApiService {
         return null;
     }
 
+    constructor(public $http: HttpClient, public $transform: TransformProvider) { }
+
     /**
      * APP Settings
      */
     settings() {
-        return this.$http.get(`/assets/settings.json`, this.httpOptions);
+        return this.$http.get("/assets/settings.json", this.httpOptions);
     }
 
     /**
@@ -75,7 +75,7 @@ export class ApiService {
     }
 
     sessionPing() {
-        return this.$http.get(`${this.base}/rsc/echo/ping`, { responseType: "text" as "text" }).pipe(
+        return this.$http.get(`${this.base}/rsc/echo/ping`, { responseType: <"text">"text" }).pipe(
             map(res => "pong" === res)
         );
     }
@@ -120,7 +120,7 @@ export class ApiService {
 
     object(id: string) {
         return this.$http.get(`${this.base}/api/v2/objects/${id}`,
-            { headers: { accept: "application/xml" }, responseType: "text" as "text" }).pipe(
+            { headers: { accept: "application/xml" }, responseType: <"text">"text" }).pipe(
                 map((res) => this.$transform.convertToJson(res))
             );
     }
@@ -144,7 +144,7 @@ export class ApiService {
     versions(id: string, revision?: number) {
         if (revision) {
             return this.$http.get(`${this.base}/api/v2/objects/${id}/versions/${revision}`,
-                { headers: { accept: "application/xml" }, responseType: "text" as "text" }).pipe(
+                { headers: { accept: "application/xml" }, responseType: <"text">"text" }).pipe(
                     map((res) => this.$transform.convertToJson(res))
                 );
         }
@@ -158,7 +158,7 @@ export class ApiService {
 
     derivate(objectId: string, derivateId: string) {
         return this.$http.get(`${this.base}/api/v2/objects/${objectId}/derivates/${derivateId}`,
-            { headers: { accept: "application/xml" }, responseType: "text" as "text" }).pipe(
+            { headers: { accept: "application/xml" }, responseType: <"text">"text" }).pipe(
                 map((res) => this.$transform.convertToJson(res))
             );
     }
@@ -193,8 +193,8 @@ export class ApiService {
                         "pre-check=0",
                         "max-age=0"
                     ],
-                    "expires": ["0", "Tue, 01 Jan 1980 1:00:00 GMT"],
-                    "pragma": "no-cache"
+                    expires: ["0", "Tue, 01 Jan 1980 1:00:00 GMT"],
+                    pragma: "no-cache"
                 }
             }, this.httpOptions) :
             this.httpOptions;

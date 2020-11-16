@@ -23,32 +23,32 @@ interface Person extends PersonDetails {
 export class PersonBrowseComponent extends MetadataHelpers implements OnInit {
 
     public terms = {
-        "A": "[a|ä|Ä].*",
-        "B": "b.*",
-        "C": "c.*",
-        "D": "d.*",
-        "E": "e.*",
-        "F": "f.*",
-        "G": "g.*",
-        "H": "h.*",
-        "I": "i.*",
-        "J": "j.*",
-        "K": "k.*",
-        "L": "l.*",
-        "M": "m.*",
-        "N": "n.*",
-        "O": "[o|ö|Ö].*",
-        "P": "p.*",
-        "Q": "q.*",
-        "R": "r.*",
-        "S": "s.*",
-        "T": "t.*",
-        "U": "[u|ü|Ü].*",
-        "V": "v.*",
-        "W": "w.*",
-        "X": "x.*",
-        "Y": "y.*",
-        "Z": "z.*"
+        A: "[a|ä|Ä].*",
+        B: "b.*",
+        C: "c.*",
+        D: "d.*",
+        E: "e.*",
+        F: "f.*",
+        G: "g.*",
+        H: "h.*",
+        I: "i.*",
+        J: "j.*",
+        K: "k.*",
+        L: "l.*",
+        M: "m.*",
+        N: "n.*",
+        O: "[o|ö|Ö].*",
+        P: "p.*",
+        Q: "q.*",
+        R: "r.*",
+        S: "s.*",
+        T: "t.*",
+        U: "[u|ü|Ü].*",
+        V: "v.*",
+        W: "w.*",
+        X: "x.*",
+        Y: "y.*",
+        Z: "z.*"
     };
 
     public term: string;
@@ -134,7 +134,7 @@ export class PersonBrowseComponent extends MetadataHelpers implements OnInit {
 
 }
 
-export function resolveFnPersons($api, $error, $spinner, trans) {
+export const resolveFnPersons = ($api, $error, $spinner, trans) => {
     const cacheKey = CacheService.buildCacheKey(trans.to().name, trans.params().term);
     const cache = CacheService.get(cacheKey);
 
@@ -164,7 +164,7 @@ export function resolveFnPersons($api, $error, $spinner, trans) {
                 $error.handleError(err);
             });
     }
-}
+};
 
 export const PersonBrowseStates = {
     name: "persons",

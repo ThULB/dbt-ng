@@ -34,6 +34,7 @@ export class ObjectUrlPipe implements PipeTransform {
     constructor(private _ref: ChangeDetectorRef, private _sanitizer: DomSanitizer, private $api: ApiService) {
     }
 
+
     transform(url: string, progress?: Subject<number>, needTrusted: boolean = false): any {
         if (!url) {
             return null;

@@ -2,18 +2,18 @@ import { EventEmitter, Injectable } from "@angular/core";
 
 export interface Cache {
     obj: any;
-    validUntil: number |null;
+    validUntil: number | null;
     removeEvent?: EventEmitter<Cache>;
 }
 
 @Injectable()
 export class CacheService {
 
+    public static DEFAULT_LIFETIME = 1000 * 60 * 5;
+
     private static caches: Map<string, Cache> = new Map();
 
     private static interval: any;
-
-    public static DEFAULT_LIFETIME = 1000 * 60 * 5;
 
     public static set(key: string, obj: any, livetime?: number, removeEvent?: EventEmitter<Cache>) {
         const cobj: Cache = {

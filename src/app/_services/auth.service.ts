@@ -39,13 +39,13 @@ export class AuthService {
 
     private static MCR_SESSION_AUDIENCE = "mcr:session";
 
-    private jwtHelper: JwtHelperService = new JwtHelperService();
-
     public realms: Array<Realm>;
 
     public formAuth = true;
 
     public user: UserInformation;
+
+    private jwtHelper: JwtHelperService = new JwtHelperService();
 
     constructor(private $api: ApiService) {
         this.loadToken();

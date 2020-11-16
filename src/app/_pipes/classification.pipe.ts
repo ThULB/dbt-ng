@@ -18,7 +18,7 @@ export class ClassificationPipe implements PipeTransform {
 
     private static promises: Map<string, Promise<any>> = new Map();
 
-    private urlPattern: RegExp = new RegExp("https?:\/\/.*\/classifications.*\/([^#]+)(?:#(.*))?");
+    private urlPattern = new RegExp("https?:\/\/.*\/classifications.*\/([^#]+)(?:#(.*))?");
 
     private cacheLifetime: number = 60 * 60 * 1000;
 

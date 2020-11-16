@@ -17,10 +17,10 @@ import { SolrSelectResponse } from "../_datamodels/datamodel.def";
 })
 export class ClassificationBrowseComponent implements OnInit {
 
-    public id: string;
-
     @Input()
     public classif;
+
+    public id: string;
 
     public counts: Map<string, number>;
 
@@ -33,6 +33,29 @@ export class ClassificationBrowseComponent implements OnInit {
 
     ngOnInit() {
         this.load();
+    }
+
+    categoryLabel(labels): string {
+        if (labels) {
+            return (labels.find((l) => l.lang === this.translate.currentLang)
+                || labels.find((l) => !l.lang.startsWith("x-"))).text || null;
+        }
+
+        return null;
+    }
+
+    isCategoryOpen(category) {
+        return this.openCategs.indexOf(category.ID) !== -1;
+    }
+
+    categoryToggle(category) {
+        if (category) {
+            if (this.isCategoryOpen(category)) {
+                this.openCategs.splice(this.openCategs.indexOf(category.ID), 1);
+            } else {
+                this.openCategs.push(category.ID);
+            }
+        }
     }
 
     private load() {
@@ -60,32 +83,9 @@ export class ClassificationBrowseComponent implements OnInit {
             }, (err) => this.$error.handleError(err));
         }
     }
-
-    categoryLabel(labels): string {
-        if (labels) {
-            return (labels.find((l) => l.lang === this.translate.currentLang)
-                || labels.find((l) => !l.lang.startsWith("x-"))).text || null;
-        }
-
-        return null;
-    }
-
-    isCategoryOpen(category) {
-        return this.openCategs.indexOf(category.ID) !== -1;
-    }
-
-    categoryToggle(category) {
-        if (category) {
-            if (this.isCategoryOpen(category)) {
-                this.openCategs.splice(this.openCategs.indexOf(category.ID), 1);
-            } else {
-                this.openCategs.push(category.ID);
-            }
-        }
-    }
 }
 
-export function BrowseTitleResolver($injector, params) {
+export const BrowseTitleResolver = ($injector, params) => {
     const translate = $injector.get(TranslateService);
     const api = $injector.get(ApiService);
     return api.classification(params.id).pipe(
@@ -96,9 +96,9 @@ export function BrowseTitleResolver($injector, params) {
             })
         )
     );
-}
+};
 
-export function resolveFnClassification($api, $error, $spinner, trans) {
+export const resolveFnClassification = ($api, $error, $spinner, trans) => {
     const cacheKey = ["classification", trans.params().id].join("_");
     const cache = CacheService.get(cacheKey);
 
@@ -117,7 +117,7 @@ export function resolveFnClassification($api, $error, $spinner, trans) {
                 $error.handleError(err);
             });
     }
-}
+};
 
 export const ClassificationBrowseStates = {
     name: "browse",

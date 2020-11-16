@@ -79,17 +79,13 @@ export class PersonComponent extends MetadataHelpers implements OnInit, OnChange
         params.set("rows", 5);
         params.set("fq", ["objectType:mods", this.buildQuery(id)]);
 
-        return this.$api.solrSelect("*:*", params).toPromise().then((res: SolrSelectResponse) => {
-            return res;
-        });
+        return this.$api.solrSelect("*:*", params).toPromise().then((res: SolrSelectResponse) => res);
     }
 
     private loadDetails(id: IdentifierDetails) {
         if (id) {
             const idStr = [id.prefix, id.id].join(":");
-            return this.$api.lookupPerson(idStr).toPromise().then((details) => {
-                return details;
-            });
+            return this.$api.lookupPerson(idStr).toPromise().then((details) => details);
         }
 
         return null;
@@ -120,13 +116,13 @@ export class PersonComponent extends MetadataHelpers implements OnInit, OnChange
     }
 
     thumbLoaded(event: Event) {
-        const elm = event.target as Element;
+        const elm = <Element>event.target;
         this.renderer.removeClass(elm.parentElement, "loading");
     }
 
     defaultThumb(event: Event, item: SolrDocument) {
         const derId = item["link"] ? item["link"].find((l) => l.indexOf("derivate") !== -1) : null;
-        const elm = event.target as Element;
+        const elm = <Element>event.target;
         const parent = this.renderer.parentNode(elm);
         const ph = this.renderer.createElement("div");
 
@@ -167,7 +163,7 @@ export class PersonComponent extends MetadataHelpers implements OnInit, OnChange
     }
 }
 
-export function personTitleResolver($injector, params) {
+export const personTitleResolver = ($injector, params) => {
     const api = $injector.get(PersonApiService);
     return params.id ? api.lookupPerson(params.id).pipe(
         map((p: any) => {
@@ -176,9 +172,9 @@ export function personTitleResolver($injector, params) {
             }
             return null;
         })) : of(params.name);
-}
+};
 
-export function resolveFnPerson($api, $error, $spinner, trans) {
+export const resolveFnPerson = ($api, $error, $spinner, trans) => {
     const cacheKey = CacheService.buildCacheKey(trans.to().name, trans.params());
     const cache = CacheService.get(cacheKey);
 
@@ -208,13 +204,11 @@ export function resolveFnPerson($api, $error, $spinner, trans) {
             params.set("rows", 5);
             params.set("fq", ["objectType:mods", `mods.pindexname.published:"${name}"`]);
 
-            promise = $api.solrSelect("*:*", params).toPromise().then((res: SolrSelectResponse) => {
-                return {
-                    name: name,
-                    documentCount: res.response.numFound,
-                    documents: res.response.docs
-                };
-            });
+            promise = $api.solrSelect("*:*", params).toPromise().then((res: SolrSelectResponse) => ({
+                name: name,
+                documentCount: res.response.numFound,
+                documents: res.response.docs
+            }));
         }
 
         return promise.then((person) => {
@@ -230,7 +224,7 @@ export function resolveFnPerson($api, $error, $spinner, trans) {
             $error.handleError(err);
         });
     }
-}
+};
 
 export const PersonStates = {
     name: "persons.person",

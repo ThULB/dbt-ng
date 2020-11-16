@@ -53,47 +53,47 @@ export class FileListComponent implements OnInit {
     public deleteAllowed = false;
 
     private fileIcons = {
-        "PDF": {
+        PDF: {
             icon: "fa-file-pdf",
             extensions: "pdf|ps"
         },
-        "Archive": {
+        Archive: {
             icon: "fa-file-archive",
             extensions: "zip|tar|rar|bz|xs|gz|bz2|xz"
         },
-        "Image": {
+        Image: {
             icon: "fa-file-image",
             extensions: "tif|tiff|gif|jpeg|jpg|jif|jfif|jp2|jpx|j2k|j2c|fpx|pcd|png"
         },
-        "Text": {
+        Text: {
             icon: "fa-file-alt",
             extensions: "txt|rtf"
         },
-        "Audio": {
+        Audio: {
             icon: "fa-file-audio",
             extensions: "wav|wma|mp3"
         },
-        "Video": {
+        Video: {
             icon: "fa-file-video",
             extensions: "mp4|m4v|f4v|flv|rm|avi|wmv|mov"
         },
-        "Code": {
+        Code: {
             icon: "fa-file-code",
             extensions: "css|htm|html|php|c|cpp|bat|cmd|pas|java"
         },
-        "Word": {
+        Word: {
             icon: "fa-file-word",
             extensions: "doc|docx|dot"
         },
-        "Excel": {
+        Excel: {
             icon: "fa-file-excel",
             extensions: "xls|xlt|xlsx|xltx"
         },
-        "Powerpoint": {
+        Powerpoint: {
             icon: "fa-file-powerpoint",
             extensions: "ppt|potx|ppsx|sldx"
         },
-        "default": {
+        default: {
             icon: "fa-file"
         }
     };

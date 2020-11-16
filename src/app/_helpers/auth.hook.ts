@@ -5,15 +5,11 @@ import { AuthService } from "../_services/auth.service";
 export function authHook(transitionService: TransitionService) {
 
     const requiresAuthCriteria = {
-        to: (state) => {
-            return state.data && state.data.requiresAuth === true;
-        }
+        to: (state) => state.data && state.data.requiresAuth === true
     };
 
     const requiresRoleCriteria = {
-        to: (state) => {
-            return state.data && state.data.requiresRole && state.data.requiresRole.length !== 0;
-        }
+        to: (state) => state.data && state.data.requiresRole && state.data.requiresRole.length !== 0
     };
 
     const redirectToLogin = (transition) => {

@@ -1,4 +1,4 @@
-import { Component, Input} from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 
 import { ErrorService } from "../_services/error.service";
@@ -17,19 +17,19 @@ export class StaticContentComponent {
 
 }
 
-export function ContentTitleResolver($injector, params) {
+export const ContentTitleResolver = ($injector, params) => {
     const translate = $injector.get(TranslateService);
     const fileName = params.fileName || "";
 
     return translate.get(`content.static.${fileName}`);
-}
+};
 
-export function resolveFnContent($http, $error, $spinner, trans) {
+export const resolveFnContent = ($http, $error, $spinner, trans) => {
     $spinner.setLoadingState(trans.options().source !== "url" && trans.from().name !== trans.to().name);
 
     const fileName = trans.params().fileName;
 
-    return $http.get(`/assets/content/${fileName}.html`, { responseType: "text" as "text" })
+    return $http.get(`/assets/content/${fileName}.html`, { responseType: <"text">"text" })
         .toPromise().then((content: any) => {
             $spinner.setLoadingState(false);
             return content;
@@ -37,7 +37,7 @@ export function resolveFnContent($http, $error, $spinner, trans) {
             $spinner.setLoadingState(false);
             $error.handleError(err);
         });
-}
+};
 
 export const StaticContentStates = {
     name: "content.static",

@@ -40,9 +40,7 @@ import { environment } from "../environments/environment";
 import { HomeComponent, HomeStates } from "./home/home.component";
 import { LoginComponent, LoginStates } from "./login/login.component";
 
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
-}
+export const createTranslateLoader = (http: HttpClient) => new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 
 // Lazy Loading States
 export const BasketFutureState = {

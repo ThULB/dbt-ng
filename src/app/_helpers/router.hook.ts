@@ -1,12 +1,10 @@
 import { TransitionService, Transition } from "@uirouter/core";
 import { CacheService } from "../_services/cache.service";
 
-export function routerHook(transitionService: TransitionService) {
+export const routerHook = (transitionService: TransitionService) => {
 
     const injectReturnToCriteria = {
-        to: (state) => {
-            return state.name === "login" && state.params.returnTo && state.params.returnTo.value() == null;
-        }
+        to: (state) => state.name === "login" && state.params.returnTo && state.params.returnTo.value() == null
     };
 
     const injectReturnTo = (transition: Transition) => {
@@ -16,9 +14,7 @@ export function routerHook(transitionService: TransitionService) {
     };
 
     const allStateCriteria = {
-        to: (state) => {
-            return true;
-        }
+        to: (state) => true
     };
 
     const closeNavbar = () => {
@@ -72,4 +68,4 @@ export function routerHook(transitionService: TransitionService) {
     transitionService.onStart(allStateCriteria, closeNavbar, { priority: 10 });
     transitionService.onStart(allStateCriteria, saveScrollPosition, { priority: 20 });
     transitionService.onFinish(allStateCriteria, scrollTo, { priority: 10 });
-}
+};

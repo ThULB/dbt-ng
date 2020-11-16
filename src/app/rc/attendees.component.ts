@@ -16,10 +16,10 @@ import { Attendees } from "./datamodel.def";
 })
 export class AttendeesComponent implements OnInit {
 
-    public id: string;
-
     @Input()
     public attendees: Attendees;
+
+    public id: string;
 
     constructor(public $auth: AuthService, private $state: StateService, private globals: UIRouterGlobals) {
         this.id = this.globals.params.id;
@@ -30,7 +30,7 @@ export class AttendeesComponent implements OnInit {
 
 }
 
-export function resolveFnAttendees($api, $auth, $error, $spinner, trans) {
+export const resolveFnAttendees = ($api, $auth, $error, $spinner, trans) => {
     const cacheKey = CacheService.buildCacheKey("rcSlotAttendees" + ($auth.user && $auth.user.username || ""), trans.params());
     const cache = CacheService.get(cacheKey);
 
@@ -48,7 +48,7 @@ export function resolveFnAttendees($api, $auth, $error, $spinner, trans) {
             $error.handleError(err);
         });
     }
-}
+};
 
 export const AttendeesStates = {
     name: "rc.slot.attendees",

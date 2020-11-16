@@ -7,7 +7,7 @@ interface Script {
 
 export const ScriptStore: Script[] = [];
 
-declare var document: any;
+declare let document: any;
 
 @Injectable()
 export class ScriptService {

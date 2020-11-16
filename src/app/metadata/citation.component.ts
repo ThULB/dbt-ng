@@ -32,10 +32,6 @@ export class CitationComponent implements OnInit {
         "springer-basic-author-date", "din-1505-2"
     ];
 
-    private altmetricApiUrl = "https://api.altmetric.com/v1";
-
-    private dataciteUrl = "https://data.datacite.org/text/x-bibliography";
-
     public supportedIdentifier = ["doi", "urn", "handle", "isbn"];
 
     public identifier: Array<Identifier> = new Array();
@@ -47,6 +43,10 @@ export class CitationComponent implements OnInit {
     public citation: any;
 
     public loading = true;
+
+    private altmetricApiUrl = "https://api.altmetric.com/v1";
+
+    private dataciteUrl = "https://data.datacite.org/text/x-bibliography";
 
     constructor(private $http: HttpClient, private $error: ErrorService,
         private modalService: NgbModal, private $script: ScriptService, private translate: TranslateService) {
@@ -60,12 +60,31 @@ export class CitationComponent implements OnInit {
         this.mods = new Mods(this.object.mods());
 
         this.supportedIdentifier.forEach((t) => {
-            const elms = this.mods.getElementsWithAttribute("mods:identifier", { "type": t });
+            const elms = this.mods.getElementsWithAttribute("mods:identifier", { type: t });
             elms.forEach((e) => this.identifier.push({ type: t, value: e.text }));
         });
 
         this.load();
         this.checkAltmetrics().then(() => this.altmericEnabledId() && this.$script.loadScript("altmetrics"));
+    }
+
+    identifierByType(type: string, all: boolean = false) {
+        return all ? this.identifier.filter((id) => id.type === type) : this.identifier.find((id) => id.type === type);
+    }
+
+    altmericEnabledId() {
+        return this.identifier.find((id) => id.altmetric && id.altmetric === true);
+    }
+
+    selectStyle(event) {
+        this.style = event.currentTarget.value;
+        window.localStorage.setItem("citationStyle", this.style);
+        this.load();
+    }
+
+    openModal(content) {
+        this.modalService.open(content, { size: "lg" });
+        return false;
     }
 
     private load() {
@@ -84,7 +103,7 @@ export class CitationComponent implements OnInit {
                 this.loading = true;
                 return this.$http.get(
                     `${this.dataciteUrl};style=${this.style};locale=${this.translate.getBrowserCultureLang()}/${doi.value}`,
-                    { responseType: "text" as "text" }
+                    { responseType: <"text">"text" }
                 ).toPromise().then((res: any) => {
                     this.citation = this.formatCitation(res);
                     this.styleSelection = true;
@@ -109,11 +128,11 @@ export class CitationComponent implements OnInit {
     }
 
     private checkAltmetric(id: Identifier) {
-        return this.$http.get(`${this.altmetricApiUrl}/${id.type}/${id.value}`).toPromise().then((res: any) => {
-            return Object.assign(id, { altmetric: true });
-        }).catch((err) => {
-            return Object.assign(id, { altmetric: false });
-        });
+        return this.$http.get(`${this.altmetricApiUrl}/${id.type}/${id.value}`).toPromise().then((res: any) =>
+            Object.assign(id, { altmetric: true })
+        ).catch((err) =>
+            Object.assign(id, { altmetric: false })
+        );
     }
 
     private formatCitation(citation: string) {
@@ -191,22 +210,4 @@ export class CitationComponent implements OnInit {
         }
     }
 
-    identifierByType(type: string, all: boolean = false) {
-        return all ? this.identifier.filter((id) => id.type === type) : this.identifier.find((id) => id.type === type);
-    }
-
-    altmericEnabledId() {
-        return this.identifier.find((id) => id.altmetric && id.altmetric === true);
-    }
-
-    selectStyle(event) {
-        this.style = event.currentTarget.value;
-        window.localStorage.setItem("citationStyle", this.style);
-        this.load();
-    }
-
-    openModal(content) {
-        this.modalService.open(content, { size: "lg" });
-        return false;
-    }
 }

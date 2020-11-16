@@ -5,14 +5,12 @@ import { TranslateService } from "@ngx-translate/core";
 
 import { BreadcrumbService } from "./breadcrumb.service";
 
-export function breadcrumbHook(injector: Injector, transitionService: TransitionService, breadcrumbService: BreadcrumbService) {
+export const breadcrumbHook = (injector: Injector, transitionService: TransitionService, breadcrumbService: BreadcrumbService) => {
 
     const TITLE_SUFFIX = " - Digitale Bibliothek Thüringen";
 
     const allStateCriteria = {
-        to: (state) => {
-            return true;
-        }
+        to: (state) => true
     };
 
     const beforeTransisition = (transition: Transition) => {
@@ -36,4 +34,4 @@ export function breadcrumbHook(injector: Injector, transitionService: Transition
 
     transitionService.onBefore(allStateCriteria, beforeTransisition, { priority: 10 });
     transitionService.onFinish(allStateCriteria, finishTransisition, { priority: 10 });
-}
+};

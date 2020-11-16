@@ -70,7 +70,7 @@ export class MetadataComponent extends MetadataHelpers implements OnInit {
     }
 }
 
-export function MetadataTitleResolver($injector, params) {
+export const MetadataTitleResolver = ($injector, params) => {
     const api = $injector.get(ApiService);
     return api.solrCondQuery("id\:" + params.id, 0, 1).pipe(
         map((res: SolrSelectResponse) => {
@@ -80,9 +80,9 @@ export function MetadataTitleResolver($injector, params) {
                 (doc["mods.title.subtitle"] ? " : " + doc["mods.title.subtitle"] : "")
                 + (params.revision ? " (Rev. " + params.revision + ")" : "");
         }));
-}
+};
 
-export function resolveFnObject($api, $error, $spinner, trans) {
+export const resolveFnObject = ($api, $error, $spinner, trans) => {
     const cacheKey = CacheService.buildCacheKey(trans.to().name, trans.params());
     const cache = CacheService.get(cacheKey);
 
@@ -106,9 +106,9 @@ export function resolveFnObject($api, $error, $spinner, trans) {
             $error.handleError(err);
         });
     }
-}
+};
 
-export function resolveFnDerivates($api, $error, $spinner, trans) {
+export const resolveFnDerivates = ($api, $error, $spinner, trans) => {
     const cacheKey = CacheService.buildCacheKey(trans.to().name + "_derivates", trans.params());
     const cache = CacheService.get(cacheKey);
 
@@ -156,7 +156,7 @@ export function resolveFnDerivates($api, $error, $spinner, trans) {
             $error.handleError(err);
         });
     }
-}
+};
 
 export const MetadataStates = {
     name: "metadata",

@@ -1,5 +1,7 @@
-import { Component, Directive, OnInit, Input, Output, OnChanges, HostListener,
-    SimpleChanges, SimpleChange, EventEmitter } from "@angular/core";
+import {
+    Component, Directive, OnInit, Input, Output, OnChanges, HostListener,
+    SimpleChanges, SimpleChange, EventEmitter
+} from "@angular/core";
 
 import { Subject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
@@ -218,26 +220,24 @@ export class FileDropZoneDirective {
     private getFilesWebkitDataTransferItems(dataTransferItems) {
         const files = [];
 
-        function traverseFileTreePromise(item, path = "") {
-            return new Promise(resolve => {
-                if (item.isFile) {
-                    item.file(file => {
-                        file.filepath = path + file.name;
-                        files.push(file);
-                        resolve(file);
-                    });
-                } else if (item.isDirectory) {
-                    const dirReader = item.createReader();
-                    dirReader.readEntries(entries => {
-                        const entriesPromises = [];
-                        for (const entr of entries) {
-                            entriesPromises.push(traverseFileTreePromise(entr, path + item.name + "/"));
-                        }
-                        resolve(Promise.all(entriesPromises));
-                    });
-                }
-            });
-        }
+        const traverseFileTreePromise = (item, path = "") => new Promise(resolve => {
+            if (item.isFile) {
+                item.file(file => {
+                    file.filepath = path + file.name;
+                    files.push(file);
+                    resolve(file);
+                });
+            } else if (item.isDirectory) {
+                const dirReader = item.createReader();
+                dirReader.readEntries(entries => {
+                    const entriesPromises = [];
+                    for (const entr of entries) {
+                        entriesPromises.push(traverseFileTreePromise(entr, path + item.name + "/"));
+                    }
+                    resolve(Promise.all(entriesPromises));
+                });
+            }
+        });
 
         return new Promise((resolve, reject) => {
             const entriesPromises = [];

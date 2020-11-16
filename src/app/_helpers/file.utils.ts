@@ -1,9 +1,9 @@
 export interface FilePath {
-    path: string |null;
-    file: string |null;
+    path: string | null;
+    file: string | null;
 }
 
-export function fileExtension(fileName: string): string {
+export const fileExtension = (fileName: string): string => {
     const reExt = new RegExp("^.*\\.(.+)$");
 
     if (fileName && reExt.test(fileName)) {
@@ -11,9 +11,9 @@ export function fileExtension(fileName: string): string {
     }
 
     return null;
-}
+};
 
-export function filePath(path: string): FilePath {
+export const filePath = (path: string): FilePath => {
     if (path) {
         const re = new RegExp("(.*)\/(.*)?$");
         if (re.test(path)) {
@@ -25,4 +25,4 @@ export function filePath(path: string): FilePath {
     }
 
     return null;
-}
+};

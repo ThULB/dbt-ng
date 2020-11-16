@@ -23,7 +23,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const authReq = req.clone({ setHeaders: this.$auth.buildHeaders() });
 
-        return next.handle(authReq).pipe(catchError((error, caught) => {
+        return <any>next.handle(authReq).pipe(catchError((error, caught) => {
             if (error.status === 401 && (!this.$gloabls || this.$gloabls && this.$gloabls.current.name !== "login")) {
                 if (this.$auth.isLoggedIn()) {
                     this.$auth.logout();
@@ -41,7 +41,7 @@ export class AuthHttpInterceptor implements HttpInterceptor {
             }
 
             return throwError(error);
-        })) as any;
+        }));
     }
 
 }
