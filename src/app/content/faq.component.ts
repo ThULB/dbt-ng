@@ -85,8 +85,6 @@ export function filterFAQ(faq: Array<FAQCategory>, filter: string): Array<FAQCat
             filter = fp.join(" ");
         }
 
-        console.log(f, filter);
-
         const res = [];
         faq.forEach(c => {
             if (c.title.toLowerCase().indexOf(f) !== -1 ||

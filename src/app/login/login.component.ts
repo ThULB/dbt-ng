@@ -78,6 +78,7 @@ class LoginComponent implements OnInit {
                 return decoded.name.length !== 0 ? this.$state.target(decoded.name, decoded.params) : null;
             }
         } catch (e) {
+            // ignore
         }
 
         return state;

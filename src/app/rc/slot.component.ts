@@ -53,7 +53,7 @@ export class SlotComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     ngOnDestroy() {
-        this.downloads.forEach((o) => console.log(o));
+        this.downloads.forEach((o) => o = undefined);
     }
 
     ngAfterViewInit() {
