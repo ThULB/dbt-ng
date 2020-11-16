@@ -137,17 +137,35 @@ export class FileListComponent implements OnInit {
                 entries: []
             };
 
-            content.directories.forEach((d) => de.entries.push({
-                type: "dir",
-                name: d.name
-            }));
-            content.files.forEach((f) => de.entries.push({
-                type: "file",
-                name: f.name,
-                md5: f.md5,
-                modified: f.modified,
-                size: f.size
-            }));
+            if (content.directories) {
+                content.directories.forEach((d) => de.entries.push({
+                    type: "dir",
+                    name: d.name
+                }));
+            } else {
+                content.directory.forEach((d) => de.entries.push({
+                    type: "dir",
+                    name: d.name
+                }));
+            }
+
+            if (content.files) {
+                content.files.forEach((f) => de.entries.push({
+                    type: "file",
+                    name: f.name,
+                    md5: f.md5,
+                    modified: f.modified,
+                    size: f.size
+                }));
+            } else {
+                content.file.forEach((f) => de.entries.push({
+                    type: "file",
+                    name: f.name,
+                    md5: f.md5,
+                    modified: f.modified,
+                    size: f.size
+                }));
+            }
 
             return de;
         }

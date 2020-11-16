@@ -141,21 +141,23 @@ export class MCRDerivate extends XmlMappedElement {
 }
 
 export interface MCRDerivateContentDirectory {
-    name: string |null;
-    directory: Array<MCRDerivateContentDirectory> |null;
+    name: string | null;
+    directory: Array<MCRDerivateContentDirectory> | null;
 }
 
 export interface MCRDerivateContentFile {
-    name: string |null;
+    name: string | null;
     md5: string;
     modified: Date;
     size: number;
 }
 
 export interface MCRDerivateContent {
-    name?: string |null;
-    directories: Array<MCRDerivateContentDirectory> |null;
-    files: Array<MCRDerivateContentFile> |null;
+    name?: string | null;
+    directory?: Array<MCRDerivateContentDirectory> | null;
+    file?: Array<MCRDerivateContentFile> | null;
+    directories: Array<MCRDerivateContentDirectory> | null;
+    files: Array<MCRDerivateContentFile> | null;
 }
 
 /**
