@@ -153,7 +153,7 @@ export const SlotsStates = {
         },
         sort: {
             type: "string",
-            value: "slotId ASC",
+            value: "slot.lecturers ASC",
             squash: true
         },
         page: {
