@@ -63,14 +63,11 @@
           "warn",
           {
             "default": [
-              // Index signature
               "signature",
-              // Fields
               "public-static-field",
               "protected-static-field",
               "private-static-field",
               "static-field",
-              // Fields
               "public-decorated-field",
               "protected-decorated-field",
               "private-decorated-field",
@@ -87,16 +84,13 @@
               "abstract-field",
               "decorated-field",
               "field",
-              // Methods
               "public-static-method",
               "protected-static-method",
               "private-static-method",
-              // Constructors
               "public-constructor",
               "protected-constructor",
               "private-constructor",
               "constructor",
-              // Methods
               "public-decorated-method",
               "protected-decorated-method",
               "private-decorated-method",
