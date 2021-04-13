@@ -114,12 +114,14 @@ export class SlotComponent implements OnInit, OnDestroy, AfterViewInit {
     this.groups = this.groupEntries();
     this.toc = this.tocEntries();
 
-    this.slot.entries.entry
-      .filter(e => e.type === "file")
-      .forEach(e =>
-        this.isStreamingSupported(e).toPromise()
-          .then(sup => sup && this.loadMediaSources(e))
-      );
+    if (this.slot.entries && this.slot.entries.entry) {
+      this.slot.entries.entry
+        .filter(e => e.type === "file")
+        .forEach(e =>
+          this.isStreamingSupported(e).toPromise()
+            .then(sup => sup && this.loadMediaSources(e))
+        );
+    }
   }
 
   ngOnDestroy() {
