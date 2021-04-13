@@ -47,10 +47,11 @@ export class RCApiService extends ApiService {
 
   isStreamingSupported(id: string, entryId: string) {
     return this.$http.get(`${this.base}/api/v2/rc/${id}/streamable/${entryId}`,
-      { observe: "response" }).pipe(
-        map((res: HttpResponse<any>) => res.status === 200),
-        catchError((_err, _caught) => of(false))
-      );
+      { observe: "response" }
+    ).pipe(
+      map((res: HttpResponse<any>) => res.status === 200),
+      catchError((_err, _caught) => of(false))
+    );
   }
 
   attendees(id: string) {
