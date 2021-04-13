@@ -102,10 +102,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
 
   private content: MCRDerivateContent;
 
-
   private changesPlayerElm: any;
-
-
 
   private playerPlugins: Array<any> = [];
 
