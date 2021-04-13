@@ -8,216 +8,217 @@ import { MCRDerivate, MCRDerivateContent } from "../_datamodels/datamodel.def";
 import { PreviewComponent } from "./preview.component";
 
 interface DirectoryEntry {
-    type: string;
-    name?: string;
-    md5?: string;
-    modified?: Date;
-    size?: number;
+  type: string;
+  name?: string;
+  md5?: string;
+  modified?: Date;
+  size?: number;
 }
 
 interface DirectoryEntries {
-    path?: string;
-    entries: Array<DirectoryEntry>;
+  path?: string;
+  entries: Array<DirectoryEntry>;
 }
 
 @Component({
-    selector: "ui-filelist",
-    templateUrl: "./fileList.component.html"
+  selector: "ui-filelist",
+  templateUrl: "./fileList.component.html"
 })
 export class FileListComponent implements OnInit {
 
-    public loading = false;
+  @Input() public derivate: MCRDerivate;
 
-    public page = 1;
+  @Input() public path: string;
 
-    public rows = 10;
+  @Output() public selectedFile: EventEmitter<string> = new EventEmitter<string>();
 
-    public start = 0;
+  public loading = false;
 
-    public end = 10;
+  public page = 1;
 
-    @Input() public derivate: MCRDerivate;
+  public rows = 10;
 
-    @Input() public path: string;
+  public start = 0;
 
-    @Output() public selectedFile: EventEmitter<string> = new EventEmitter<string>();
+  public end = 10;
 
-    public content: MCRDerivateContent;
+  public content: MCRDerivateContent;
 
-    public dirEntries: DirectoryEntries;
+  public dirEntries: DirectoryEntries;
 
-    public mainFile: string;
+  public mainFile: string;
 
-    public writeAllowed = false;
+  public writeAllowed = false;
 
-    public deleteAllowed = false;
+  public deleteAllowed = false;
 
-    private fileIcons = {
-        PDF: {
-            icon: "fa-file-pdf",
-            extensions: "pdf|ps"
-        },
-        Archive: {
-            icon: "fa-file-archive",
-            extensions: "zip|tar|rar|bz|xs|gz|bz2|xz"
-        },
-        Image: {
-            icon: "fa-file-image",
-            extensions: "tif|tiff|gif|jpeg|jpg|jif|jfif|jp2|jpx|j2k|j2c|fpx|pcd|png"
-        },
-        Text: {
-            icon: "fa-file-alt",
-            extensions: "txt|rtf"
-        },
-        Audio: {
-            icon: "fa-file-audio",
-            extensions: "wav|wma|mp3"
-        },
-        Video: {
-            icon: "fa-file-video",
-            extensions: "mp4|m4v|f4v|flv|rm|avi|wmv|mov"
-        },
-        Code: {
-            icon: "fa-file-code",
-            extensions: "css|htm|html|php|c|cpp|bat|cmd|pas|java"
-        },
-        Word: {
-            icon: "fa-file-word",
-            extensions: "doc|docx|dot"
-        },
-        Excel: {
-            icon: "fa-file-excel",
-            extensions: "xls|xlt|xlsx|xltx"
-        },
-        Powerpoint: {
-            icon: "fa-file-powerpoint",
-            extensions: "ppt|potx|ppsx|sldx"
-        },
-        default: {
-            icon: "fa-file"
-        }
-    };
+  private fileIcons = {
+    PDF: {
+      icon: "fa-file-pdf",
+      extensions: "pdf|ps"
+    },
+    Archive: {
+      icon: "fa-file-archive",
+      extensions: "zip|tar|rar|bz|xs|gz|bz2|xz"
+    },
+    Image: {
+      icon: "fa-file-image",
+      extensions: "tif|tiff|gif|jpeg|jpg|jif|jfif|jp2|jpx|j2k|j2c|fpx|pcd|png"
+    },
+    Text: {
+      icon: "fa-file-alt",
+      extensions: "txt|rtf"
+    },
+    Audio: {
+      icon: "fa-file-audio",
+      extensions: "wav|wma|mp3"
+    },
+    Video: {
+      icon: "fa-file-video",
+      extensions: "mp4|m4v|f4v|flv|rm|avi|wmv|mov"
+    },
+    Code: {
+      icon: "fa-file-code",
+      extensions: "css|htm|html|php|c|cpp|bat|cmd|pas|java"
+    },
+    Word: {
+      icon: "fa-file-word",
+      extensions: "doc|docx|dot"
+    },
+    Excel: {
+      icon: "fa-file-excel",
+      extensions: "xls|xlt|xlsx|xltx"
+    },
+    Powerpoint: {
+      icon: "fa-file-powerpoint",
+      extensions: "ppt|potx|ppsx|sldx"
+    },
+    default: {
+      icon: "fa-file"
+    }
+  };
 
-    constructor(public $api: ApiService, private $auth: AuthService, private $error: ErrorService) {
+  constructor(public $api: ApiService, private $auth: AuthService, private $error: ErrorService) {
+  }
+
+  onReload() {
+    this.load(true);
+  }
+
+  pageChange(page: number) {
+    this.page = page;
+    this.start = (this.page - 1) * this.rows;
+    this.end = Math.min(this.start + this.rows, this.dirEntries.entries.length);
+  }
+
+  isMainFile(name: string) {
+    return this.mainFile === (this.path ? [this.path, name].join("/") : name);
+  }
+
+  fileType(name: string) {
+    const reExt = new RegExp("^.*\\.(.+)$");
+
+    if (name) {
+      const ext = reExt.test(name) ? name.match(reExt)[1].toLowerCase() : null;
+      const fi = Object.keys(this.fileIcons).find((k) => k !== "default" && this.fileIcons[k].extensions.indexOf(ext) !== -1);
+      return this.fileIcons[fi] || this.fileIcons["default"];
     }
 
-    ngOnInit() {
-        this.load();
-        this.mainFile = (this.derivate instanceof MCRDerivate) && this.derivate.getElementsWithAttribute("internal", "mainfile", true)
-            .find((e) => e.getAttributeValue("maindoc") !== null).getAttributeValue("maindoc");
+    return null;
+  }
+
+  cd(dir: string) {
+    if (dir === "..") {
+      const p = this.path.split("/");
+      p.pop();
+      this.path = p.join("/");
+    } else {
+      this.path = this.path ? [this.path, dir].join("/") : dir;
     }
 
-    private load(force: boolean = false) {
-        this.loading = true;
-        this.checkAccess();
-        return this.$api.derivateContent(this.derivate.objectId, this.derivate.id, this.path, force)
-            .toPromise().then((res: MCRDerivateContent) => {
-                this.content = res;
-                this.dirEntries = this.buildDirectoryEntries(res);
-                this.loading = false;
-            }).catch((err) => {
-                this.loading = false;
-                this.$error.handleError(err);
-            });
+    this.load();
+  }
+
+  selectFile(name: string) {
+    this.selectedFile.emit(this.derivate.id + ":" + (this.path ? [this.path, name].join("/") : name));
+    return !PreviewComponent.isPreviewSupported(name);
+  }
+
+  deleteFile(name: string) {
+    this.$api.derivateDelete(this.derivate.objectId, this.derivate.id, (this.path ? [this.path, name].join("/") : name)).
+      subscribe(() => this.load(true), (err) => this.$error.handleError(err));
+  }
+
+  ngOnInit() {
+    this.load();
+    this.mainFile = (this.derivate instanceof MCRDerivate) && this.derivate.getElementsWithAttribute("internal", "mainfile", true)
+      .find((e) => e.getAttributeValue("maindoc") !== null).getAttributeValue("maindoc");
+  }
+
+  private load(force: boolean = false) {
+    this.loading = true;
+    this.checkAccess();
+    return this.$api.derivateContent(this.derivate.objectId, this.derivate.id, this.path, force)
+      .toPromise().then((res: MCRDerivateContent) => {
+        this.content = res;
+        this.dirEntries = this.buildDirectoryEntries(res);
+        this.loading = false;
+      }).catch((err) => {
+        this.loading = false;
+        this.$error.handleError(err);
+      });
+  }
+
+  private checkAccess() {
+    if (this.$auth.isLoggedIn()) {
+      this.$api.derivateWriteAllow(this.derivate.objectId, this.derivate.id).
+        subscribe((allow) => this.writeAllowed = allow);
+      this.$api.derivateDeleteAllow(this.derivate.objectId, this.derivate.id).
+        subscribe((allow) => this.deleteAllowed = allow);
+    }
+  }
+
+  private buildDirectoryEntries(content: MCRDerivateContent): DirectoryEntries {
+    if (content) {
+      const de: DirectoryEntries = {
+        path: content.name,
+        entries: []
+      };
+
+      if (content.directories) {
+        content.directories.forEach((d) => de.entries.push({
+          type: "dir",
+          name: d.name
+        }));
+      } else {
+        content.directory.forEach((d) => de.entries.push({
+          type: "dir",
+          name: d.name
+        }));
+      }
+
+      if (content.files) {
+        content.files.forEach((f) => de.entries.push({
+          type: "file",
+          name: f.name,
+          md5: f.md5,
+          modified: f.modified,
+          size: f.size
+        }));
+      } else {
+        content.file.forEach((f) => de.entries.push({
+          type: "file",
+          name: f.name,
+          md5: f.md5,
+          modified: f.modified,
+          size: f.size
+        }));
+      }
+
+      return de;
     }
 
-    private checkAccess() {
-        if (this.$auth.isLoggedIn()) {
-            this.$api.derivateWriteAllow(this.derivate.objectId, this.derivate.id).
-                subscribe((allow) => this.writeAllowed = allow);
-            this.$api.derivateDeleteAllow(this.derivate.objectId, this.derivate.id).
-                subscribe((allow) => this.deleteAllowed = allow);
-        }
-    }
+    return null;
+  }
 
-    private buildDirectoryEntries(content: MCRDerivateContent): DirectoryEntries {
-        if (content) {
-            const de: DirectoryEntries = {
-                path: content.name,
-                entries: []
-            };
-
-            if (content.directories) {
-                content.directories.forEach((d) => de.entries.push({
-                    type: "dir",
-                    name: d.name
-                }));
-            } else {
-                content.directory.forEach((d) => de.entries.push({
-                    type: "dir",
-                    name: d.name
-                }));
-            }
-
-            if (content.files) {
-                content.files.forEach((f) => de.entries.push({
-                    type: "file",
-                    name: f.name,
-                    md5: f.md5,
-                    modified: f.modified,
-                    size: f.size
-                }));
-            } else {
-                content.file.forEach((f) => de.entries.push({
-                    type: "file",
-                    name: f.name,
-                    md5: f.md5,
-                    modified: f.modified,
-                    size: f.size
-                }));
-            }
-
-            return de;
-        }
-
-        return null;
-    }
-
-    onReload() {
-        this.load(true);
-    }
-
-    pageChange(page: number) {
-        this.page = page;
-        this.start = (this.page - 1) * this.rows;
-        this.end = Math.min(this.start + this.rows, this.dirEntries.entries.length);
-    }
-
-    isMainFile(name: string) {
-        return this.mainFile === (this.path ? [this.path, name].join("/") : name);
-    }
-
-    fileType(name: string) {
-        const reExt = new RegExp("^.*\\.(.+)$");
-
-        if (name) {
-            const ext = reExt.test(name) ? name.match(reExt)[1].toLowerCase() : null;
-            const fi = Object.keys(this.fileIcons).find((k) => k !== "default" && this.fileIcons[k].extensions.indexOf(ext) !== -1);
-            return this.fileIcons[fi] || this.fileIcons["default"];
-        }
-
-        return null;
-    }
-
-    cd(dir: string) {
-        if (dir === "..") {
-            const p = this.path.split("/");
-            p.pop();
-            this.path = p.join("/");
-        } else {
-            this.path = this.path ? [this.path, dir].join("/") : dir;
-        }
-
-        this.load();
-    }
-
-    selectFile(name: string) {
-        this.selectedFile.emit(this.derivate.id + ":" + (this.path ? [this.path, name].join("/") : name));
-        return !PreviewComponent.isPreviewSupported(name);
-    }
-
-    deleteFile(name: string) {
-        this.$api.derivateDelete(this.derivate.objectId, this.derivate.id, (this.path ? [this.path, name].join("/") : name)).
-            subscribe(() => this.load(true), (err) => this.$error.handleError(err));
-    }
 }

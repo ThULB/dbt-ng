@@ -8,39 +8,40 @@ import { ApiService } from "../_services/api.service";
 import { MCRObject, MCRObjectVersion } from "../_datamodels/datamodel.def";
 
 @Component({
-    selector: "ui-sysinfo",
-    templateUrl: "./sysInfo.component.html"
+  selector: "ui-sysinfo",
+  templateUrl: "./sysInfo.component.html"
 })
 export class SysInfoComponent implements OnInit {
 
-    @Input()
-    public object: MCRObject;
+  @Input()
+  public object: MCRObject;
 
-    public loading = true;
+  public loading = true;
 
-    public versions: Array<MCRObjectVersion>;
+  public versions: Array<MCRObjectVersion>;
 
-    constructor(private $api: ApiService, private $error: ErrorService, private modalService: NgbModal) {
-    }
+  constructor(private $api: ApiService, private $error: ErrorService, private modalService: NgbModal) {
+  }
 
-    ngOnInit() {
-        this.load();
-    }
+  openModal(content) {
+    this.modalService.open(content, { size: "lg" });
+    return false;
+  }
 
-    private load() {
-        this.loading = true;
-        return this.$api.versions(this.object.id)
-            .toPromise().then((res: Array<MCRObjectVersion>) => {
-                this.versions = res;
-                this.loading = false;
-            }).catch((err) => {
-                this.loading = false;
-                this.$error.handleError(err);
-            });
-    }
+  ngOnInit() {
+    this.load();
+  }
 
-    openModal(content) {
-        this.modalService.open(content, { size: "lg" });
-        return false;
-    }
+  private load() {
+    this.loading = true;
+    return this.$api.versions(this.object.id)
+      .toPromise().then((res: Array<MCRObjectVersion>) => {
+        this.versions = res;
+        this.loading = false;
+      }).catch((err) => {
+        this.loading = false;
+        this.$error.handleError(err);
+      });
+  }
+
 }
