@@ -2,17 +2,13 @@
 import { Component, Input, AfterViewInit, OnInit, Renderer2, ViewChild, OnDestroy, ElementRef } from "@angular/core";
 import { DomSanitizer, SafeHtml, SafeUrl } from "@angular/platform-browser";
 
-import { Observable } from "rxjs";
-
 import { AuthService } from "../_services/auth.service";
-import { CacheService } from "../_services/cache.service";
 import { ErrorService } from "../_services/error.service";
 import { RCApiService } from "./api.service";
 import { SpinnerService } from "../spinner/spinner.service";
 import { StateService, Transition, UIRouterGlobals } from "@uirouter/core";
 
-import { MCRObject, SolrSelectResponse } from "../_datamodels/datamodel.def";
-import { Slot, Entry, EntryTypes, AdminRoles, EditorRoles, Permission } from "./datamodel.def";
+import { Slot, Entry, EntryTypes, AdminRoles, EditorRoles } from "./datamodel.def";
 
 @Component({
   selector: "ui-rc-slot",
@@ -35,12 +31,11 @@ export class SlotComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild("slotToc")
   private slotToc: ElementRef;
 
-
   public id: string;
 
-  public toc;
+  public toc: any;
 
-  public groups;
+  public groups: any;
 
   private downloads: Map<string, any> = new Map();
 
