@@ -13,14 +13,10 @@ import { RCApiService } from "./api.service";
 import { SpinnerService } from "../spinner/spinner.service";
 import { StateService, Transition, UIRouterGlobals } from "@uirouter/core";
 
-import { MediaSources } from "../_datamodels/datamodel.def";
-import { Slot, Entry, EntryTypes, AdminRoles, EditorRoles } from "./datamodel.def";
+import { preloadImages } from "../_helpers/image.utils";
 
-interface Source {
-  src: string;
-  type: string;
-  label?: string;
-}
+import { MediaSources, Source } from "../_datamodels/datamodel.def";
+import { Slot, Entry, EntryTypes, AdminRoles, EditorRoles } from "./datamodel.def";
 
 @Component({
   selector: "ui-rc-slot",
@@ -307,37 +303,13 @@ export class SlotComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  private preloadImage(url: string, anImageLoadedCallback: () => void): HTMLImageElement {
-    const img = new Image();
-
-    img.onload = anImageLoadedCallback;
-    img.src = url;
-
-    return img;
-  }
-
-  private preloadImages(urls: Array<string>, allImagesLoadedCallback: (images: Array<HTMLImageElement>) => void) {
-    const imgs: Array<HTMLImageElement> = [];
-    let loadedCounter = 0;
-    const toBeLoadedNumber = urls.length;
-
-    urls.forEach((url) => {
-      imgs.push(this.preloadImage(url, () => {
-        loadedCounter++;
-        if (loadedCounter === toBeLoadedNumber) {
-          allImagesLoadedCallback(imgs);
-        }
-      }));
-    });
-  }
-
   private updatePosterPreview(entry: Entry, sources: MediaSources) {
     const cmpPoster = this.getComponent(entry, "PosterImage");
     const elmPoster = cmpPoster.el();
 
     if (elmPoster) {
       const thumbs = sources.source.map(s => this.$api.mediaThumbUrl(this.buildInternalId(entry), s.src));
-      this.preloadImages(thumbs, (images) => {
+      preloadImages(thumbs, (images) => {
         const thumbImg: Array<HTMLImageElement> = images;
 
         let child = elmPoster.lastElementChild;

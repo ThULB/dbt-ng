@@ -17,14 +17,10 @@ import * as CryptoJS from "crypto-js";
 import videojs from "video.js";
 import * as WaveSurfer from "wavesurfer.js";
 
-import { MCRDerivate, MCRDerivateContent, MCRDerivateContentFile, MediaSources } from "../_datamodels/datamodel.def";
-import { fileExtension, FilePath, filePath } from "../_helpers/file.utils";
+import { preloadImages } from "../_helpers/image.utils";
 
-interface Source {
-  src: string;
-  type: string;
-  label?: string;
-}
+import { MCRDerivate, MCRDerivateContent, MCRDerivateContentFile, MediaSources, Source } from "../_datamodels/datamodel.def";
+import { fileExtension, FilePath, filePath } from "../_helpers/file.utils";
 
 @Component({
   selector: "ui-preview",
@@ -236,8 +232,8 @@ export class PreviewComponent implements OnInit, OnDestroy {
           forEach((stream) => stream.src = this.$api.mediaProgressivUrl(this.derivate.id, stream.src));
       }).then(() => this.$api.mediaThumbs(id).toPromise()
         .then((res: MediaSources) => this.mediaThumbs = res))
-        .then(() => resolve())
-        .catch((err) => resolve());
+        .then(() => resolve(null))
+        .catch((err) => reject(err));
     });
   }
 
@@ -382,37 +378,13 @@ export class PreviewComponent implements OnInit, OnDestroy {
     }
   }
 
-  private preloadImage(url: string, anImageLoadedCallback: () => void): HTMLImageElement {
-    const img = new Image();
-
-    img.onload = anImageLoadedCallback;
-    img.src = url;
-
-    return img;
-  }
-
-  private preloadImages(urls: Array<string>, allImagesLoadedCallback: (images: Array<HTMLImageElement>) => void) {
-    const imgs: Array<HTMLImageElement> = [];
-    let loadedCounter = 0;
-    const toBeLoadedNumber = urls.length;
-
-    urls.forEach((url) => {
-      imgs.push(this.preloadImage(url, () => {
-        loadedCounter++;
-        if (loadedCounter === toBeLoadedNumber) {
-          allImagesLoadedCallback(imgs);
-        }
-      }));
-    });
-  }
-
   private updatePosterPreview(sources: MediaSources) {
     const cmpPoster = this.getComponent("PosterImage");
     const elmPoster = cmpPoster.el();
 
     if (elmPoster) {
       const thumbs = sources.source.map(s => this.$api.mediaThumbUrl(this.buildInternalId(), s.src));
-      this.preloadImages(thumbs, (images) => {
+      preloadImages(thumbs, (images) => {
         const thumbImg: Array<HTMLImageElement> = images;
 
         let child = elmPoster.lastElementChild;

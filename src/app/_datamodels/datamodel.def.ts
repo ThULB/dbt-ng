@@ -174,6 +174,12 @@ export interface MediaSources {
   source: Array<MediaSource>;
 }
 
+export interface Source {
+  src: string;
+  type: string;
+  label?: string;
+}
+
 /**
  * MODS
  */
