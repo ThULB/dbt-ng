@@ -86,7 +86,7 @@
                     <ng-container *ngSwitchCase="'file'">
                       <div class="media-body mw-100 p-2">
 
-                        <div *ngIf="!(isStreamingSupported(entry) | async)"
+                        <div *ngIf="(isStreamingSupported(entry) | async) === false"
                           class="d-flex flex-row flex-fill justify-content-between">
                           <a class="text-truncate" href="javascript:void(0)" (click)="download($event, entry)">
                             {{ entry.file.comment || entry.file.name }}
