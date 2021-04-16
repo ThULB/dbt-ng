@@ -222,7 +222,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
   }
 
   private mediaSourcesPromise() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const id = this.buildInternalId();
 
       this.$api.mediaSources(id).toPromise().then((res: MediaSources) => {
@@ -233,7 +233,7 @@ export class PreviewComponent implements OnInit, OnDestroy {
       }).then(() => this.$api.mediaThumbs(id).toPromise()
         .then((res: MediaSources) => this.mediaThumbs = res))
         .then(() => resolve(null))
-        .catch((err) => reject(err));
+        .catch((_err) => resolve(null));
     });
   }
 

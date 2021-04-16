@@ -199,7 +199,7 @@ export class SlotComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private mediaSourcesPromise(entry: Entry) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const id = this.buildInternalId(entry);
 
       this.$api.mediaSources(id).toPromise().then((res: MediaSources) => {
@@ -207,7 +207,7 @@ export class SlotComponent implements OnInit, OnDestroy, AfterViewInit {
       }).then(() => this.$api.mediaThumbs(id).toPromise()
         .then((res: MediaSources) => this.mediaThumbs.set(entry.id, res)))
         .then(() => resolve(null))
-        .catch((err) => reject(err));
+        .catch((_err) => resolve(null));
     });
   }
 
