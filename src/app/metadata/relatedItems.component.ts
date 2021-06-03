@@ -86,7 +86,7 @@ export class RelatedItemsComponent implements OnInit {
   }
 
   private load() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve: any, reject) => {
       const structure = this.object.getElement("structure");
       if (structure) {
         const children = structure.getElementWithAttribute("children", { class: "MCRMetaLinkID" });
@@ -97,7 +97,7 @@ export class RelatedItemsComponent implements OnInit {
             const loc = children.getElementsWithAttribute("child", { "xlink:type": "locator" });
             this.itemsTotal = loc.length;
 
-            new Promise((r, e) => {
+            new Promise((r: any, e) => {
               let li = this.itemsTotal;
               loc.forEach((l) => {
                 const id = l.getAttributeValue("xlink:href");
