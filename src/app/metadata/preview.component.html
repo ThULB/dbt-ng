@@ -72,7 +72,7 @@
 
 <ng-container *ngIf="'pdf|ps'.indexOf(fileExtension(file)) !== -1">
 	<ng-template #pdfViewerTemplate let-url="url">
-		<div #pdfViewer class="card">
+		<div #pdfViewer id="pdf-preview" class="card">
 			<div class="card-body p-1">
 				<div class="text-center m-2" [hidden]="done">
 					<i class="fas fa-spinner fa-spin"></i> <span class="ml-1">{{ loadingPercent || 0 }}%</span>

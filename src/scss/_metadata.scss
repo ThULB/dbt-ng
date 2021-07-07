@@ -142,3 +142,18 @@
     vertical-align: middle;
   }
 }
+
+#pdf-preview {
+  .card-footer {
+    background-color: #f5f5f5;
+  }
+}
+
+pdf-viewer {
+  display: block;
+  height: 100vh;
+    
+  .ng2-pdf-viewer-container {
+    position: relative;
+  }
+}
